@@ -43,7 +43,7 @@ public class GameEngine {
      * @return A list of the currently available actions.
      */
     public List<ActionOption> getAvailableActions() {
-        return getCurrentInteractable().getAvailableActions(gameState);
+        return getCurrentInteractable().getAvailableActions();
     }
 
     /**
@@ -53,7 +53,7 @@ public class GameEngine {
      * @return String representing the description text.
      */
     public String getCurrentDescription() {
-        return getCurrentInteractable().getDescription(gameState);
+        return getCurrentInteractable().getDescription();
     }
 
     /**
@@ -74,7 +74,7 @@ public class GameEngine {
         }
 
         // If the action is valid, tell the interactable to run.
-        InteractionResult result = controllingInteractable.performAction(actionToPerform, gameState);
+        InteractionResult result = controllingInteractable.performAction(actionToPerform);
 
         // Store the transition requested by the action.
         // This is what informs us if we need to modify the interactionStack.
