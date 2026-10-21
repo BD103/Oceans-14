@@ -102,7 +102,7 @@ public class GameEngine {
             case CHANGE_ROOM: // TODO validate the room exists
                 interactionStack.clear();
                 interactionStack.push(result.target());
-                // TODO actually change GameState so it knows the current room
+                GameState.setCurrentRoomID(result.target().getID());
                 break;
             // Used when no change in the controlling interactable is in order.
             case NONE:

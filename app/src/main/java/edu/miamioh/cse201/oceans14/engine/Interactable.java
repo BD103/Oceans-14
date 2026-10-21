@@ -17,6 +17,12 @@ public interface Interactable {
     String getDescription();
 
     /**
+     * Gives the ID of the current interactable
+     * @return the ID of the current interactable.
+     */
+    String getID();
+
+    /**
      * Returns the current list of available actions.
      * ActionOption are just a Java Record which holds an actions id and its
      * Description.

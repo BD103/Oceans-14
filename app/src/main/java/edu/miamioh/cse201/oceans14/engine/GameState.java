@@ -38,7 +38,7 @@ public class GameState {
      * Remove chips from the players count. Used if a player spends or loses chips
      * @param amount the amount of chips to lose
      * @return True if the chips can be spent, False if the player doesn't have enough chips
-     *         Throws an IllegalArgumentException if a negative number is entered.
+     * @throws IllegalArgumentException if a negative number is entered.
      */
     public static boolean removeChips(int amount) {
         if (amount < 0) {
@@ -65,8 +65,8 @@ public class GameState {
 
     /**
      * Add an item to the players inventory.
-     * Will throw IllegalArgumentException if the item doesn't exist in the registry
      * @param itemID the ID of the item to add
+     * @throws IllegalArgumentException if the item doesn't exist in the registry
      */
     public static void addItem(String itemID) {
         if (!itemIsValid(itemID)) {
@@ -77,9 +77,9 @@ public class GameState {
 
     /**
      * remove an item from the players inventory
-     * Will throw IllegalArgumentException if the item doesn't exist in the registry
      * @param itemID the item to remove
      * @return true if the item was successfully removed, false if the item was not.
+     * @throws IllegalArgumentException if the item doesn't exist in the registry
      */
     public static boolean removeItem(String itemID) {
         if (!itemIsValid(itemID)) {
