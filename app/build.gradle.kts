@@ -37,17 +37,3 @@ tasks.jar {
     // Bundle all dependencies into the jar.
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
 }
-
-tasks.register<Exec>("run") {
-    group = "Application"
-    description = "Runs this project as a JVM application."
-    dependsOn(tasks.jar)
-    standardInput = System.`in`
-
-    commandLine = listOf(
-        Jvm.current().javaExecutable.absolutePath,
-        "-jar",
-        layout.buildDirectory.file("libs/app.jar").get().asFile.absolutePath,
-    )
-
-}
