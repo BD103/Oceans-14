@@ -18,8 +18,26 @@ public class RootView implements View {
 
     @Override
     public void draw(Terminal term) {
+        PrintWriter writer = term.writer();
+
         term.puts(Capability.clear_screen);
-        ViewDebugger.fillViewport(term, this.viewport);
+
+        term.puts(Capability.cursor_address, this.viewport.y(), this.viewport.x());
+        writer.print('+');
+        for (int i = 0; i < this.viewport.width() - 2; i++) writer.print('-');
+        writer.print('+');
+
+        for (int y = this.viewport.y() + 1; y < this.viewport.y() + this.viewport.height() - 1; y++) {
+            term.puts(Capability.cursor_address, y, this.viewport.x());
+            writer.print('|');
+            term.puts(Capability.cursor_address, y, this.viewport.x() + this.viewport.width() - 1);
+            writer.print('|');
+        }
+
+        term.puts(Capability.cursor_address, this.viewport.y() + this.viewport.height() - 1, this.viewport.x());
+        writer.print('+');
+        for (int i = 0; i < this.viewport.width() - 2; i++) writer.print('-');
+        writer.print('+');
     }
 
     @Override
