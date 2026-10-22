@@ -5,6 +5,7 @@ import org.jline.terminal.Size;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.jline.utils.InfoCmp;
+import org.jline.utils.NonBlockingReader;
 
 import java.io.IOException;
 
@@ -17,7 +18,7 @@ import java.io.IOException;
 public class UI implements AutoCloseable {
     private final Terminal term;
     private final Attributes originalAttributes;
-//    private final RootView rootView;
+    private final RootView rootView;
 
     public UI() throws IOException {
         this.term = TerminalBuilder.builder().system(true).devTty(true).build();
@@ -33,14 +34,20 @@ public class UI implements AutoCloseable {
         Size size = this.term.getSize();
         Rect screenViewport = new Rect(0, 0, size.getColumns(), size.getRows());
 
-//        this.rootView = new RootView();
-//        this.rootView.computeViewport(screenViewport);
+        this.rootView = new RootView();
+        this.rootView.computeViewport(screenViewport);
     }
 
-    public void run() {
-        // TODO: runloop
-//        this.rootView.draw(this.term);
+    public void run() throws IOException {
+        this.rootView.draw(this.term);
         this.term.flush();
+
+        NonBlockingReader reader = term.reader();
+
+        while (reader.read() != 'q') {
+            // TODO: update screen
+            Thread.yield();
+        }
     }
 
     @Override
