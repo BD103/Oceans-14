@@ -33,6 +33,9 @@ tasks.jar {
         // Configure entrypoint when jar is run.
         attributes("Main-Class" to "edu.miamioh.cse201.oceans14.Main")
     }
+
+    // Bundle all dependencies into the jar.
+    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
 }
 
 tasks.register<Exec>("run") {
