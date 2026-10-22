@@ -14,6 +14,10 @@ import java.io.PrintWriter;
 public class RootView implements View {
     private Rect viewport;
 
+    private final DialogueView dialogueView = new DialogueView();
+    private final StatsView statsView = new StatsView();
+    private final CommandView commandView = new CommandView();
+
     public RootView() {}
 
     @Override
@@ -38,11 +42,19 @@ public class RootView implements View {
         writer.print('+');
         for (int i = 0; i < this.viewport.width() - 2; i++) writer.print('-');
         writer.print('+');
+
+        this.dialogueView.draw(term);
+        this.statsView.draw(term);
+        this.commandView.draw(term);
     }
 
     @Override
     public void computeViewport(Rect screenViewport) {
         // This view expands to the entire screen, so we don't modify anything.
         this.viewport = screenViewport;
+
+        this.dialogueView.computeViewport(this.viewport);
+        this.statsView.computeViewport(this.viewport);
+        this.commandView.computeViewport(this.viewport);
     }
 }
