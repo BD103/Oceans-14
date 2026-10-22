@@ -6,9 +6,10 @@ import java.util.Set;
 
 public class GameState {
 
+    // TODO alter these to be in line with the game design.
     // Starting values for the game.
     private static final int STARTING_CHIPS = 500;
-    private static final String STARTING_ROOM = "entrance";
+    private static final String STARTING_ROOM = "entrance_room";
 
     // Current game state
     private static int chipCount = STARTING_CHIPS;
@@ -96,14 +97,8 @@ public class GameState {
         return Set.copyOf(inventory);
     }
 
-    /**
-     * Validates if a given item exists in GameWorlds registry of items.
-     * Useful to ensure a valid item has been entered.
-     * @param itemID the item to validate the existence of.
-     * @return true if the item exists, false if not.
-     */
     public static boolean itemIsValid(String itemID) {
-        // TODO this method will handle validation that an item exists in the registry.
+        // TODO This is a placeholder till I add such a function in the GameWorld class.
         // Should throw exception if the item does not exist.
         return true;
     }

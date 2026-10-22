@@ -36,7 +36,7 @@ public interface Interactable {
     /**
      * Checks to see if the proposed action ID is a valid action for the current Interactable
      * @param proposedActionID the ID of the action that you want to perform.
-     * @return True if the given action is valid, false if the action doesn't exist or can be performed.
+     * @return True if the given action is valid, false if the action doesn't exist or can't be performed.
      */
     Boolean hasValidAction(String proposedActionID);
 

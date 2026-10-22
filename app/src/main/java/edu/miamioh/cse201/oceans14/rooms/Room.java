@@ -1,5 +1,6 @@
 package edu.miamioh.cse201.oceans14.rooms;
 
+import edu.miamioh.cse201.oceans14.engine.ActionOption;
 import edu.miamioh.cse201.oceans14.engine.Interactable;
 
 /**
@@ -18,6 +19,7 @@ public abstract class Room implements Interactable {
      */
     protected Room(String id, String name) {
         if (id == null || name == null) {
+            // TODO ensure the ID doesn't already exist
             throw new NullPointerException("Neither ID nor Name can be null");
         }
         this.id = id;
@@ -40,6 +42,13 @@ public abstract class Room implements Interactable {
         return name;
     }
 
-
+    public Boolean hasValidAction(String actionID) {
+        for (ActionOption action : getAvailableActions()) {
+            if (action.id().equals(actionID)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
