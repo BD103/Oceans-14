@@ -16,6 +16,8 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.jline)
+
     // Use JUnit test framework.
     testImplementation(libs.junit)
 }
