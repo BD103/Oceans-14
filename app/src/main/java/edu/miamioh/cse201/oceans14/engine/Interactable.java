@@ -11,11 +11,16 @@ import java.util.List;
 public interface Interactable {
     /**
      * Returns a description of the current interaction
-     * @param state the current state of the game.
      * @return A string representing the description of the current action.
      */
 
-    String getDescription(GameState state);
+    String getDescription();
+
+    /**
+     * Gives the ID of the current interactable
+     * @return the ID of the current interactable.
+     */
+    String getID();
 
     /**
      * Returns the current list of available actions.
@@ -24,10 +29,16 @@ public interface Interactable {
      * Ex. if option = ActionOption("listen_to_gossip", "Listen to the secretaries gossip");
      *      option.id() -> "listen_to_gossip"
      *      option.label() -> "Listen to the secretaries gossip"
-     * @param state The current state of the game.
      * @return A list of ActionOption that represent possible actions.
      */
-    List<ActionOption> getAvailableActions(GameState state);
+    List<ActionOption> getAvailableActions();
+
+    /**
+     * Checks to see if the proposed action ID is a valid action for the current Interactable
+     * @param proposedActionID the ID of the action that you want to perform.
+     * @return True if the given action is valid, false if the action doesn't exist or can't be performed.
+     */
+    boolean hasValidAction(String proposedActionID);
 
     /**
      * Performs the given action and returns information about how to change the GameState.
@@ -39,9 +50,8 @@ public interface Interactable {
      *      Used when switching the focus on the interaction. Primarily for when a room
      *      needs to designate an Actor as the current top of the stack, or when changing rooms.
      * @param actionID The string ID of the interaction to run
-     * @param state The current state of the game.
      * @return InteractionResult which is a record containing the results of the action and how
      *          to modify the GameState.
      */
-    InteractionResult performAction(String actionID, GameState state);
+    InteractionResult performAction(String actionID);
 }
