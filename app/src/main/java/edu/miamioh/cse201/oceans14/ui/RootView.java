@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 public class RootView implements View {
     private Rect viewport;
 
+    // Child views
     private final DialogueView dialogueView = new DialogueView();
     private final StatsView statsView = new StatsView();
     private final CommandView commandView = new CommandView();
@@ -28,6 +29,7 @@ public class RootView implements View {
 
         int dialogue_stats_divider = this.viewport.width() * 2 / 3 + this.viewport.x();
 
+        // Draw the top horizontal border
         term.puts(Capability.cursor_address, this.viewport.y(), this.viewport.x());
         writer.print('+');
         for (int x = this.viewport.x() + 1; x < this.viewport.x() + this.viewport.width() - 1; x++) {
@@ -39,6 +41,7 @@ public class RootView implements View {
         }
         writer.print('+');
 
+        // Draw the left, middle, and right vertical borders surrounding the dialogue and stats views
         for (int y = this.viewport.y() + 1; y < this.viewport.y() + this.viewport.height() - 3; y++) {
             term.puts(Capability.cursor_address, y, this.viewport.x());
             writer.print('|');
@@ -48,6 +51,7 @@ public class RootView implements View {
             writer.print('|');
         }
 
+        // Draw the horizontal border separating the command view from the other two views
         term.puts(Capability.cursor_address, this.viewport.y() + this.viewport.height() - 3, this.viewport.x());
         writer.print('+');
         for (int x = this.viewport.x() + 1; x < this.viewport.x() + this.viewport.width() - 1; x++) {
@@ -59,11 +63,13 @@ public class RootView implements View {
         }
         writer.print('+');
 
+        // Draw the left and right vertical borders surrounding the command view
         term.puts(Capability.cursor_address, this.viewport.y() + this.viewport.height() - 2, this.viewport.x());
         writer.print('|');
         term.puts(Capability.cursor_address, this.viewport.y() + this.viewport.height() - 2, this.viewport.x() + this.viewport.width() - 1);
         writer.print('|');
 
+        // Draw the bottom horizontal border
         term.puts(Capability.cursor_address, this.viewport.y() + this.viewport.height() - 1, this.viewport.x());
         writer.print('+');
         for (int i = 0; i < this.viewport.width() - 2; i++) writer.print('-');

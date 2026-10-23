@@ -3,6 +3,9 @@ package edu.miamioh.cse201.oceans14.ui;
 import org.jline.terminal.Terminal;
 import org.jline.utils.InfoCmp.Capability;
 
+/**
+ * The command view, an input box where the player types commands.
+ */
 public class CommandView implements View {
     private Rect viewport;
 

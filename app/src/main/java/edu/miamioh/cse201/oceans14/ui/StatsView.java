@@ -5,6 +5,9 @@ import org.jline.utils.InfoCmp.Capability;
 
 import java.io.PrintWriter;
 
+/**
+ * The stats view, responsible for displaying player stats and inventory.
+ */
 public class StatsView implements View {
     private Rect viewport;
 

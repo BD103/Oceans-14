@@ -5,6 +5,9 @@ import org.jline.utils.InfoCmp;
 
 import java.io.PrintWriter;
 
+/**
+ * The dialogue view, responsible for displaying current and past game dialogue.
+ */
 public class DialogueView implements View {
     private Rect viewport;
 
