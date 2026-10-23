@@ -1,6 +1,7 @@
 package edu.miamioh.cse201.oceans14.ui;
 
 import org.jline.terminal.Terminal;
+import org.jline.utils.InfoCmp.Capability;
 
 public class CommandView implements View {
     private Rect viewport;
@@ -9,7 +10,8 @@ public class CommandView implements View {
 
     @Override
     public void draw(Terminal term) {
-        ViewDebugger.fillViewport(term, this.viewport);
+        term.puts(Capability.cursor_address, this.viewport.y(), this.viewport.x());
+        term.writer().print("> Command...");
     }
 
     @Override
