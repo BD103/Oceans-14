@@ -35,7 +35,7 @@ public class TemplateRoom extends Room {
     // TODO change the constructor
     public TemplateRoom() {
         // TODO change the ID and Name
-        super("entrance_room", "Casino Entrace");
+        super("room_id_to_replace", "Display Name");
     }
 
     /**

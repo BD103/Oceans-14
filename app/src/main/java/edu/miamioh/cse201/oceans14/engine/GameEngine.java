@@ -11,18 +11,15 @@ import java.util.Stack;
 public class GameEngine {
     // The current GameState including inventory, flags, and currentRoom
     // TODO delete me
-    private final GameState gameState;
     // The interaction stack which tracks what interactable is currently in control
     // along with tracking what interactable to return to after the current one is finished.
     private final Stack<Interactable> interactionStack;
 
     /**
      *  The constructor for the GameEngine. This is what will be used to initialize the backend.
-     * @param gameState the starting GameState. Good if we want to load a specific GameState.
      * @param startingRoom The room to start in, this is so GameEngine can initialize the InteractionStack.
      */
-    public GameEngine(GameState gameState, Interactable startingRoom) {
-        this.gameState = gameState;
+    public GameEngine(Interactable startingRoom) {
         this.interactionStack = new Stack<>();
 
         // Add the starting room to the interaction stack

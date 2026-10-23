@@ -6,6 +6,8 @@ import java.util.Set;
 
 public class GameState {
 
+    private GameState() {}
+
     // TODO alter these to be in line with the game design.
     // Starting values for the game.
     private static final int STARTING_CHIPS = 500;
@@ -70,7 +72,7 @@ public class GameState {
      * @throws IllegalArgumentException if the item doesn't exist in the registry
      */
     public static void addItem(String itemID) {
-        if (!itemIsValid(itemID)) {
+        if (!GameWorld.itemExists(itemID)) {
             throw new IllegalArgumentException("Item: " + itemID + " does not exist in the registry");
         }
         inventory.add(itemID);
@@ -83,7 +85,7 @@ public class GameState {
      * @throws IllegalArgumentException if the item doesn't exist in the registry
      */
     public static boolean removeItem(String itemID) {
-        if (!itemIsValid(itemID)) {
+        if (!GameWorld.itemExists(itemID)) {
             throw new IllegalArgumentException("Item: " + itemID + " does not exist in the registry");
         }
         return inventory.remove(itemID);
@@ -96,13 +98,6 @@ public class GameState {
     public static Set<String> getInventory() {
         return Set.copyOf(inventory);
     }
-
-    public static boolean itemIsValid(String itemID) {
-        // TODO This is a placeholder till I add such a function in the GameWorld class.
-        // Should throw exception if the item does not exist.
-        return true;
-    }
-
 
     // All Methods Dealing with the Current Room ----------------------------------------
 

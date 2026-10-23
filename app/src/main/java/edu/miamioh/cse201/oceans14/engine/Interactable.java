@@ -38,7 +38,7 @@ public interface Interactable {
      * @param proposedActionID the ID of the action that you want to perform.
      * @return True if the given action is valid, false if the action doesn't exist or can't be performed.
      */
-    Boolean hasValidAction(String proposedActionID);
+    boolean hasValidAction(String proposedActionID);
 
     /**
      * Performs the given action and returns information about how to change the GameState.

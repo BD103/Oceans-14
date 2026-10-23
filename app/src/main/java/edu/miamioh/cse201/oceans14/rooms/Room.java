@@ -42,7 +42,7 @@ public abstract class Room implements Interactable {
         return name;
     }
 
-    public Boolean hasValidAction(String actionID) {
+    public boolean hasValidAction(String actionID) {
         for (ActionOption action : getAvailableActions()) {
             if (action.id().equals(actionID)) {
                 return true;
