@@ -1,6 +1,9 @@
 package edu.miamioh.cse201.oceans14.ui;
 
 import org.jline.terminal.Terminal;
+import org.jline.utils.InfoCmp;
+
+import java.io.PrintWriter;
 
 public class DialogueView implements View {
     private Rect viewport;
@@ -9,7 +12,18 @@ public class DialogueView implements View {
 
     @Override
     public void draw(Terminal term) {
-        ViewDebugger.fillViewport(term, this.viewport);
+        PrintWriter writer = term.writer();
+
+        term.puts(InfoCmp.Capability.cursor_address, this.viewport.y(), this.viewport.x());
+        writer.print("> talk to Anthony");
+
+        term.puts(InfoCmp.Capability.cursor_address, this.viewport.y() + 2, this.viewport.x());
+        writer.print("Anthony: Hey, how's it going?");
+
+        for (int y = this.viewport.y(); y < this.viewport.y() + this.viewport.height(); y++) {
+            term.puts(InfoCmp.Capability.cursor_address, y, this.viewport.x() + this.viewport.width() - 1);
+            writer.print('@');
+        }
     }
 
     @Override
