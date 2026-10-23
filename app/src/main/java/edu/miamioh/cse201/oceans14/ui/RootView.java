@@ -23,8 +23,6 @@ public class RootView implements View {
     public void draw(Terminal term) {
         PrintWriter writer = term.writer();
 
-        term.puts(Capability.clear_screen);
-
         int dialogue_stats_divider = this.viewport.width() * 2 / 3 + this.viewport.x();
 
         // Draw the top horizontal border

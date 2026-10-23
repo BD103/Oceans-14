@@ -44,8 +44,7 @@ public class UI implements AutoCloseable {
         this.term.puts(Capability.enter_ca_mode);
 
         // Configure the root view (and all of its children) with the terminal's current size.
-        Size size = this.term.getSize();
-        this.rootView.computeViewport(new Rect(0, 0, size.getColumns(), size.getRows()));
+        this.computeViewport();
 
         // Track when the terminal is resized, so that the viewports can be recomputed next draw.
         this.term.handle(Terminal.Signal.WINCH, signal -> this.terminalResized = true);
@@ -62,18 +61,13 @@ public class UI implements AutoCloseable {
         NonBlockingReader reader = term.reader();
 
         // Draw the UI for the first time.
-        this.rootView.draw(this.term);
-        this.term.flush();
+        this.draw();
 
         while (reader.read(10) != 'q') {
             // When the terminal is resized, recompute viewports and redraw.
             if (this.terminalResized) {
-                Size size = this.term.getSize();
-                this.rootView.computeViewport(new Rect(0, 0, size.getColumns(), size.getRows()));
-
-                this.rootView.draw(this.term);
-                this.term.flush();
-
+                this.computeViewport();
+                this.draw();
                 this.terminalResized = false;
             }
         }
@@ -93,5 +87,25 @@ public class UI implements AutoCloseable {
         this.term.setAttributes(this.originalAttributes);
 
         this.term.close();
+    }
+
+    /**
+     * Computes the viewports of all views based on the terminal's current size.
+     * <p>
+     * This should be called before the root view is drawn for the first time, as well as whenever
+     * the terminal changes sizes.
+     */
+    private void computeViewport() {
+        Size size = this.term.getSize();
+        this.rootView.computeViewport(new Rect(0, 0, size.getColumns(), size.getRows()));
+    }
+
+    /**
+     * Draws the user interface to the terminal.
+     */
+    private void draw() {
+        this.term.puts(Capability.clear_screen);
+        this.rootView.draw(this.term);
+        this.term.flush();
     }
 }
