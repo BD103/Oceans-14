@@ -19,6 +19,7 @@ public class UI implements AutoCloseable {
     private final Terminal term;
     private final Attributes originalAttributes;
     private final RootView rootView;
+    private boolean terminalResized = false;
 
     public UI() throws IOException {
         this.term = TerminalBuilder.builder().system(true).devTty(true).build();
@@ -36,6 +37,9 @@ public class UI implements AutoCloseable {
 
         this.rootView = new RootView();
         this.rootView.computeViewport(screenViewport);
+
+        // Track when the terminal is resized, so that the viewports can be recomputed next draw.
+        this.term.handle(Terminal.Signal.WINCH, signal -> this.terminalResized = true);
     }
 
     public void run() throws IOException {
@@ -44,8 +48,17 @@ public class UI implements AutoCloseable {
 
         NonBlockingReader reader = term.reader();
 
-        while (reader.read() != 'q') {
-            // TODO: update screen
+        while (reader.read(10) != 'q') {
+            // When the terminal is resized, recompute viewports and redraw.
+            if (this.terminalResized) {
+                Size size = this.term.getSize();
+                Rect screenViewport = new Rect(0, 0, size.getColumns(), size.getRows());
+                this.rootView.computeViewport(screenViewport);
+                this.rootView.draw(this.term);
+                this.term.flush();
+                this.terminalResized = false;
+            }
+
             Thread.yield();
         }
     }
