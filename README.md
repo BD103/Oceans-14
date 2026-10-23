@@ -26,10 +26,12 @@ You can compile and run the project with the following command:
 
 ```bash
 # Linux or MacOS
-./gradlew run
+./gradlew jar
+java -jar app/build/libs/app.jar
 
 # Windows
-gradlew.bat run
+gradlew.bat jar
+java -jar app\build\libs\app.jar
 ```
 
 Some IDEs such as IntelliJ IDEA integrate directly with Gradle, and let you run the project using their UI rather than through the terminal.

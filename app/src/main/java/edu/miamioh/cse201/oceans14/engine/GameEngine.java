@@ -9,8 +9,6 @@ import java.util.Stack;
  * the front and back end.
  */
 public class GameEngine {
-    // The current GameState including inventory, flags, and currentRoom
-    // TODO delete me
     // The interaction stack which tracks what interactable is currently in control
     // along with tracking what interactable to return to after the current one is finished.
     private final Stack<Interactable> interactionStack;
