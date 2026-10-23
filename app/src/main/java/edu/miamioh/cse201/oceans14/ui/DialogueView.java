@@ -16,7 +16,7 @@ public class DialogueView implements View {
     public void computeViewport(Rect parentViewport) {
         int x = parentViewport.x() + 3;
         int y = parentViewport.y() + 1;
-        int width = parentViewport.width() * 2 / 3 - 6;
+        int width = parentViewport.width() * 2 / 3 - 5;
         int height = parentViewport.height() - 4;
 
         this.viewport = new Rect(x, y, width, height);
