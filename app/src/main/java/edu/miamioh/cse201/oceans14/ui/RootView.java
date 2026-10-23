@@ -19,8 +19,6 @@ public class RootView implements View {
     private final StatsView statsView = new StatsView();
     private final CommandView commandView = new CommandView();
 
-    public RootView() {}
-
     @Override
     public void draw(Terminal term) {
         PrintWriter writer = term.writer();

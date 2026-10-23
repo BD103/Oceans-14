@@ -11,8 +11,6 @@ import java.io.PrintWriter;
 public class DialogueView implements View {
     private Rect viewport;
 
-    public DialogueView() {}
-
     @Override
     public void draw(Terminal term) {
         PrintWriter writer = term.writer();

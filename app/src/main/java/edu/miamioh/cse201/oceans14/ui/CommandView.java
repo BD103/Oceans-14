@@ -9,8 +9,6 @@ import org.jline.utils.InfoCmp.Capability;
 public class CommandView implements View {
     private Rect viewport;
 
-    public CommandView() {}
-
     @Override
     public void draw(Terminal term) {
         term.puts(Capability.cursor_address, this.viewport.y(), this.viewport.x());

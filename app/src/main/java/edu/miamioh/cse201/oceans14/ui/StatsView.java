@@ -13,8 +13,6 @@ public class StatsView implements View {
 
     private final static String TITLE = "Ocean's 14";
 
-    public StatsView() {}
-
     @Override
     public void draw(Terminal term) {
         PrintWriter writer = term.writer();
