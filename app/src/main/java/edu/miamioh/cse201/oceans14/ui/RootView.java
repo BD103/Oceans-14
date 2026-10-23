@@ -26,17 +26,43 @@ public class RootView implements View {
 
         term.puts(Capability.clear_screen);
 
+        int dialogue_stats_divider = this.viewport.width() * 2 / 3 + this.viewport.x();
+
         term.puts(Capability.cursor_address, this.viewport.y(), this.viewport.x());
         writer.print('+');
-        for (int i = 0; i < this.viewport.width() - 2; i++) writer.print('-');
+        for (int x = this.viewport.x() + 1; x < this.viewport.x() + this.viewport.width() - 1; x++) {
+            if (x == dialogue_stats_divider) {
+                writer.print('+');
+            } else {
+                writer.print('-');
+            }
+        }
         writer.print('+');
 
-        for (int y = this.viewport.y() + 1; y < this.viewport.y() + this.viewport.height() - 1; y++) {
+        for (int y = this.viewport.y() + 1; y < this.viewport.y() + this.viewport.height() - 3; y++) {
             term.puts(Capability.cursor_address, y, this.viewport.x());
+            writer.print('|');
+            term.puts(Capability.cursor_address, y, dialogue_stats_divider);
             writer.print('|');
             term.puts(Capability.cursor_address, y, this.viewport.x() + this.viewport.width() - 1);
             writer.print('|');
         }
+
+        term.puts(Capability.cursor_address, this.viewport.y() + this.viewport.height() - 3, this.viewport.x());
+        writer.print('+');
+        for (int x = this.viewport.x() + 1; x < this.viewport.x() + this.viewport.width() - 1; x++) {
+            if (x == dialogue_stats_divider) {
+                writer.print('+');
+            } else {
+                writer.print('-');
+            }
+        }
+        writer.print('+');
+
+        term.puts(Capability.cursor_address, this.viewport.y() + this.viewport.height() - 2, this.viewport.x());
+        writer.print('|');
+        term.puts(Capability.cursor_address, this.viewport.y() + this.viewport.height() - 2, this.viewport.x() + this.viewport.width() - 1);
+        writer.print('|');
 
         term.puts(Capability.cursor_address, this.viewport.y() + this.viewport.height() - 1, this.viewport.x());
         writer.print('+');
