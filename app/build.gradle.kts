@@ -18,7 +18,9 @@ dependencies {
     implementation(libs.jline)
 
     // Use JUnit test framework.
-    testImplementation(libs.junit)
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platformlauncher)
 }
 
 java {
@@ -36,4 +38,8 @@ tasks.jar {
 
     // Bundle all dependencies into the jar.
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
