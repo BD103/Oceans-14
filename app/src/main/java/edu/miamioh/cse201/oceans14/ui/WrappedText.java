@@ -4,18 +4,39 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Takes a contiguous string and breaks it up into lines that do not exceed a max width.
+ */
 public class WrappedText implements Iterable<String> {
     private final String paragraph;
     private final List<Line> lines = new ArrayList<>();
 
-    public WrappedText(String paragraph, int maxWidth) {
+    /**
+     * Wraps a paragraph into lines.
+     *
+     * @param paragraph The string to wrap. It should not contain any newline characters ('\n').
+     * @param maxWidth The maximum width of a line, must be 2 or greater.
+     * @throws IllegalArgumentException If maxWidth is less than 2.
+     */
+    public WrappedText(String paragraph, int maxWidth) throws IllegalArgumentException {
         this.paragraph = paragraph;
-        this.calculateBreaks(maxWidth);
+        this.calculateLines(maxWidth);
     }
 
-    private void calculateBreaks(int maxWidth) {
+    /**
+     * Calculates line breaks and populates {@link lines} with the results.
+     *
+     * @param maxWidth The maximum width of a line.
+     * @throws IllegalArgumentException If maxWidth is less than 2.
+     */
+    private void calculateLines(int maxWidth) throws IllegalArgumentException {
+        if (maxWidth < 2) {
+            throw new IllegalArgumentException("Wrapped text max width was " + maxWidth + ", but must be 2 or greater");
+        }
+
         // There are two spans represented here. The span of the line being constructed,
-        // [lineStart, lineEndWordStart), and the span of the next word found, [lineEndWordStart, wordEnd).
+        // [lineStart, lineEndWordStart), and the span of the next word found,
+        // [lineEndWordStart, wordEnd).
         int lineStart = 0;
         int lineEndWordStart = 0;
         int wordEnd;
@@ -30,7 +51,8 @@ public class WrappedText implements Iterable<String> {
                 wordEnd = this.paragraph.length();
             }
 
-            // Next word is empty, we're reached the end of the paragraph. Add the last line and exit.
+            // Next word is empty, we're reached the end of the paragraph. Add the last line and
+            // exit.
             if (lineEndWordStart == wordEnd) {
                 lines.add(new Line(lineStart, lineEndWordStart, BreakKind.SOFT));
                 break;
