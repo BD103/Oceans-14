@@ -20,8 +20,22 @@ public class WrappedText implements Iterable<String> {
         int lineEndWordStart = 0;
         int wordEnd;
 
-        // Repeat until there are no spaces left in the paragraph.
-        while ((wordEnd = this.paragraph.indexOf(' ', lineEndWordStart + 1)) > 0) {
+        // Repeat until there are no more words that haven't been emitted as lines.
+        while (true) {
+            // Find where the next word ends by looking for the next space.
+            wordEnd = this.paragraph.indexOf(' ', lineEndWordStart + 1);
+
+            // If no space is found, the word spans to the end of the paragraph.
+            if (wordEnd < 0) {
+                wordEnd = this.paragraph.length();
+            }
+
+            // Next word is empty, we're reached the end of the paragraph. Add the last line and exit.
+            if (lineEndWordStart == wordEnd) {
+                lines.add(new Line(lineStart, lineEndWordStart, BreakKind.SOFT));
+                break;
+            }
+
             // If adding the word would cause the line to grow to long.
             if (wordEnd - lineStart > maxWidth) {
                 // If the word itself is longer than the max width, we need to insert a hard break.
@@ -40,7 +54,6 @@ public class WrappedText implements Iterable<String> {
                     lines.add(new Line(lineStart, lineEndWordStart, BreakKind.SOFT));
 
                     // Create new blank line, skipping the space.
-                    // TODO: handle multiple spaces
                     lineStart = lineEndWordStart + 1;
                 }
 
@@ -91,15 +104,5 @@ public class WrappedText implements Iterable<String> {
     private enum BreakKind {
         SOFT,
         HARD;
-    }
-
-    // TODO: remove
-    public static void main(String[] args) {
-        // TODO: test "A AB  ABC ABCDEF AB"
-        WrappedText wrapped = new WrappedText("A AB ABC ABCDEF AB ABCDEFGHIJKLMNOPQRSTUVWXYZ", 4);
-
-        for (String line : wrapped) {
-            System.out.println(line);
-        }
     }
 }
