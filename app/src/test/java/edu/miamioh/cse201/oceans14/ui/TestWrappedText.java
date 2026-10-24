@@ -15,7 +15,7 @@ public class TestWrappedText {
             "soft breaks, A AB ABC AB A ABCD A A A, 'A AB\nABC\nAB A\nABCD\nA A\nA', 4",
             "hard breaks, ABCDEFGHIJKLM, 'ABCD-\nEFGH-\nIJKLM', 5",
             "hanging hard break, A REALLYLONGWORD, 'A\nREALLY-\nLONGWO-\nRD', 7",
-            "much whitespace, A AAA   A  AAA     AA    AAAAA, 'A AAA\n  A \nAAA  \n  AA \n \nAAAAA', 5"
+            "much whitespace, A AAA   A  AA     AA    AAAAA, 'A AAA\nA  AA\nAA   \nAAAAA', 5"
     })
     void wrappedText(String _name, String input, String expected, int maxWidth) {
         WrappedText wrapped = new WrappedText(input, maxWidth);

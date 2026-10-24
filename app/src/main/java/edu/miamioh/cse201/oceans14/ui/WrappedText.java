@@ -77,6 +77,12 @@ public class WrappedText implements Iterable<String> {
 
                     // Create new blank line, skipping the space.
                     lineStart = lineEndWordStart + 1;
+
+                    // If there are multiple spaces, keep skipping forward until a non-space is
+                    // found, or we reach EOF.
+                    while (lineStart < this.paragraph.length() && this.paragraph.charAt(lineStart) == ' ') {
+                        lineStart++;
+                    }
                 }
 
                 lineEndWordStart = lineStart;
