@@ -38,15 +38,13 @@ public class TestWrappedText {
     private static String wrappedToString(WrappedText wrapped) {
         StringBuilder builder = new StringBuilder();
 
-        Iterator<String> it = wrapped.iterator();
-
-        if (it.hasNext()) {
-            builder.append(it.next());
+        if (wrapped.height() > 0) {
+            builder.append(wrapped.get(0));
         }
 
-        while (it.hasNext()) {
+        for (int i = 1; i < wrapped.height(); i++) {
             builder.append('\n');
-            builder.append(it.next());
+            builder.append(wrapped.get(i));
         }
 
         return builder.toString();

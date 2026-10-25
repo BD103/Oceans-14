@@ -1,13 +1,12 @@
 package edu.miamioh.cse201.oceans14.ui;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
  * Takes a contiguous string and breaks it up into lines that do not exceed a max width.
  */
-public class WrappedText implements Iterable<String> {
+public class WrappedText {
     private final String paragraph;
     private final List<Line> lines = new ArrayList<>();
 
@@ -93,27 +92,21 @@ public class WrappedText implements Iterable<String> {
         }
     }
 
-    @Override
-    public Iterator<String> iterator() {
-        return new Iterator<>() {
-            private final Iterator<Line> it = lines.iterator();
+    /**
+     * @return The number of lines in the wrapped text.
+     */
+    public int height() {
+        return this.lines.size();
+    }
 
-            @Override
-            public boolean hasNext() {
-                return it.hasNext();
-            }
-
-            @Override
-            public String next() {
-                Line line = it.next();
-                String substring = paragraph.substring(line.start, line.end);
-
-                return switch (line.kind) {
-                    case SOFT -> substring;
-                    case HARD -> substring + "-";
-                };
-            }
-        };
+    /**
+     *
+     * @param index The line number to get.
+     * @return The stringified line.
+     * @throws IndexOutOfBoundsException If index is less than 0 or >= {@link height}.
+     */
+    public String get(int index) throws IndexOutOfBoundsException {
+        return this.lines.get(index).toString(this.paragraph);
     }
 
     /**
@@ -123,7 +116,15 @@ public class WrappedText implements Iterable<String> {
      * @param end The index (exclusive) of the paragraph where the line ends.
      * @param kind Whether the line ends in a soft or hard break.
      */
-    private record Line(int start, int end, BreakKind kind) {}
+    private record Line(int start, int end, BreakKind kind) {
+        public String toString(String paragraph) {
+            String substring = paragraph.substring(this.start, this.end);
+            return switch (this.kind) {
+                case SOFT -> substring;
+                case HARD -> substring + "-";
+            };
+        }
+    }
 
     /**
      * Represents whether a line ends in a soft break (separated by whitespace) or a hard break
