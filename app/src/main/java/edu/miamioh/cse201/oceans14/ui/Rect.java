@@ -33,4 +33,26 @@ public record Rect(int x, int y, int width, int height) {
                 new Rect(this.x + leftWidth, this.y, rightWidth, this.height),
         };
     }
+
+    /**
+     * Shrinks the viewport with a horizontal margin.
+     * <p>
+     * For example, if a viewport's x was 0 and width was 10, using a margin of 2 would result in
+     * a new viewport whose x is 2 and width is 6.
+     *
+     * @param margin The amount of cells on the left and right to shrink by.
+     * @return The smaller viewport with the margin.
+     * @throws ViewportTooSmallException If creating the margins would result in a viewport whose
+     *                                   width is less than 0.
+     */
+    public Rect marginHorizontal(int margin) throws ViewportTooSmallException {
+        int x = this.x + margin;
+        int width = this.width - margin - margin;
+
+        if (width < 0) {
+            throw new ViewportTooSmallException();
+        }
+
+        return new Rect(x, this.y, width, this.height);
+    }
 }

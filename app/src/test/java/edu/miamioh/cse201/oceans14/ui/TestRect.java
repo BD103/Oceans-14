@@ -53,4 +53,25 @@ public class TestRect {
             );
         }
     }
+
+    @Nested
+    class MarginHorizontal {
+        @Test
+        void one() throws ViewportTooSmallException {
+            Rect input = new Rect(5, 2, 10, 1);
+            Assertions.assertEquals(new Rect(6, 2, 8, 1), input.marginHorizontal(1));
+        }
+
+        @Test
+        void widthBecomesZero() throws ViewportTooSmallException {
+            Rect input = new Rect(0, 0, 8, 1);
+            Assertions.assertEquals(new Rect(4, 0, 0, 1), input.marginHorizontal(4));
+        }
+
+        @Test
+        void marginTooLarge() {
+            Rect input = new Rect(0, 0, 4, 1);
+            Assertions.assertThrows(ViewportTooSmallException.class, () -> input.marginHorizontal(3));
+        }
+    }
 }
