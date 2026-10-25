@@ -8,11 +8,13 @@ import org.jline.utils.InfoCmp.Capability;
  */
 public class CommandView implements View {
     private Rect viewport;
+    // TODO: Replace this sample input with actual user-typed input.
+    private final OverflowText input = new OverflowText("> Enter a command here", 20);
 
     @Override
     public void draw(Terminal term) {
         term.puts(Capability.cursor_address, this.viewport.y(), this.viewport.x());
-        term.writer().print("> Command...");
+        term.writer().print(this.input);
     }
 
     @Override
@@ -23,5 +25,7 @@ public class CommandView implements View {
         int height = 1;
 
         this.viewport = new Rect(x, y, width, height);
+
+        this.input.resize(width);
     }
 }
