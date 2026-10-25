@@ -57,7 +57,7 @@ public class TestRect {
     @Nested
     class MarginHorizontal {
         @Test
-        void one() throws ViewportTooSmallException {
+        void basic() throws ViewportTooSmallException {
             Rect input = new Rect(5, 2, 10, 1);
             Assertions.assertEquals(new Rect(6, 2, 8, 1), input.marginHorizontal(1));
         }
@@ -72,6 +72,27 @@ public class TestRect {
         void marginTooLarge() {
             Rect input = new Rect(0, 0, 4, 1);
             Assertions.assertThrows(ViewportTooSmallException.class, () -> input.marginHorizontal(3));
+        }
+    }
+
+    @Nested
+    class MarginVertical {
+        @Test
+        void basic() throws ViewportTooSmallException {
+            Rect input = new Rect(0, 1, 1, 5);
+            Assertions.assertEquals(new Rect(0, 3, 1, 1), input.marginVertical(2));
+        }
+
+        @Test
+        void heightBecomesZero() throws ViewportTooSmallException {
+            Rect input = new Rect(10, 0, 5, 2);
+            Assertions.assertEquals(new Rect(10, 1, 5, 0), input.marginVertical(1));
+        }
+
+        @Test
+        void marginTooLarge() {
+            Rect input = new Rect(0, 0, 20, 1);
+            Assertions.assertThrows(ViewportTooSmallException.class, () -> input.marginVertical(3));
         }
     }
 }
