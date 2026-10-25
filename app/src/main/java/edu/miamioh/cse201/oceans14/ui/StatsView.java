@@ -4,6 +4,7 @@ import org.jline.terminal.Terminal;
 import org.jline.utils.InfoCmp.Capability;
 
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * The stats view, responsible for displaying player stats and inventory.
@@ -11,24 +12,32 @@ import java.io.PrintWriter;
 public class StatsView implements View {
     private Rect viewport;
 
-    private final static String TITLE = "Ocean's 14";
+    private final OverflowText title = new OverflowText("Ocean's 14", 20);
+    private final OverflowText cash = new OverflowText("Cash: $0 :(", 20);
+    private final OverflowText inventory = new OverflowText("Inventory:", 20);
+    private final List<OverflowText> inventoryList = List.of(
+            new OverflowText("- 1 Screwdriver", 20),
+            new OverflowText("- 1 Lucky Rock", 20)
+    );
 
     @Override
     public void draw(Terminal term) {
         PrintWriter writer = term.writer();
 
-        term.puts(Capability.cursor_address, this.viewport.y(), (this.viewport.width() / 2) - (TITLE.length() / 2) + this.viewport.x());
-        writer.print(TITLE);
+        term.puts(Capability.cursor_address, this.viewport.y(), (this.viewport.width() / 2) - (title.toString().length() / 2) + this.viewport.x());
+        writer.print(title);
 
         term.puts(Capability.cursor_address, this.viewport.y() + 2, this.viewport.x());
-        writer.print("Cash: $0 :(");
+        writer.print(cash);
 
         term.puts(Capability.cursor_address, this.viewport.y() + 4, this.viewport.x());
-        writer.print("Inventory:");
-        term.puts(Capability.cursor_address, this.viewport.y() + 5, this.viewport.x());
-        writer.print("- 1 Screwdriver");
-        term.puts(Capability.cursor_address, this.viewport.y() + 6, this.viewport.x());
-        writer.print("- 1 Lucky Rock");
+        writer.print(inventory);
+
+        int i = 0;
+        for (int y = this.viewport.y() + 5; i < inventoryList.size() && y < this.viewport.y() + this.viewport.width(); i++, y++) {
+            term.puts(Capability.cursor_address, y, this.viewport.x());
+            writer.print(inventoryList.get(i));
+        }
     }
 
     @Override
@@ -39,5 +48,10 @@ public class StatsView implements View {
         int height = parentViewport.height() - 4;
 
         this.viewport = new Rect(x, y, width, height);
+
+        this.title.resize(width);
+        this.cash.resize(width);
+        this.inventory.resize(width);
+        this.inventoryList.forEach(t -> t.resize(width));
     }
 }
