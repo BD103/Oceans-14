@@ -12,13 +12,11 @@ import java.util.List;
  */
 public class DialogueView implements View {
     private Rect viewport;
-    private final List<WrappedText> entries = new ArrayList<>();
-
-    DialogueView() {
-        // TODO: Remove sample dialogue once actual dialogue can be emitted by the game.
-        entries.add(new WrappedText("> talk to Anthony", 20));
-        entries.add(new WrappedText("Anthony: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at mauris elit. Vivamus at eleifend nisl. Curabitur viverra eget enim eget luctus. Aenean mollis lorem a hendrerit imperdiet. Ut venenatis ante non diam imperdiet laoreet. Suspendisse feugiat blandit ex. Donec vestibulum tortor ut ex auctor faucibus. Morbi egestas nulla nunc, ut rhoncus nunc porttitor ac. Donec sit amet justo venenatis, tristique eros vel, tempus urna.", 20));
-    }
+    // TODO: Remove sample dialogue once actual dialogue can be emitted by the game.
+    private final List<WrappedText> entries = List.of(
+            new WrappedText("> talk to Anthony", 20),
+            new WrappedText("Anthony: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at mauris elit. Vivamus at eleifend nisl. Curabitur viverra eget enim eget luctus. Aenean mollis lorem a hendrerit imperdiet. Ut venenatis ante non diam imperdiet laoreet. Suspendisse feugiat blandit ex. Donec vestibulum tortor ut ex auctor faucibus. Morbi egestas nulla nunc, ut rhoncus nunc porttitor ac. Donec sit amet justo venenatis, tristique eros vel, tempus urna.", 20)
+    );
 
     @Override
     public void draw(Terminal term) {
