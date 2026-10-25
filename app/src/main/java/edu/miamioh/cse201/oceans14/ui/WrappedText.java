@@ -19,7 +19,7 @@ public class WrappedText {
      */
     public WrappedText(String paragraph, int maxWidth) throws IllegalArgumentException {
         this.paragraph = paragraph;
-        this.calculateLines(maxWidth);
+        this.resize(maxWidth);
     }
 
     /**
@@ -28,10 +28,12 @@ public class WrappedText {
      * @param maxWidth The maximum width of a line.
      * @throws IllegalArgumentException If maxWidth is less than 2.
      */
-    private void calculateLines(int maxWidth) throws IllegalArgumentException {
+    public void resize(int maxWidth) throws IllegalArgumentException {
         if (maxWidth < 2) {
             throw new IllegalArgumentException("Wrapped text max width was " + maxWidth + ", but must be 2 or greater");
         }
+
+        this.lines.clear();
 
         // There are two spans represented here. The span of the line being constructed,
         // [lineStart, lineEndWordStart), and the span of the next word found,
