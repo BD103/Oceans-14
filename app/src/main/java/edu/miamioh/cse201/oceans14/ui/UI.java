@@ -30,6 +30,9 @@ public class UI implements AutoCloseable {
     /** Set to true when the terminal is resized, signals that the UI should be redrawn. */
     private boolean terminalResized = false;
 
+    /** Set to true when computing viewports fails with {@link ViewportTooSmallException}. */
+    private boolean terminalTooSmall = false;
+
     public UI() throws IOException {
         // Connect to this program's system terminal. `devTty` lets us still draw to the terminal
         // on POSIX systems, even when this program's stdin / stdout is piped.
@@ -97,8 +100,13 @@ public class UI implements AutoCloseable {
      * the terminal changes sizes.
      */
     private void computeViewport() {
-        Size size = this.term.getSize();
-        this.rootView.computeViewport(new Rect(0, 0, size.getColumns(), size.getRows()));
+        try {
+            Size size = this.term.getSize();
+            this.rootView.computeViewport(new Rect(0, 0, size.getColumns(), size.getRows()));
+            this.terminalTooSmall = false;
+        } catch (ViewportTooSmallException e) {
+            this.terminalTooSmall = true;
+        }
     }
 
     /**
@@ -106,7 +114,13 @@ public class UI implements AutoCloseable {
      */
     private void draw() {
         this.term.puts(Capability.clear_screen);
-        this.rootView.draw(this.term);
+
+        if (this.terminalTooSmall) {
+            this.term.writer().print("\033[31mThe terminal is too small to display the game, please increase its size.\033[0m");
+        } else {
+            this.rootView.draw(this.term);
+        }
+
         this.term.flush();
     }
 }

@@ -24,6 +24,7 @@ public interface View {
      * has resized.
      *
      * @param parentViewport The viewport of the parent view.
+     * @throws ViewportTooSmallException If the viewport is too small to draw the view.
      */
-    void computeViewport(Rect parentViewport);
+    void computeViewport(Rect parentViewport) throws ViewportTooSmallException;
 }
