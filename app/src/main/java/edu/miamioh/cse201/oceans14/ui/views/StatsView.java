@@ -1,5 +1,8 @@
-package edu.miamioh.cse201.oceans14.ui;
+package edu.miamioh.cse201.oceans14.ui.views;
 
+import edu.miamioh.cse201.oceans14.ui.OverflowText;
+import edu.miamioh.cse201.oceans14.ui.Rect;
+import edu.miamioh.cse201.oceans14.ui.View;
 import org.jline.terminal.Terminal;
 import org.jline.utils.InfoCmp.Capability;
 
