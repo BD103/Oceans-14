@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 public class TestRect {
     @Nested
-    class SplitHorizontal {
+    class SplitHorizontalRatio {
         @Test
         void half() {
             Rect input = new Rect(1, 1, 4, 2);
@@ -46,10 +46,69 @@ public class TestRect {
         @Test
         void invalidRatio() {
             Rect input = new Rect(0, 0, 10, 10);
-
             Assertions.assertAll(
                     () -> Assertions.assertThrows(IllegalArgumentException.class, () -> input.splitHorizontal(-1)),
                     () -> Assertions.assertThrows(IllegalArgumentException.class, () -> input.splitHorizontal(2))
+            );
+        }
+    }
+
+    @Nested
+    class SplitVerticalHeight {
+        @Test
+        void half() throws ViewportTooSmallException {
+            Rect input = new Rect(0, 1, 4, 4);
+            Assertions.assertArrayEquals(
+                    new Rect[]{
+                            new Rect(0, 1, 4, 2),
+                            new Rect(0, 3, 4, 2),
+                    },
+                    input.splitVertical(2)
+            );
+        }
+
+        @Test
+        void secondIsTwoTall() throws ViewportTooSmallException {
+            Rect input = new Rect(0, 0, 2, 10);
+            Assertions.assertArrayEquals(
+                    new Rect[]{
+                            new Rect(0, 0, 2, 8),
+                            new Rect(0, 8, 2, 2),
+                    },
+                    input.splitVertical(input.height() - 2)
+            );
+        }
+
+        @Test
+        void onlyTop() throws ViewportTooSmallException {
+            Rect input = new Rect(5, 4, 5, 4);
+            Assertions.assertArrayEquals(
+                    new Rect[]{
+                            new Rect(5, 4, 5, 4),
+                            new Rect(5, 8, 5, 0),
+                    },
+                    input.splitVertical(4)
+            );
+        }
+
+        @Test
+        void onlyBottom() throws ViewportTooSmallException {
+            Rect input = new Rect(5, 4, 5, 4);
+            Assertions.assertArrayEquals(
+                    new Rect[]{
+                            new Rect(5, 4, 5, 0),
+                            new Rect(5, 4, 5, 4),
+                    },
+                    input.splitVertical(0)
+            );
+        }
+
+        @Test
+        void invalidHeight() {
+            Rect input = new Rect(0, 0, 2, 2);
+            Assertions.assertAll(
+                    () -> Assertions.assertThrows(ViewportTooSmallException.class, () -> input.splitVertical(-1)),
+                    () -> Assertions.assertThrows(ViewportTooSmallException.class, () -> input.splitVertical(3))
             );
         }
     }

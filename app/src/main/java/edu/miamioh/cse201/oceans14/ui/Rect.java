@@ -35,6 +35,25 @@ public record Rect(int x, int y, int width, int height) {
     }
 
     /**
+     * Splits the viewport vertically by a certain number of cells.
+     *
+     * @param height How tall the first viewport should be.
+     * @return An array of two viewports, where the first is the specified height and the second
+     *         takes up the remaining space.
+     * @throws ViewportTooSmallException If height is less than zero or greater than the height of this viewport.
+     */
+    public Rect[] splitVertical(int height) throws ViewportTooSmallException {
+        if (height < 0 || height > this.height) {
+            throw new ViewportTooSmallException();
+        }
+
+        return new Rect[] {
+                new Rect(this.x, this.y, this.width, height),
+                new Rect(this.x, this.y + height, this.width, this.height - height),
+        };
+    }
+
+    /**
      * Shrinks the viewport with a horizontal margin.
      * <p>
      * For example, if a viewport's x was 0 and width was 10, using a margin of 2 would result in
