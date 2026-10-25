@@ -1,8 +1,6 @@
 package edu.miamioh.cse201.oceans14.ui.views;
 
-import edu.miamioh.cse201.oceans14.ui.OverflowText;
-import edu.miamioh.cse201.oceans14.ui.Rect;
-import edu.miamioh.cse201.oceans14.ui.View;
+import edu.miamioh.cse201.oceans14.ui.*;
 import org.jline.terminal.Terminal;
 import org.jline.utils.InfoCmp.Capability;
 
@@ -21,14 +19,11 @@ public class CommandView implements View {
     }
 
     @Override
-    public void computeViewport(Rect parentViewport) {
-        int x = parentViewport.x() + 3;
-        int y = parentViewport.y() + parentViewport.height() - 2;
-        int width = parentViewport.width() - 6;
-        int height = 1;
+    public void computeViewport(Rect parentViewport) throws ViewportTooSmallException {
+        this.viewport = parentViewport.splitVertical(parentViewport.height() - 3)[1]
+                .marginHorizontal(3)
+                .marginVertical(1);
 
-        this.viewport = new Rect(x, y, width, height);
-
-        this.input.resize(width);
+        this.input.resize(this.viewport.width());
     }
 }

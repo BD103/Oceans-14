@@ -1,8 +1,6 @@
 package edu.miamioh.cse201.oceans14.ui.views;
 
-import edu.miamioh.cse201.oceans14.ui.OverflowText;
-import edu.miamioh.cse201.oceans14.ui.Rect;
-import edu.miamioh.cse201.oceans14.ui.View;
+import edu.miamioh.cse201.oceans14.ui.*;
 import org.jline.terminal.Terminal;
 import org.jline.utils.InfoCmp.Capability;
 
@@ -44,17 +42,15 @@ public class StatsView implements View {
     }
 
     @Override
-    public void computeViewport(Rect parentViewport) {
-        int x = parentViewport.width() * 2 / 3 + 3;
-        int y = parentViewport.y() + 1;
-        int width = parentViewport.width() - x - 3;
-        int height = parentViewport.height() - 4;
+    public void computeViewport(Rect parentViewport) throws ViewportTooSmallException {
+        this.viewport = parentViewport.splitHorizontal(2.0 / 3.0)[1]
+                .splitVertical(parentViewport.height() - 3)[0]
+                .marginHorizontal(3)
+                .marginVertical(1);
 
-        this.viewport = new Rect(x, y, width, height);
-
-        this.title.resize(width);
-        this.cash.resize(width);
-        this.inventory.resize(width);
-        this.inventoryList.forEach(t -> t.resize(width));
+        this.title.resize(this.viewport.width());
+        this.cash.resize(this.viewport.width());
+        this.inventory.resize(this.viewport.width());
+        this.inventoryList.forEach(t -> t.resize(this.viewport.width()));
     }
 }

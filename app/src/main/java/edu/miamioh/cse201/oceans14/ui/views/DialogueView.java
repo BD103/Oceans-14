@@ -1,8 +1,6 @@
 package edu.miamioh.cse201.oceans14.ui.views;
 
-import edu.miamioh.cse201.oceans14.ui.Rect;
-import edu.miamioh.cse201.oceans14.ui.View;
-import edu.miamioh.cse201.oceans14.ui.WrappedText;
+import edu.miamioh.cse201.oceans14.ui.*;
 import org.jline.terminal.Terminal;
 import org.jline.utils.InfoCmp;
 
@@ -52,15 +50,13 @@ public class DialogueView implements View {
     }
 
     @Override
-    public void computeViewport(Rect parentViewport) {
-        int x = parentViewport.x() + 3;
-        int y = parentViewport.y() + 1;
-        int width = parentViewport.width() * 2 / 3 - 5;
-        int height = parentViewport.height() - 4;
-
-        this.viewport = new Rect(x, y, width, height);
+    public void computeViewport(Rect parentViewport) throws ViewportTooSmallException {
+        this.viewport = parentViewport.splitHorizontal(2.0 / 3.0)[0]
+                .splitVertical(parentViewport.height() - 3)[0]
+                .marginHorizontal(3)
+                .marginVertical(1);
 
         // Resize dialogue entries.
-        this.entries.forEach(t -> t.resize(width - 2));
+        this.entries.forEach(t -> t.resize(this.viewport.width() - 2));
     }
 }

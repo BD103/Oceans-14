@@ -2,6 +2,7 @@ package edu.miamioh.cse201.oceans14.ui.views;
 
 import edu.miamioh.cse201.oceans14.ui.Rect;
 import edu.miamioh.cse201.oceans14.ui.View;
+import edu.miamioh.cse201.oceans14.ui.ViewportTooSmallException;
 import org.jline.terminal.Terminal;
 import org.jline.utils.InfoCmp.Capability;
 
@@ -79,7 +80,7 @@ public class RootView implements View {
     }
 
     @Override
-    public void computeViewport(Rect screenViewport) {
+    public void computeViewport(Rect screenViewport) throws ViewportTooSmallException {
         // This view expands to the entire screen, so we don't modify anything.
         this.viewport = screenViewport;
 
