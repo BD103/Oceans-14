@@ -1,5 +1,3 @@
-import org.gradle.internal.jvm.Jvm
-
 // This file describes how to build the Java project.
 // For more details, see <https://docs.gradle.org/9.8.1/userguide/building_java_projects.html>.
 
@@ -42,4 +40,10 @@ tasks.jar {
 
 tasks.test {
     useJUnitPlatform()
+
+    // Track the `BLESS` environmental variable. Used to invalidate the Gradle cache when `BLESS`
+    // is changed.
+    inputs.property("bless") {
+        System.getenv("BLESS") ?: "0"
+    }
 }
