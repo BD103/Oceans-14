@@ -1,11 +1,13 @@
 package edu.miamioh.cse201.oceans14.ui;
 
+import edu.miamioh.cse201.oceans14.ui.input.CommandBuffer;
+import edu.miamioh.cse201.oceans14.ui.input.Input;
+import edu.miamioh.cse201.oceans14.ui.input.InputParser;
 import org.jline.terminal.Attributes;
 import org.jline.terminal.Size;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.jline.utils.InfoCmp.Capability;
-import org.jline.utils.NonBlockingReader;
 
 import java.io.IOException;
 
@@ -24,10 +26,16 @@ public class UI implements AutoCloseable {
      */
     private final Attributes originalAttributes;
 
-    private final RootView rootView = new RootView();
+    private final InputParser parser;
+    private final CommandBuffer commandBuffer = new CommandBuffer();
+    private final RootView rootView = new RootView(this.commandBuffer);
 
-    /** Set to true when the terminal is resized, signals that the UI should be redrawn. */
-    private boolean terminalResized = false;
+    /**
+     * Set to true when the terminal is resized, signals that the UI should be redrawn.
+     */
+    private boolean computeViewportRequested = false;
+    private boolean drawRequested = false;
+    private boolean exitRequested = false;
 
     public UI() throws IOException {
         // Connect to this program's system terminal. `devTty` lets us still draw to the terminal
@@ -47,7 +55,10 @@ public class UI implements AutoCloseable {
         this.computeViewport();
 
         // Track when the terminal is resized, so that the viewports can be recomputed next draw.
-        this.term.handle(Terminal.Signal.WINCH, signal -> this.terminalResized = true);
+        this.term.handle(Terminal.Signal.WINCH, signal -> this.computeViewportRequested = true);
+
+        // Create a new parser to read terminal input.
+        this.parser = new InputParser(term.reader());
     }
 
     /**
@@ -58,17 +69,29 @@ public class UI implements AutoCloseable {
      * @throws IOException If trying to read input results in an error.
      */
     public void run() throws IOException {
-        NonBlockingReader reader = term.reader();
-
         // Draw the UI for the first time.
         this.draw();
 
-        while (reader.read(10) != 'q') {
-            // When the terminal is resized, recompute viewports and redraw.
-            if (this.terminalResized) {
+        while (true) {
+            this.processInput();
+
+            if (this.exitRequested) {
+                break;
+            }
+
+            // When the terminal is resized, recompute viewports.
+            if (this.computeViewportRequested) {
                 this.computeViewport();
+
+                // Recomputing viewports requires a redraw afterward.
+                this.drawRequested = true;
+
+                this.computeViewportRequested = false;
+            }
+
+            if (this.drawRequested) {
                 this.draw();
-                this.terminalResized = false;
+                this.drawRequested = false;
             }
         }
     }
@@ -107,5 +130,54 @@ public class UI implements AutoCloseable {
         this.term.puts(Capability.clear_screen);
         this.rootView.draw(this.term);
         this.term.flush();
+    }
+
+    /**
+     * Reads the user input, updating the {@link CommandBuffer} and requesting a re-draw as
+     * necessary.
+     *
+     * @throws IOException If reading from the terminal fails.
+     */
+    private void processInput() throws IOException {
+        Input input = parser.readAndParse();
+
+        // If no input, do nothing.
+        if (input == null) {
+            return;
+        }
+
+        // If a plain character, write it.
+        if (input instanceof Input.Character) {
+            this.commandBuffer.insert(((Input.Character) input).get());
+
+            // Changing command buffer requires `CommandView` to be redrawn.
+            this.drawRequested = true;
+
+            return;
+        }
+
+        // If a special input, process it.
+        if (input instanceof Input.Special) {
+            switch ((Input.Special) input) {
+                case ENTER -> {
+                    // TODO: sent buffer's contents to command parsing system
+                    this.commandBuffer.clear();
+                    this.drawRequested = true;
+                }
+                case DELETE -> {
+                    this.commandBuffer.delete();
+                    this.drawRequested = true;
+                }
+                case LEFT -> {
+                    this.commandBuffer.left();
+                    this.drawRequested = true;
+                }
+                case RIGHT -> {
+                    this.commandBuffer.right();
+                    this.drawRequested = true;
+                }
+                case EXIT -> this.exitRequested = true;
+            }
+        }
     }
 }

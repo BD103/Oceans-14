@@ -26,7 +26,7 @@ public class InputParser {
      * @return The parsed input, null if reading timed out or the input could not be parsed.
      * @throws IOException If reading from the terminal fails.
      */
-    public Input parse() throws IOException {
+    public Input readAndParse() throws IOException {
         int input = reader.read(READ_TIMEOUT);
 
         switch (input) {
