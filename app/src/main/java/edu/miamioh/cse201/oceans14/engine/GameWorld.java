@@ -66,9 +66,8 @@ public class GameWorld {
      * @throws IllegalArgumentException if the given room ID already exists
      */
     private static void registerRoom(Room room) {
-        if (!rooms.containsKey(room.getID())) {
-            rooms.put(room.getID(), room);
-        } else {
+        Room previous = rooms.putIfAbsent(room.getID(), room);
+        if (previous != null) {
             throw new IllegalArgumentException("Duplicate Room ID: " + room.getID());
         }
     }
@@ -79,9 +78,8 @@ public class GameWorld {
      * @throws IllegalArgumentException if the given actor ID already exists
      */
     private static void registerActor(Actor actor) {
-        if (!actors.containsKey(actor.getID())) {
-            actors.put(actor.getID(), actor);
-        } else {
+        Actor previous = actors.putIfAbsent(actor.getID(), actor);
+        if (previous != null) {
             throw new IllegalArgumentException("Duplicate Actor ID: " + actor.getID());
         }
     }
@@ -92,9 +90,8 @@ public class GameWorld {
      * @throws IllegalArgumentException if the given item ID already exists
      */
     private static void registerItem(Item item) {
-        if (!items.containsKey(item.id())) {
-            items.put(item.id(), item);
-        } else {
+        Item previous = items.putIfAbsent(item.id(), item);
+        if (previous != null) {
             throw new IllegalArgumentException("Duplicate Item ID: " + item.id());
         }
     }
@@ -108,11 +105,11 @@ public class GameWorld {
      * @throws IllegalArgumentException if the room ID does not exist
      */
     public static Room getRoom(String roomID) {
-        if (roomExists(roomID)) {
-            return rooms.get(roomID);
-        } else {
-            throw new IllegalArgumentException("No such room exists with ID: " + roomID);
+        Room room = rooms.get(roomID);
+        if (room == null) {
+            throw new IllegalArgumentException("So such room exists with ID: " + roomID);
         }
+        return room;
 
     }
 
@@ -123,11 +120,11 @@ public class GameWorld {
      * @throws IllegalArgumentException if the actor ID does not exist
      */
     public static Actor getActor(String actorID) {
-        if (actorExists(actorID)) {
-            return actors.get(actorID);
-        } else {
-            throw new IllegalArgumentException("No such actor exists with ID: " + actorID);
+        Actor actor = actors.get(actorID);
+        if (actor == null) {
+            throw new IllegalArgumentException("So such actor exists with ID: " + actorID);
         }
+        return actor;
     }
 
     /**
@@ -137,11 +134,11 @@ public class GameWorld {
      * @throws IllegalArgumentException if the item ID does not exist
      */
     public static Item getItem(String itemID) {
-        if (itemExists(itemID)) {
-            return items.get(itemID);
-        } else {
-            throw new IllegalArgumentException("No such item exists with ID: " + itemID);
+        Item item = items.get(itemID);
+        if (item == null) {
+            throw new IllegalArgumentException("So such item exists with ID: " + itemID);
         }
+        return item;
     }
 
     /**
@@ -169,6 +166,10 @@ public class GameWorld {
      */
     public static boolean itemExists(String itemID) {
         return items.containsKey(itemID);
+    }
+
+    public static boolean interactableExists(String interactableID) {
+        return roomExists(interactableID) || actorExists(interactableID);
     }
 
 
