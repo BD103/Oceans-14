@@ -36,7 +36,8 @@ public class InputParser {
             // CR (Carriage return)
             case 13:
                 return Input.Special.ENTER;
-            // DEL (Delete)
+            // BS (Backspace) or DEL (Delete)
+            case 8:
             case 127:
                 return Input.Special.DELETE;
             // EOF or Ctrl+C
@@ -63,25 +64,23 @@ public class InputParser {
     private Input parseESC() throws IOException {
         int input = reader.read(READ_TIMEOUT);
 
-        if (input == '[') {
-            return this.parseCSI();
+        if (input == 'O') {
+            return this.parseArrows();
         } else {
             return null;
         }
     }
 
     /**
-     * Parses the sequence after a CSI (Control Sequence Introducer, `ESC [`) is read.
-     *
-     * @see <a href="https://ghostty.org/docs/vt/concepts/sequences#csi">Control Sequences - CSI</a>
+     * Parses the sequence after the arrow sequence introducer (ESC O) is read.
      */
-    private Input parseCSI() throws IOException {
+    private Input parseArrows() throws IOException {
         int input = reader.read(READ_TIMEOUT);
 
         return switch (input) {
-            // ESC [ C
+            // ESC O C
             case 'C' -> Input.Special.RIGHT;
-            // ESC [ D
+            // ESC O D
             case 'D' -> Input.Special.LEFT;
             default -> null;
         };

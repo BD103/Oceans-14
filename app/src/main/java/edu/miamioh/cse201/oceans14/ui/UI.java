@@ -51,6 +51,10 @@ public class UI implements AutoCloseable {
         // up the user's main terminal history.
         this.term.puts(Capability.enter_ca_mode);
 
+        // Put the terminal in application mode. This ensures that both Windows and Unix input
+        // arrow keys using the same format (`\x1bOC` instead of `\x1b[C`, for example).
+        this.term.puts(Capability.keypad_xmit);
+
         // Configure the root view (and all of its children) with the terminal's current size.
         this.computeViewport();
 
@@ -103,6 +107,9 @@ public class UI implements AutoCloseable {
      */
     @Override
     public void close() throws IOException {
+        // Exit out of application mode.
+        this.term.puts(Capability.keypad_local);
+
         // Exit the alternate screen, restore the original terminal screen.
         this.term.puts(Capability.exit_ca_mode);
 
