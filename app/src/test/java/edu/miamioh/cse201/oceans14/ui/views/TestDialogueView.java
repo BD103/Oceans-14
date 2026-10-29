@@ -11,22 +11,22 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(TermSnapshotExtension.class)
 public class TestDialogueView {
     @Test
-    void draw(@TermSnapshot Terminal term) {
+    void draw(@TermSnapshot(width = 50, height = 20) Terminal term) {
         Size size = term.getSize();
-        Rect parentViewport = new Rect(0, 0, size.getColumns(), size.getRows());
+        Rect viewport = new Rect(0, 0, size.getColumns(), size.getRows());
 
         DialogueView view = new DialogueView();
-        view.computeViewport(parentViewport);
+        view.resize(viewport);
         view.draw(term);
     }
 
     @Test
-    void drawTooSmall(@TermSnapshot(width = 44, height = 8) Terminal term) {
+    void drawTooSmall(@TermSnapshot(width = 25, height = 8) Terminal term) {
         Size size = term.getSize();
-        Rect parentViewport = new Rect(0, 0, size.getColumns(), size.getRows());
+        Rect viewport = new Rect(0, 0, size.getColumns(), size.getRows());
 
         DialogueView view = new DialogueView();
-        view.computeViewport(parentViewport);
+        view.resize(viewport);
         view.draw(term);
     }
 }
