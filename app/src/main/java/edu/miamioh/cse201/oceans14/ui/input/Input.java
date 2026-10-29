@@ -7,11 +7,11 @@ package edu.miamioh.cse201.oceans14.ui.input;
  * numbers, and symbols with {@link Character}, or they represent special actions with
  * {@link Special}.
  */
-public interface Input {
+public sealed interface Input {
     /**
      * A literal character input, such as the letter 'A' or the number '3'.
      */
-    class Character implements Input {
+    final class Character implements Input {
         private final char c;
 
         public Character(char c) {
@@ -20,6 +20,15 @@ public interface Input {
 
         public char get() {
             return this.c;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof Character) {
+                return this.c == ((Character)obj).c;
+            } else {
+                return false;
+            }
         }
     }
 
