@@ -3,66 +3,70 @@ package edu.miamioh.cse201.oceans14.ui;
 import edu.miamioh.cse201.oceans14.ui.input.CommandBuffer;
 import org.jline.terminal.Size;
 import org.jline.terminal.Terminal;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TermSnapshotExtension.class)
 public class TestCommandView {
-    @Test
-    void drawEmpty(@TermSnapshot Terminal term) {
-        Size size = term.getSize();
-        Rect parentViewport = new Rect(0, 0, size.getColumns(), size.getRows());
+    private Terminal term;
+    private Rect parentViewport;
+    private CommandBuffer buffer;
 
-        CommandView view = new CommandView(new CommandBuffer());
-        view.computeViewport(parentViewport);
-        view.draw(term);
+    @BeforeEach
+    void beforeEach(@TermSnapshot Terminal term) {
+        this.term = term;
+
+        Size size = term.getSize();
+        this.parentViewport = new Rect(0, 0, size.getColumns(), size.getRows());
+
+        this.buffer = new CommandBuffer();
     }
 
     @Test
-    void drawTooSmall(@TermSnapshot(width = 10, height = 2) Terminal term) {
-        Size size = term.getSize();
-        Rect parentViewport = new Rect(0, 0, size.getColumns(), size.getRows());
-
-        CommandView view = new CommandView(new CommandBuffer());
-        view.computeViewport(parentViewport);
-        view.draw(term);
+    void drawEmpty() {
+        CommandView view = new CommandView(this.buffer);
+        view.computeViewport(this.parentViewport);
+        view.draw(this.term);
     }
 
     @Test
-    void drawText(@TermSnapshot Terminal term) {
-        Size size = term.getSize();
-        Rect parentViewport = new Rect(0, 0, size.getColumns(), size.getRows());
-        CommandBuffer buffer = new CommandBuffer();
+    void drawTooSmall() {
+        this.term.setSize(Size.of(10, 2));
+        this.parentViewport = new Rect(0, 0, 10, 2);
 
-        CommandView view = new CommandView(buffer);
-        view.computeViewport(parentViewport);
+        CommandView view = new CommandView(this.buffer);
+        view.computeViewport(this.parentViewport);
+        view.draw(this.term);
+    }
+
+    @Test
+    void drawText() {
+        CommandView view = new CommandView(this.buffer);
+        view.computeViewport(this.parentViewport);
 
         for (char c : "Hello, world!".toCharArray()) {
-            buffer.insert(c);
+            this.buffer.insert(c);
         }
 
-        view.draw(term);
+        view.draw(this.term);
     }
 
     @Test
-    void drawMoveCursor(@TermSnapshot Terminal term) {
-        Size size = term.getSize();
-        Rect parentViewport = new Rect(0, 0, size.getColumns(), size.getRows());
-        CommandBuffer buffer = new CommandBuffer();
-
-        CommandView view = new CommandView(buffer);
-        view.computeViewport(parentViewport);
+    void drawMoveCursor() {
+        CommandView view = new CommandView(this.buffer);
+        view.computeViewport(this.parentViewport);
 
         for (char c : "Colourful".toCharArray()) {
-            buffer.insert(c);
+            this.buffer.insert(c);
         }
 
         for (int i = 0; i < 4; i++) {
-            buffer.left();
+            this.buffer.left();
         }
 
-        buffer.delete();
+        this.buffer.delete();
 
-        view.draw(term);
+        view.draw(this.term);
     }
 }
