@@ -27,4 +27,42 @@ public class TestCommandView {
         view.computeViewport(parentViewport);
         view.draw(term);
     }
+
+    @Test
+    void drawText(@TermSnapshot Terminal term) {
+        Size size = term.getSize();
+        Rect parentViewport = new Rect(0, 0, size.getColumns(), size.getRows());
+        CommandBuffer buffer = new CommandBuffer();
+
+        CommandView view = new CommandView(buffer);
+        view.computeViewport(parentViewport);
+
+        for (char c : "Hello, world!".toCharArray()) {
+            buffer.insert(c);
+        }
+
+        view.draw(term);
+    }
+
+    @Test
+    void drawMoveCursor(@TermSnapshot Terminal term) {
+        Size size = term.getSize();
+        Rect parentViewport = new Rect(0, 0, size.getColumns(), size.getRows());
+        CommandBuffer buffer = new CommandBuffer();
+
+        CommandView view = new CommandView(buffer);
+        view.computeViewport(parentViewport);
+
+        for (char c : "Colourful".toCharArray()) {
+            buffer.insert(c);
+        }
+
+        for (int i = 0; i < 4; i++) {
+            buffer.left();
+        }
+
+        buffer.delete();
+
+        view.draw(term);
+    }
 }
