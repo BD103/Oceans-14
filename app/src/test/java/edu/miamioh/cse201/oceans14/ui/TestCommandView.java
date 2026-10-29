@@ -37,6 +37,11 @@ public class TestCommandView {
 
         CommandView view = new CommandView(this.buffer);
         view.computeViewport(this.parentViewport);
+
+        for (char c : "Line toooooo long".toCharArray()) {
+            this.buffer.insert(c);
+        }
+
         view.draw(this.term);
     }
 
