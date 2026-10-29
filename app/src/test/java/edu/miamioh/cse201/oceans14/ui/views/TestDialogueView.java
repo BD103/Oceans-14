@@ -1,29 +1,31 @@
-package edu.miamioh.cse201.oceans14.ui;
+package edu.miamioh.cse201.oceans14.ui.views;
 
+import edu.miamioh.cse201.oceans14.ui.Rect;
+import edu.miamioh.cse201.oceans14.ui.TermSnapshot;
+import edu.miamioh.cse201.oceans14.ui.TermSnapshotExtension;
 import org.jline.terminal.Size;
 import org.jline.terminal.Terminal;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
 
 @ExtendWith(TermSnapshotExtension.class)
-public class TestCommandView {
+public class TestDialogueView {
     @Test
     void draw(@TermSnapshot Terminal term) {
         Size size = term.getSize();
         Rect parentViewport = new Rect(0, 0, size.getColumns(), size.getRows());
 
-        CommandView view = new CommandView();
+        DialogueView view = new DialogueView();
         view.computeViewport(parentViewport);
         view.draw(term);
     }
 
     @Test
-    void drawTooSmall(@TermSnapshot(width = 10, height = 2) Terminal term) {
+    void drawTooSmall(@TermSnapshot(width = 44, height = 8) Terminal term) {
         Size size = term.getSize();
         Rect parentViewport = new Rect(0, 0, size.getColumns(), size.getRows());
 
-        CommandView view = new CommandView();
+        DialogueView view = new DialogueView();
         view.computeViewport(parentViewport);
         view.draw(term);
     }

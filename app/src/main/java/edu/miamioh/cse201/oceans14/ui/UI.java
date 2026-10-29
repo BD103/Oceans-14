@@ -1,5 +1,6 @@
 package edu.miamioh.cse201.oceans14.ui;
 
+import edu.miamioh.cse201.oceans14.ui.views.RootView;
 import org.jline.terminal.Attributes;
 import org.jline.terminal.Size;
 import org.jline.terminal.Terminal;
