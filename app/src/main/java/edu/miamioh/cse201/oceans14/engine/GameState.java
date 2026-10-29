@@ -40,7 +40,7 @@ public class GameState {
     /**
      * Remove chips from the players count. Used if a player spends or loses chips
      * @param amount the amount of chips to lose
-     * @return True if the chips can be spent, False if the player doesn't have enough chips
+     * @return True if the chips were successfully removed, false if the player doesn't have enough chips to remove
      * @throws IllegalArgumentException if a negative number is entered.
      */
     public static boolean removeChips(int amount) {
