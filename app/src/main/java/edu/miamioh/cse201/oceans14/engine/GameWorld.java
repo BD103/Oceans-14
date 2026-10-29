@@ -168,6 +168,10 @@ public class GameWorld {
         return items.containsKey(itemID);
     }
 
+    public static boolean interactableExists(String interactableID) {
+        return roomExists(interactableID) || actorExists(interactableID);
+    }
+
 
 
 }

@@ -116,7 +116,9 @@ public class GameState {
      * @param newRoomID the new room's ID
      */
     static void setCurrentRoomID(String newRoomID) {
-        // TODO connect with a method to ensure the new room ID is valid. Should be implemented in GameWorld.
+        if (newRoomID == null || !GameWorld.roomExists(newRoomID)) {
+            throw new IllegalArgumentException("No such room exists with ID: " + newRoomID);
+        }
         currentRoomID = newRoomID;
     }
 
