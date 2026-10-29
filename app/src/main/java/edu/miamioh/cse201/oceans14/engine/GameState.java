@@ -40,7 +40,7 @@ public class GameState {
     /**
      * Remove chips from the players count. Used if a player spends or loses chips
      * @param amount the amount of chips to lose
-     * @return True if the chips can be spent, False if the player doesn't have enough chips
+     * @return True if the chips were successfully removed, false if the player doesn't have enough chips to remove
      * @throws IllegalArgumentException if a negative number is entered.
      */
     public static boolean removeChips(int amount) {
@@ -116,7 +116,9 @@ public class GameState {
      * @param newRoomID the new room's ID
      */
     static void setCurrentRoomID(String newRoomID) {
-        // TODO connect with a method to ensure the new room ID is valid. Should be implemented in GameWorld.
+        if (newRoomID == null || !GameWorld.roomExists(newRoomID)) {
+            throw new IllegalArgumentException("No such room exists with ID: " + newRoomID);
+        }
         currentRoomID = newRoomID;
     }
 
