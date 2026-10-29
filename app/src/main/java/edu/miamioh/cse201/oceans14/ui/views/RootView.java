@@ -79,12 +79,13 @@ public class RootView implements View {
     }
 
     @Override
-    public void computeViewport(Rect screenViewport) {
-        // This view expands to the entire screen, so we don't modify anything.
-        this.viewport = screenViewport;
+    public void resize(Rect viewport) {
+        this.viewport = viewport;
 
-        this.dialogueView.computeViewport(this.viewport);
-        this.statsView.computeViewport(this.viewport);
-        this.commandView.computeViewport(this.viewport);
+        int twoThirdWidth = viewport.width() * 2 / 3;
+
+        this.dialogueView.resize(new Rect(viewport.x() + 3, viewport.y() + 1, twoThirdWidth - 5, viewport.height() - 4));
+        this.statsView.resize(new Rect(viewport.x() + twoThirdWidth + 3, viewport.y() + 1, viewport.width() - twoThirdWidth - 6, viewport.height() - 4));
+        this.commandView.resize(new Rect(viewport.x() + 3, viewport.y() + viewport.height() - 2, viewport.width() - 6, 1));
     }
 }

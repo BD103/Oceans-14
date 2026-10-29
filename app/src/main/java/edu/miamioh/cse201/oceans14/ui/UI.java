@@ -45,7 +45,7 @@ public class UI implements AutoCloseable {
         this.term.puts(Capability.enter_ca_mode);
 
         // Configure the root view (and all of its children) with the terminal's current size.
-        this.computeViewport();
+        this.resize();
 
         // Track when the terminal is resized, so that the viewports can be recomputed next draw.
         this.term.handle(Terminal.Signal.WINCH, signal -> this.terminalResized = true);
@@ -67,7 +67,7 @@ public class UI implements AutoCloseable {
         while (reader.read(10) != 'q') {
             // When the terminal is resized, recompute viewports and redraw.
             if (this.terminalResized) {
-                this.computeViewport();
+                this.resize();
                 this.draw();
                 this.terminalResized = false;
             }
@@ -96,9 +96,9 @@ public class UI implements AutoCloseable {
      * This should be called before the root view is drawn for the first time, as well as whenever
      * the terminal changes sizes.
      */
-    private void computeViewport() {
+    private void resize() {
         Size size = this.term.getSize();
-        this.rootView.computeViewport(new Rect(0, 0, size.getColumns(), size.getRows()));
+        this.rootView.resize(new Rect(0, 0, size.getColumns(), size.getRows()));
     }
 
     /**
