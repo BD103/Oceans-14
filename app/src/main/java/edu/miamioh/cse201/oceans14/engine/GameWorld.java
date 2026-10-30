@@ -1,8 +1,7 @@
 package edu.miamioh.cse201.oceans14.engine;
 
-import edu.miamioh.cse201.oceans14.rooms.Room;
-import edu.miamioh.cse201.oceans14.rooms.EntranceRoom;
-import edu.miamioh.cse201.oceans14.actors.Actor;
+import edu.miamioh.cse201.oceans14.rooms.*;
+import edu.miamioh.cse201.oceans14.actors.*;
 import edu.miamioh.cse201.oceans14.items.Item;
 
 import java.util.HashMap;
@@ -39,6 +38,8 @@ public class GameWorld {
      */
     private static void registerRooms() {
         registerRoom(new EntranceRoom());
+        registerRoom(new CasinoRoom());
+        registerRoom(new StaffRoom());
     }
 
     /**
@@ -52,10 +53,35 @@ public class GameWorld {
      * Area where all items are initialized and added to the items map.
      */
     private static void registerItems() {
+        // TODO change descriptions
         registerItem(new Item(
                 "screwdriver",
                 "Screwdriver",
                 "SCREWDRIVER DESCRIPTIVE TEXT HERE"));
+        registerItem(new Item(
+                "staff_room_keycard",
+                "Staff Keycard",
+                "STAFF KEYCARD DESCRIPTIVE TEXT HERE"));
+        registerItem(new Item(
+                "level_one_disguise",
+                "Staff Disguise",
+                "LEVEL ONE DISGUISE DESCRIPTIVE TEXT HERE"));
+        registerItem(new Item(
+                "level_two_disguise",
+                "Guard Disguise",
+                "LEVEL TWO DISGUISE DESCRIPTIVE TEXT HERE"));
+        registerItem(new Item(
+                "boss_food",
+                "Boss's food",
+                "BOSS'S FOOD DESCRIPTIVE TEXT HERE"));
+        registerItem(new Item(
+                "chef_permission",
+                "Chef Permission Note",
+                "CHEF PERMISSION NOTE DESCRIPTIVE TEXT HERE"));
+        registerItem(new Item(
+                "maintenance_key",
+                "Maintenance Room Key",
+                "MAINTENANCE ROOM KEY DESCRIPTIVE TEXT HERE"));
     }
 
     // Registration Methods

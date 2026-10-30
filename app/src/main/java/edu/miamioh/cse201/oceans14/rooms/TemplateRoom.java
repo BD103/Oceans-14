@@ -1,10 +1,12 @@
 package edu.miamioh.cse201.oceans14.rooms;
 
 import edu.miamioh.cse201.oceans14.engine.ActionOption;
+import edu.miamioh.cse201.oceans14.engine.GameState;
 import edu.miamioh.cse201.oceans14.engine.InteractionResult;
 import edu.miamioh.cse201.oceans14.engine.InteractionTransition;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /* TODO DELETE ME WHEN DONE IMPLEMENTING
@@ -56,14 +58,17 @@ public class TemplateRoom extends Room {
      */
     @Override
     public List<ActionOption> getAvailableActions() {
-        // This was done to ensure a immutable list is returned. This prevents some other
-        // part of the program from attempting to alter the list of AvailableActions.
-        // TODO add the list of actions for this room
-        return List.of(
-                new ActionOption("function_name", "Function Description"),
-        new ActionOption("function_name_two", "Function Description Two")
+        List<ActionOption> actions = new ArrayList<>();
 
-        );
+        //Area for always present interactions
+        actions.add(new ActionOption("function_name", "Function Description"));
+
+        // Area for conditional Interactions
+        // Only offer function two if player has debug_item
+        if (!GameState.hasItem("debug_item")) {
+            actions.add(new ActionOption("function_name_two", "Function Description Two"));
+        }
+        return List.copyOf(actions);
     }
 
     /**
@@ -89,15 +94,11 @@ public class TemplateRoom extends Room {
         // The convention for writing these functions is to use underscores in the ID and
         // camel case for the corresponding function.
         // Ex. enter_casino -> enterCasino()
-
-        // Additional Note: this is an "enhanced" switch statement which helps prevent fall through.
-        // Pretty neat idea!
         //TODO add to the switch statement with action ID's and the function names
         return switch (actionID) {
             case "function_name" -> functionName();
             case "function_name_two" -> functionNameTwo();
-            // This is the case that we has programmers messed up. It gives an error
-            // message so we can make sure all valid action ID's have corresponding functions.
+            // Detect action IDs that are available but lack an implementation.
             default -> throw new IllegalStateException(
                     "A valid action does not exist in the performAction for " + this.getID() +
                             "\n Please make sure the list of available actions all have an action function."
