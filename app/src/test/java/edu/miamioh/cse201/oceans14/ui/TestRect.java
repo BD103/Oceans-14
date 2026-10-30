@@ -72,4 +72,40 @@ public class TestRect {
                 () -> Assertions.assertThrows(IllegalArgumentException.class, () -> r.margin(-1))
         );
     }
+
+    @Test
+    void splitHorizontalHalf() {
+        Rect r = new Rect(0, 0, 5, 1);
+        Assertions.assertArrayEquals(new Rect[]{
+                new Rect(0, 0, 2, 1),
+                new Rect(3, 0, 2, 1),
+        }, r.splitHorizontal(0.5));
+    }
+
+    @Test
+    void splitHorizontalTwoThirds() {
+        Rect r = new Rect(0, 0, 7, 2);
+        Assertions.assertArrayEquals(new Rect[] {
+                new Rect(0, 0, 4, 2),
+                new Rect(5, 0, 2, 2),
+        }, r.splitHorizontal(2.0 / 3.0));
+    }
+
+    @Test
+    void splitHorizontalLeft() {
+        Rect r = new Rect(0, 0, 4, 1);
+        Assertions.assertArrayEquals(new Rect[] {
+                new Rect(0, 0, 0, 1),
+                new Rect(1, 0, 3, 1),
+        }, r.splitHorizontal(0));
+    }
+
+    @Test
+    void splitHorizontalRight() {
+        Rect r = new Rect(2, 2, 3, 3);
+        Assertions.assertArrayEquals(new Rect[] {
+                new Rect(2, 2, 3, 3),
+                new Rect(5, 2, 0, 3),
+        }, r.splitHorizontal(1));
+    }
 }

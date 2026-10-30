@@ -107,4 +107,29 @@ public record Rect(int x, int y, int width, int height) {
         // No need to check if margin is negative, the more specific margin methods do so already.
         return this.marginHorizontal(margin).marginVertical(margin);
     }
+
+    /**
+     * Splits the viewport horizontally by a given ratio.
+     * <p>
+     * This method leaves a gap of 1 cell between the two split viewports.
+     *
+     * @param ratio A value between 0 and 1 representing where to split, where 0 is the far left,
+     *              0.5 is the middle, and 1 is the far right.
+     * @return An array of two viewports, the first being the left viewport and the second being the right.
+     * @throws IllegalArgumentException If ratio is less than 0 or greater than 1
+     */
+    public Rect[] splitHorizontal(double ratio) throws IllegalArgumentException {
+        if (ratio < 0 || ratio > 1) {
+            throw new IllegalArgumentException("Ratio " + ratio + " is not between 0 and 1");
+        }
+
+        int leftWidth = (int)(this.width * ratio);
+        int rightX = Math.min(this.x + leftWidth + 1, this.x + this.width);
+        int rightWidth = Math.max(this.width - leftWidth - 1, 0);
+
+        return new Rect[]{
+                new Rect(this.x, this.y, leftWidth, this.height),
+                new Rect(rightX, this.y, rightWidth, this.height),
+        };
+    }
 }
