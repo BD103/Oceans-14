@@ -1,5 +1,7 @@
-package edu.miamioh.cse201.oceans14.ui;
+package edu.miamioh.cse201.oceans14.ui.views;
 
+import edu.miamioh.cse201.oceans14.ui.Rect;
+import edu.miamioh.cse201.oceans14.ui.View;
 import org.jline.terminal.Terminal;
 import org.jline.utils.InfoCmp.Capability;
 
@@ -16,12 +18,7 @@ public class CommandView implements View {
     }
 
     @Override
-    public void computeViewport(Rect parentViewport) {
-        int x = parentViewport.x() + 3;
-        int y = parentViewport.y() + parentViewport.height() - 2;
-        int width = parentViewport.width() - 6;
-        int height = 1;
-
-        this.viewport = new Rect(x, y, width, height);
+    public void resize(Rect viewport) {
+        this.viewport = viewport;
     }
 }
