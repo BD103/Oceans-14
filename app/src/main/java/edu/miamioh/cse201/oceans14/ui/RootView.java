@@ -1,5 +1,6 @@
 package edu.miamioh.cse201.oceans14.ui;
 
+import edu.miamioh.cse201.oceans14.ui.input.CommandBuffer;
 import org.jline.terminal.Terminal;
 import org.jline.utils.InfoCmp.Capability;
 
@@ -17,7 +18,11 @@ public class RootView implements View {
     // Child views
     private final DialogueView dialogueView = new DialogueView();
     private final StatsView statsView = new StatsView();
-    private final CommandView commandView = new CommandView();
+    private final CommandView commandView;
+
+    public RootView(CommandBuffer commandBuffer) {
+        commandView = new CommandView(commandBuffer);
+    }
 
     @Override
     public void draw(Terminal term) {
