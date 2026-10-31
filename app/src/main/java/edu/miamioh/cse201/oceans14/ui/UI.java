@@ -34,7 +34,7 @@ public class UI implements AutoCloseable {
     /**
      * Set to true when the terminal is resized, signals that the UI should be redrawn.
      */
-    private boolean computeViewportRequested = false;
+    private boolean resizeRequested = false;
     private boolean drawRequested = false;
     private boolean exitRequested = false;
 
@@ -60,7 +60,7 @@ public class UI implements AutoCloseable {
         this.resize();
 
         // Track when the terminal is resized, so that the viewports can be recomputed next draw.
-        this.term.handle(Terminal.Signal.WINCH, signal -> this.computeViewportRequested = true);
+        this.term.handle(Terminal.Signal.WINCH, signal -> this.resizeRequested = true);
 
         // Create a new parser to read terminal input.
         this.parser = new InputParser(term.reader());
@@ -85,13 +85,13 @@ public class UI implements AutoCloseable {
             }
 
             // When the terminal is resized, recompute viewports.
-            if (this.computeViewportRequested) {
+            if (this.resizeRequested) {
                 this.resize();
 
                 // Recomputing viewports requires a redraw afterward.
                 this.drawRequested = true;
 
-                this.computeViewportRequested = false;
+                this.resizeRequested = false;
             }
 
             if (this.drawRequested) {

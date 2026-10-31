@@ -15,6 +15,7 @@ public class TestCommandView {
     private Terminal term;
     private Rect viewport;
     private CommandBuffer buffer;
+    private CommandView commandView;
 
     @BeforeEach
     void beforeEach(@TermSnapshot(height = 1) Terminal term) {
@@ -24,47 +25,40 @@ public class TestCommandView {
         this.viewport = new Rect(0, 0, size.getColumns(), size.getRows());
 
         this.buffer = new CommandBuffer();
+
+        this.commandView = new CommandView(this.buffer);
+        this.commandView.resize(this.viewport);
     }
 
     @Test
     void drawEmpty() {
-        CommandView view = new CommandView(this.buffer);
-        view.resize(this.viewport);
-        view.draw(this.term);
+        this.commandView.draw(this.term);
     }
 
     @Test
     void drawTooSmall() {
         this.term.setSize(Size.of(10, 2));
         this.viewport = new Rect(0, 0, 10, 2);
-
-        CommandView view = new CommandView(this.buffer);
-        view.resize(this.viewport);
+        this.commandView.resize(this.viewport);
 
         for (char c : "Line toooooo long".toCharArray()) {
             this.buffer.insert(c);
         }
 
-        view.draw(this.term);
+        this.commandView.draw(this.term);
     }
 
     @Test
     void drawText() {
-        CommandView view = new CommandView(this.buffer);
-        view.resize(this.viewport);
-
         for (char c : "Hello, world!".toCharArray()) {
             this.buffer.insert(c);
         }
 
-        view.draw(this.term);
+        this.commandView.draw(this.term);
     }
 
     @Test
     void drawMoveCursor() {
-        CommandView view = new CommandView(this.buffer);
-        view.resize(this.viewport);
-
         for (char c : "Colourful".toCharArray()) {
             this.buffer.insert(c);
         }
@@ -75,6 +69,6 @@ public class TestCommandView {
 
         this.buffer.delete();
 
-        view.draw(this.term);
+        this.commandView.draw(this.term);
     }
 }
