@@ -1,5 +1,8 @@
-package edu.miamioh.cse201.oceans14.ui;
+package edu.miamioh.cse201.oceans14.ui.views;
 
+import edu.miamioh.cse201.oceans14.ui.Rect;
+import edu.miamioh.cse201.oceans14.ui.TermSnapshot;
+import edu.miamioh.cse201.oceans14.ui.TermSnapshotExtension;
 import edu.miamioh.cse201.oceans14.ui.input.CommandBuffer;
 import org.jline.terminal.Size;
 import org.jline.terminal.Terminal;
@@ -10,58 +13,52 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(TermSnapshotExtension.class)
 public class TestCommandView {
     private Terminal term;
-    private Rect parentViewport;
+    private Rect viewport;
     private CommandBuffer buffer;
+    private CommandView commandView;
 
     @BeforeEach
-    void beforeEach(@TermSnapshot Terminal term) {
+    void beforeEach(@TermSnapshot(height = 1) Terminal term) {
         this.term = term;
 
         Size size = term.getSize();
-        this.parentViewport = new Rect(0, 0, size.getColumns(), size.getRows());
+        this.viewport = new Rect(0, 0, size.getColumns(), size.getRows());
 
         this.buffer = new CommandBuffer();
+
+        this.commandView = new CommandView(this.buffer);
+        this.commandView.resize(this.viewport);
     }
 
     @Test
     void drawEmpty() {
-        CommandView view = new CommandView(this.buffer);
-        view.computeViewport(this.parentViewport);
-        view.draw(this.term);
+        this.commandView.draw(this.term);
     }
 
     @Test
     void drawTooSmall() {
         this.term.setSize(Size.of(10, 2));
-        this.parentViewport = new Rect(0, 0, 10, 2);
-
-        CommandView view = new CommandView(this.buffer);
-        view.computeViewport(this.parentViewport);
+        this.viewport = new Rect(0, 0, 10, 2);
+        this.commandView.resize(this.viewport);
 
         for (char c : "Line toooooo long".toCharArray()) {
             this.buffer.insert(c);
         }
 
-        view.draw(this.term);
+        this.commandView.draw(this.term);
     }
 
     @Test
     void drawText() {
-        CommandView view = new CommandView(this.buffer);
-        view.computeViewport(this.parentViewport);
-
         for (char c : "Hello, world!".toCharArray()) {
             this.buffer.insert(c);
         }
 
-        view.draw(this.term);
+        this.commandView.draw(this.term);
     }
 
     @Test
     void drawMoveCursor() {
-        CommandView view = new CommandView(this.buffer);
-        view.computeViewport(this.parentViewport);
-
         for (char c : "Colourful".toCharArray()) {
             this.buffer.insert(c);
         }
@@ -72,6 +69,6 @@ public class TestCommandView {
 
         this.buffer.delete();
 
-        view.draw(this.term);
+        this.commandView.draw(this.term);
     }
 }
