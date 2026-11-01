@@ -16,7 +16,6 @@ import java.util.List;
 public class DialogueView implements View {
     private Rect viewport;
     private final DialogueEntries entries;
-    private int dialogueHeight;
 
     public DialogueView(DialogueEntries entries) {
         this.entries = entries;
@@ -68,9 +67,11 @@ public class DialogueView implements View {
     private void drawScrollbar(Terminal term) {
         PrintWriter writer = term.writer();
 
+        int dialogueHeight = this.entries.height();
+
         // Calculate at what y-coordinate the scrollbar should switch from indicating hidden
         // content to visible content.
-        double percentHidden = Math.max(this.dialogueHeight - this.viewport.height(), 0) / (double)this.dialogueHeight;
+        double percentHidden = Math.max(dialogueHeight - this.viewport.height(), 0) / (double)dialogueHeight;
         int scrollbarHiddenY = (int)(this.viewport.height() * percentHidden) + this.viewport.y();
 
         int y = this.viewport.y();
@@ -99,7 +100,5 @@ public class DialogueView implements View {
         // Rewrap paragraphs to fit new max width.
         int maxWidth = Math.max(this.viewport.width() - 3, 2);
         this.entries.resize(maxWidth);
-
-        this.dialogueHeight = this.entries.height();
     }
 }
