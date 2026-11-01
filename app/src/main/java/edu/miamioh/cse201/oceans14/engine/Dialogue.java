@@ -7,6 +7,11 @@ import java.util.List;
  */
 public sealed interface Dialogue {
     /**
+     * @return The dialogue formatted as a string.
+     */
+    String display();
+
+    /**
      * A system message.
      * <p>
      * This should be used when describing objects such as actors, rooms, and items to the player.
@@ -14,7 +19,12 @@ public sealed interface Dialogue {
      *
      * @param message The message to be displayed, should not contain any newlines.
      */
-    record System(String message) implements Dialogue {}
+    record System(String message) implements Dialogue {
+        @Override
+        public String display() {
+            return this.message;
+        }
+    }
 
     /**
      * An actor message.
@@ -24,7 +34,12 @@ public sealed interface Dialogue {
      * @param actorName The name of the actor.
      * @param message The message the actor says, should not contain any newlines.
      */
-    record Actor(String actorName, String message) implements Dialogue {}
+    record Actor(String actorName, String message) implements Dialogue {
+        @Override
+        public String display() {
+            return this.actorName + ": " + this.message;
+        }
+    }
 
     /**
      * An error message.
@@ -36,7 +51,12 @@ public sealed interface Dialogue {
      *
      * @param message The message to be displayed, should not contain any newlines.
      */
-    record Error(String message) implements Dialogue {}
+    record Error(String message) implements Dialogue {
+        @Override
+        public String display() {
+            return "ERROR: " + this.message;
+        }
+    }
 
     /**
      * A list of dialogue entries.
@@ -46,5 +66,10 @@ public sealed interface Dialogue {
      *
      * @param entries The dialogue entries, will be displayed in order.
      */
-    record DialogueList(List<Dialogue> entries) implements Dialogue {}
+    record DialogueList(List<Dialogue> entries) implements Dialogue {
+        @Override
+        public String display() {
+            throw new UnsupportedOperationException();
+        }
+    }
 }
