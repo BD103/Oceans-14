@@ -155,8 +155,8 @@ public class UI implements AutoCloseable {
         }
 
         // If a plain character, write it.
-        if (input instanceof Input.Character) {
-            this.commandBuffer.insert(((Input.Character) input).get());
+        if (input instanceof Input.Character inputCharacter) {
+            this.commandBuffer.insert(inputCharacter.get());
 
             // Changing command buffer requires `CommandView` to be redrawn.
             this.drawRequested = true;
@@ -165,8 +165,8 @@ public class UI implements AutoCloseable {
         }
 
         // If a special input, process it.
-        if (input instanceof Input.Special) {
-            switch ((Input.Special) input) {
+        if (input instanceof Input.Special inputSpecial) {
+            switch (inputSpecial) {
                 case ENTER -> {
                     // TODO: sent buffer's contents to command parsing system
                     this.commandBuffer.clear();
