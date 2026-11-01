@@ -31,7 +31,7 @@ import java.util.Map;
  * }
  * }
  * </pre>
- *
+ * <p>
  * To commit this snapshot, run {@code BLESS=1 ./gradlew test}. Afterward, the test will succeed as
  * long as "Hello, world!" remains printed to the terminal. Printing more text or changing
  * "Hello, world!" will cause the test to fail.
@@ -39,11 +39,17 @@ import java.util.Map;
  * You can modify the terminal screen size with {@code @TermSnapshot(width = 100, height = 30)}.
  */
 public class TermSnapshotExtension implements BeforeAllCallback, ParameterResolver, AfterEachCallback, TestInstancePreDestroyCallback {
-    /** The path to the snapshot folder. */
+    /**
+     * The path to the snapshot folder.
+     */
     private final static File snapshotFolder = new File("src/test/resources/snapshots");
-    /** A map that associates {@link ExtensionContext#getUniqueId()} with {@link Snapshot}s. */
+    /**
+     * A map that associates {@link ExtensionContext#getUniqueId()} with {@link Snapshot}s.
+     */
     private final Map<String, Snapshot> snapshots = new HashMap<>();
-    /** True if we're blessing the current output, false if we're checking against the historical output. */
+    /**
+     * True if we're blessing the current output, false if we're checking against the historical output.
+     */
     private boolean bless;
 
     @Override
@@ -99,8 +105,10 @@ public class TermSnapshotExtension implements BeforeAllCallback, ParameterResolv
         // Make sure terminal buffer is flushed to the "screen".
         snapshot.term.flush();
 
-        // Render the terminal's "screen" as HTML.
-        String currentOutput = snapshot.term.dump(0, true);
+        // Render the terminal's "screen" as HTML, normalizing line endings so Windows matches
+        // Unix's behavior.
+        String currentOutput = snapshot.term.dump(0, true)
+                .replace("\r\n", "\n");
 
         if (this.bless) {
             Files.writeString(snapshot.path.toPath(), currentOutput);
