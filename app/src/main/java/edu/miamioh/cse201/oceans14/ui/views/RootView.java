@@ -1,5 +1,6 @@
 package edu.miamioh.cse201.oceans14.ui.views;
 
+import edu.miamioh.cse201.oceans14.ui.DialogueEntries;
 import edu.miamioh.cse201.oceans14.ui.Rect;
 import edu.miamioh.cse201.oceans14.ui.View;
 import edu.miamioh.cse201.oceans14.ui.input.CommandBuffer;
@@ -19,11 +20,12 @@ public class RootView implements View {
     private int dialogue_stats_divider;
 
     // Child views
-    private final DialogueView dialogueView = new DialogueView();
+    private final DialogueView dialogueView;
     private final StatsView statsView = new StatsView();
     private final CommandView commandView;
 
-    public RootView(CommandBuffer commandBuffer) {
+    public RootView(CommandBuffer commandBuffer, DialogueEntries dialogue) {
+        this.dialogueView = new DialogueView(dialogue);
         commandView = new CommandView(commandBuffer);
     }
 
