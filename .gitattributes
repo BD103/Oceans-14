@@ -10,3 +10,5 @@
 # Binary files should be left untouched
 *.jar           binary
 
+# Snapshots should use LF on all platforms
+/app/src/test/resources/snapshots/*.html text eol=lf
