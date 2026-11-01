@@ -1,5 +1,6 @@
 package edu.miamioh.cse201.oceans14.ui;
 
+import edu.miamioh.cse201.oceans14.engine.Dialogue;
 import edu.miamioh.cse201.oceans14.ui.views.RootView;
 import edu.miamioh.cse201.oceans14.ui.input.CommandBuffer;
 import edu.miamioh.cse201.oceans14.ui.input.Input;
@@ -29,7 +30,10 @@ public class UI implements AutoCloseable {
 
     private final InputParser parser;
     private final CommandBuffer commandBuffer = new CommandBuffer();
-    private final RootView rootView = new RootView(this.commandBuffer);
+
+    private final DialogueEntries dialogue = new DialogueEntries();
+
+    private final RootView rootView = new RootView(this.commandBuffer, this.dialogue);
 
     /**
      * Set to true when the terminal is resized, signals that the UI should be redrawn.
