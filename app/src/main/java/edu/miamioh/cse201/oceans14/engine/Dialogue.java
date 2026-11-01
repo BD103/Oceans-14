@@ -1,7 +1,5 @@
 package edu.miamioh.cse201.oceans14.engine;
 
-import java.util.List;
-
 /**
  * A message displayed to the user in the dialogue view.
  */
@@ -66,7 +64,7 @@ public sealed interface Dialogue {
      *
      * @param entries The dialogue entries, will be displayed in order.
      */
-    record DialogueList(List<Dialogue> entries) implements Dialogue {
+    record List(java.util.List<Dialogue> entries) implements Dialogue {
         @Override
         public String display() {
             throw new UnsupportedOperationException();

@@ -20,7 +20,7 @@ public class DialogueEntries {
      * @param dialogue The dialogue to add.
      */
     public void add(Dialogue dialogue) {
-        if (dialogue instanceof  Dialogue.DialogueList list) {
+        if (dialogue instanceof  Dialogue.List list) {
             list.entries().forEach(this::add);
         } else {
             this.entries.add(new WrapParagraph(dialogue.display(), this.maxWidth));
