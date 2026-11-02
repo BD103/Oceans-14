@@ -169,7 +169,7 @@ public class GameState {
     /**
      * Resets the current game state, useful in the case of a game over.
      */
-    public static void reset(){
+    static void reset(){
         chipCount = STARTING_CHIPS;
         currentRoomID = STARTING_ROOM;
         inventory.clear();

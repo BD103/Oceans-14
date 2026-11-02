@@ -88,8 +88,8 @@ public class Chef extends Actor {
         GameState.addItem("chef_permission");
         GameState.addFlag("taken_boss_food");
         return new InteractionResult(
-                "Yeah, actually, can you deliver this food to the big boss? \"\n" +
-                        "                + \"Here's a permission note so security will let you through.",
+                "Yeah, actually, can you deliver this food to the big boss? " +
+                        "Here's a permission note so security will let you through.",
                 InteractionTransition.NONE,
                 null
         );
