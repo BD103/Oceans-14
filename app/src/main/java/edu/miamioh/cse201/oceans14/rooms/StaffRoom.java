@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StaffRoom extends Room {
-
     public StaffRoom() {
         super("staff_room", "Staff Room");
     }
@@ -39,7 +38,7 @@ public class StaffRoom extends Room {
 
         // Area for conditional Interactions
         // Only offer the uniform if the player doesn't have it
-        if (!GameState.hasItem("level_one_disguise")) {
+        if (!GameState.flagIsActive("taken_level_one_disguise")) {
             actions.add(new ActionOption("grab_staff_uniform", "Rummage Around for a staff outfit"));
         }
 
@@ -69,7 +68,6 @@ public class StaffRoom extends Room {
         // The convention for writing these functions is to use underscores in the ID and
         // camel case for the corresponding function.
         // Ex. enter_casino -> enterCasino()
-        //TODO add to the switch statement with action ID's and the function names
         return switch (actionID) {
             case "enter_casino_room" -> enterCasinoRoom();
             case "enter_kitchen_room" -> enterKitchenRoom();
@@ -143,6 +141,7 @@ public class StaffRoom extends Room {
      */
     private InteractionResult grabStaffUniform() {
         GameState.addItem("level_one_disguise");
+        GameState.addFlag("taken_level_one_disguise");
         return new InteractionResult(
                 "After shuffling around through a few lockers, you find a waiter outfit in your size",
                 InteractionTransition.NONE,

@@ -1,6 +1,7 @@
 package edu.miamioh.cse201.oceans14.rooms;
 
 import edu.miamioh.cse201.oceans14.engine.ActionOption;
+import edu.miamioh.cse201.oceans14.engine.GameWorld;
 import edu.miamioh.cse201.oceans14.engine.InteractionResult;
 import edu.miamioh.cse201.oceans14.engine.InteractionTransition;
 
@@ -88,19 +89,20 @@ public class EntranceRoom extends Room {
         return new InteractionResult(
                 "You walk through the glass door and enter the casino.",
                 InteractionTransition.CHANGE_ROOM,
-                null // TODO Add the casino main room here
+                GameWorld.getRoom("casino_room")
                 );
     }
 
     /**
      * Walk up to the Crazy Gambler / Old Man and begin interacting with him.
      * // TODO formalize gamblers name / is he an old man or what?
+     * // TODO Actually add the gambler
      * @return InteractionResult telling GameEngine to talk to the guy.
      */
     private InteractionResult talkToCrazy() {
         return new InteractionResult(
-                "You walk up to the shaggy old man",
-                InteractionTransition.PUSH,
+                "The old man doesn't currently seem interested in talking",
+                InteractionTransition.NONE,
                 null// TODO add the crazy old man.
         );
     }
@@ -113,7 +115,7 @@ public class EntranceRoom extends Room {
         return new InteractionResult(
                 "You walk up to the Casino greeter.",
                 InteractionTransition.PUSH,
-                null // TODO add the casino greeter
+                GameWorld.getActor("casino_greeter")
         );
     }
 }

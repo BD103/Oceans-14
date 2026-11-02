@@ -157,7 +157,7 @@ public class CasinoRoom extends Room {
             );
         } else {
             return new InteractionResult(
-                    "The bouncer denies you acces, you don't have sufficient status",
+                    "The bouncer denies you access, you don't have sufficient status",
                     InteractionTransition.NONE,
                     null
             );

@@ -17,6 +17,8 @@ public class GameState {
     private static int chipCount = STARTING_CHIPS;
     private static String currentRoomID = STARTING_ROOM;
     private static final Set<String> inventory = new HashSet<>();
+    private static final Set<String> activeFlags = new HashSet<>();
+
 
     // All Methods Dealing with Chips ---------------------------------------------------
 
@@ -99,6 +101,48 @@ public class GameState {
         return Set.copyOf(inventory);
     }
 
+    // All Methods Dealing with flags ---------------------------------------------------
+
+    /**
+     * Checks to see if a given flag is active.
+     * @param flagID the ID of the flag to check
+     * @return true if the flag is currently active, false otherwise
+     * @throws IllegalArgumentException if the given flagID is not in GameWorld
+     */
+    public static boolean flagIsActive(String flagID) {
+        if(!GameWorld.flagExists(flagID)) {
+            throw new IllegalArgumentException("Flag: " + flagID + " does not exist in registry");
+        }
+        return activeFlags.contains(flagID);
+    }
+
+    /**
+     *  Attempts to add the given flag to the set of active flags.
+     * @param flagID the ID of the flag to check
+     * @return true if the flag was successfully added, false if the flag already exists
+     * @throws IllegalArgumentException if the given flagID is not in GameWorld
+     */
+    public static boolean addFlag(String flagID) {
+        if(!GameWorld.flagExists(flagID)) {
+            throw new IllegalArgumentException("Flag: " + flagID + " does not exist in registry");
+        }
+        return activeFlags.add(flagID);
+    }
+
+    /**
+     * Attempts to remove the given flag from the set of active flags
+     * @param flagID the ID of the flag to remove
+     * @return true if the flag was successfully removed, false if the flag didn't exist
+     * @throws IllegalArgumentException if the given flagID is not ing GameWorld
+     */
+    public static boolean removeFlag(String flagID) {
+        if(!GameWorld.flagExists(flagID)) {
+            throw new IllegalArgumentException("Flag: " + flagID + "does not exist in registry");
+        } else {
+            return activeFlags.remove(flagID);
+        }
+    }
+
     // All Methods Dealing with the Current Room ----------------------------------------
 
     /**
@@ -129,6 +173,7 @@ public class GameState {
         chipCount = STARTING_CHIPS;
         currentRoomID = STARTING_ROOM;
         inventory.clear();
+        activeFlags.clear();
     }
 
 

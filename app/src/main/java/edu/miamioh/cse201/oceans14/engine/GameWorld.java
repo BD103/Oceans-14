@@ -5,7 +5,9 @@ import edu.miamioh.cse201.oceans14.actors.*;
 import edu.miamioh.cse201.oceans14.items.Item;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Central Registry of all that exists within the world
@@ -17,6 +19,7 @@ public class GameWorld {
     private static final Map<String, Room> rooms = new HashMap<>();
     private static final Map<String, Actor> actors = new HashMap<>();
     private static final Map<String, Item> items = new HashMap<>();
+    private static final Set<String> flags = new HashSet<>();
 
     private GameWorld() {}
 
@@ -27,6 +30,7 @@ public class GameWorld {
         registerRooms();
         registerActors();
         registerItems();
+        registerFlags();
     }
 
     // --------------------------------------------------------------------------------------------
@@ -40,13 +44,16 @@ public class GameWorld {
         registerRoom(new EntranceRoom());
         registerRoom(new CasinoRoom());
         registerRoom(new StaffRoom());
+        registerRoom(new KitchenRoom());
     }
 
     /**
      * Area where all actors are initialized and added to the actors map
      */
     private static void registerActors() {
-
+        registerActor(new CasinoGreeter());
+        registerActor(new Anthony());
+        registerActor(new Chef());
     }
 
     /**
@@ -82,6 +89,16 @@ public class GameWorld {
                 "maintenance_key",
                 "Maintenance Room Key",
                 "MAINTENANCE ROOM KEY DESCRIPTIVE TEXT HERE"));
+        registerItem(new Item(
+                "screwdriver_checkout_note",
+                "Checkout Note",
+                "Yo, borrowing this to fix a shelf - Anthony"));
+    }
+
+    private static void registerFlags() {
+        registerFlag("taken_level_one_disguise");
+        registerFlag("taken_boss_food");
+        registerFlag("taken_screwdriver");
     }
 
     // Registration Methods
@@ -122,6 +139,17 @@ public class GameWorld {
         }
     }
 
+    /**
+     * Register a new flag
+     * @param flagID the ID of the flag to add
+     * @throws IllegalArgumentException if the given flag ID already exists
+     */
+    private static void registerFlag(String flagID) {
+        if (!flags.add(flagID)) {
+            throw new IllegalArgumentException("Duplicate Flag ID: " + flagID);
+        }
+    }
+
     // Public Facing Getter Methods
 
     /**
@@ -133,7 +161,7 @@ public class GameWorld {
     public static Room getRoom(String roomID) {
         Room room = rooms.get(roomID);
         if (room == null) {
-            throw new IllegalArgumentException("So such room exists with ID: " + roomID);
+            throw new IllegalArgumentException("No such room exists with ID: " + roomID);
         }
         return room;
 
@@ -148,7 +176,7 @@ public class GameWorld {
     public static Actor getActor(String actorID) {
         Actor actor = actors.get(actorID);
         if (actor == null) {
-            throw new IllegalArgumentException("So such actor exists with ID: " + actorID);
+            throw new IllegalArgumentException("No such actor exists with ID: " + actorID);
         }
         return actor;
     }
@@ -162,7 +190,7 @@ public class GameWorld {
     public static Item getItem(String itemID) {
         Item item = items.get(itemID);
         if (item == null) {
-            throw new IllegalArgumentException("So such item exists with ID: " + itemID);
+            throw new IllegalArgumentException("No such item exists with ID: " + itemID);
         }
         return item;
     }
@@ -194,9 +222,16 @@ public class GameWorld {
         return items.containsKey(itemID);
     }
 
+    /**
+     * Checks to see if a given interactable Exists
+     * @param interactableID the ID of the interactable to check
+     * @return true if it exists, false otherwise
+     */
     public static boolean interactableExists(String interactableID) {
         return roomExists(interactableID) || actorExists(interactableID);
     }
+
+    public static boolean flagExists(String flagID) { return flags.contains(flagID); }
 
 
 
