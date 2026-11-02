@@ -136,8 +136,10 @@ public class UI implements AutoCloseable {
      */
     private void draw() {
         this.term.synchronizedUpdate(() -> {
+            this.term.puts(Capability.cursor_invisible);
             this.term.puts(Capability.clear_screen);
             this.rootView.draw(this.term);
+            this.term.puts(Capability.cursor_normal);
         });
         this.term.flush();
     }
