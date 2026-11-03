@@ -135,8 +135,12 @@ public class UI implements AutoCloseable {
      * Draws the user interface to the terminal.
      */
     private void draw() {
-        this.term.puts(Capability.clear_screen);
-        this.rootView.draw(this.term);
+        this.term.synchronizedUpdate(() -> {
+            this.term.puts(Capability.cursor_invisible);
+            this.term.puts(Capability.clear_screen);
+            this.rootView.draw(this.term);
+            this.term.puts(Capability.cursor_normal);
+        });
         this.term.flush();
     }
 
