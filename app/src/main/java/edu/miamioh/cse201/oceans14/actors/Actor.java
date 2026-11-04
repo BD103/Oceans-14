@@ -11,7 +11,7 @@ import java.util.List;
  * Abstract class for all Actors
  * Contains information shared by all actors.
  */
-public abstract class Actor implements Interactable {
+public abstract class Actor extends Interactable {
 
     // The ID and name of the room. These are unchangeable after initialization
     private final String id;

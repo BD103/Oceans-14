@@ -8,19 +8,19 @@ import java.util.List;
  * Implemented by Room and Actor, allowing GameEngine
  * to interact with them through a consistent interface.
  */
-public interface Interactable {
+public abstract class Interactable {
     /**
      * Returns a description of the current interaction
      * @return A string representing the description of the current action.
      */
 
-    String getDescription();
+    public abstract String getDescription();
 
     /**
      * Gives the ID of the current interactable
      * @return the ID of the current interactable.
      */
-    String getID();
+    public abstract String getID();
 
     /**
      * Returns the current list of available actions.
@@ -31,14 +31,14 @@ public interface Interactable {
      *      option.label() -> "Listen to the secretaries gossip"
      * @return A list of ActionOption that represent possible actions.
      */
-    List<ActionOption> getAvailableActions();
+    public abstract List<ActionOption> getAvailableActions();
 
     /**
      * Checks to see if the proposed action ID is a valid action for the current Interactable
      * @param proposedActionID the ID of the action that you want to perform.
      * @return True if the given action is valid, false if the action doesn't exist or can't be performed.
      */
-    boolean hasValidAction(String proposedActionID);
+    public abstract boolean hasValidAction(String proposedActionID);
 
     /**
      * Performs the given action and returns information about how to change the GameState.
@@ -53,5 +53,5 @@ public interface Interactable {
      * @return InteractionResult which is a record containing the results of the action and how
      *          to modify the GameState.
      */
-    InteractionResult performAction(String actionID);
+    public abstract InteractionResult performAction(String actionID);
 }

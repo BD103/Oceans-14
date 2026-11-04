@@ -7,7 +7,7 @@ import edu.miamioh.cse201.oceans14.engine.Interactable;
  * Abstract Class for all rooms
  * Contains information and behavior shared by all rooms in the game.
  */
-public abstract class Room implements Interactable {
+public abstract class Room extends Interactable {
     private final String id;
     private final String name;
 
