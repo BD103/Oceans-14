@@ -25,7 +25,7 @@ This project uses the [Gradle build system](https://gradle.org/), which is respo
 You can compile and run the project with the following command:
 
 ```bash
-# Linux or MacOS
+# Linux, MacOS, or Git Bash on Windows
 ./gradlew jar
 java -jar app/build/libs/app.jar
 
@@ -43,6 +43,9 @@ Gradle has several other capabilities:
 ```bash
 # Run tests
 ./gradlew test
+
+# Run tests, blessing snapshot tests
+BLESS=1 ./gradlew test
 
 # Build a .jar file for distribution
 ./gradlew jar

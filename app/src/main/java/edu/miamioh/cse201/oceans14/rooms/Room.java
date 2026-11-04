@@ -19,7 +19,6 @@ public abstract class Room implements Interactable {
      */
     protected Room(String id, String name) {
         if (id == null || name == null) {
-            // TODO ensure the ID doesn't already exist
             throw new NullPointerException("Neither ID nor Name can be null");
         }
         this.id = id;

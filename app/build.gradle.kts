@@ -1,5 +1,3 @@
-import org.gradle.internal.jvm.Jvm
-
 // This file describes how to build the Java project.
 // For more details, see <https://docs.gradle.org/9.8.1/userguide/building_java_projects.html>.
 
@@ -18,7 +16,9 @@ dependencies {
     implementation(libs.jline)
 
     // Use JUnit test framework.
-    testImplementation(libs.junit)
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platformlauncher)
 }
 
 java {
@@ -36,4 +36,14 @@ tasks.jar {
 
     // Bundle all dependencies into the jar.
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+}
+
+tasks.test {
+    useJUnitPlatform()
+
+    // Track the `BLESS` environmental variable. Used to invalidate the Gradle cache when `BLESS`
+    // is changed.
+    inputs.property("bless") {
+        System.getenv("BLESS") ?: "0"
+    }
 }

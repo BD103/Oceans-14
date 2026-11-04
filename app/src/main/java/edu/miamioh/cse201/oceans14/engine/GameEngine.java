@@ -22,6 +22,7 @@ public class GameEngine {
 
         // Add the starting room to the interaction stack
         this.interactionStack.push(startingRoom);
+        GameState.setCurrentRoomID(startingRoom.getID());
     }
 
     /**
@@ -66,7 +67,7 @@ public class GameEngine {
         if (!(controllingInteractable.hasValidAction(actionToPerform))) {
             // If the action is none-existent or contains unmet requirements
             // returns an InteractionResult with the message "Invalid Action"
-            return new InteractionResult("Invalid Action", InteractionTransition.NONE, null);
+            return new InteractionResult(new Dialogue.Error("Invalid Action"), InteractionTransition.NONE, null);
         }
 
         // If the action is valid, tell the interactable to run.
@@ -86,16 +87,19 @@ public class GameEngine {
                 break;
             // Used when the current controlling interactable wants to push another
             // interactable onto the top of the interactionStack.
-            case PUSH: // TODO validate the push target exists
-                // Verify the target is not null
-                if (result.target() == null) {
-                    throw new IllegalArgumentException("PUSH requires a target");
+            case PUSH:
+                // Verify the target is not null, then verify it exists.
+                if (result.target() == null || !GameWorld.interactableExists(result.target().getID())) {
+                    throw new IllegalArgumentException("PUSH requires a valid target");
                 }
                 interactionStack.push(result.target());
                 break;
             // Used when a change of the root room is requested.
             // This is called when the player is shifting what room they are in.
-            case CHANGE_ROOM: // TODO validate the room exists
+            case CHANGE_ROOM:
+                if (result.target() == null || !GameWorld.roomExists(result.target().getID())) {
+                    throw new IllegalArgumentException("CHANGE_ROOM requires a valid target");
+                }
                 interactionStack.clear();
                 interactionStack.push(result.target());
                 GameState.setCurrentRoomID(result.target().getID());
@@ -107,5 +111,11 @@ public class GameEngine {
 
         // return the InteractionResult
         return result;
+    }
+
+    public void reset() {
+        GameState.reset();
+        interactionStack.clear();
+        interactionStack.push(GameWorld.getRoom(GameState.getCurrentRoomID()));
     }
 }
