@@ -17,13 +17,4 @@ public abstract class Room extends Interactable {
     protected Room(String id, String name) {
         super(id, name);
     }
-
-    public boolean hasValidAction(String actionID) {
-        for (ActionOption action : getAvailableActions()) {
-            if (action.id().equals(actionID)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

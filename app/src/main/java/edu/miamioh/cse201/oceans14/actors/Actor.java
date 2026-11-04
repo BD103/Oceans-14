@@ -17,18 +17,4 @@ public abstract class Actor extends Interactable {
     protected Actor(String id, String name) {
         super(id, name);
     }
-
-    /**
-     * Check to see if the given input is a valid action
-     * @param actionID the ID of the action that you want to perform.
-     * @return True if the action exists and is available, else false
-     */
-    public boolean hasValidAction(String actionID) {
-        for (ActionOption action : getAvailableActions()) {
-            if (action.id().equals(actionID)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
