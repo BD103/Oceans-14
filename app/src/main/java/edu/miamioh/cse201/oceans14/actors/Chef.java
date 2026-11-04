@@ -65,7 +65,7 @@ public class Chef extends Actor {
             case "end_conversation" -> endConversation();
             // Detect action IDs that are available but lack an implementation.
             default -> throw new IllegalStateException(
-                    "A valid action does not exist in the performAction for " + this.getID() +
+                    "A valid action does not exist in the performAction for " + this.id +
                             "\n Please make sure the list of available actions all have an action function."
             );
         };
@@ -85,7 +85,7 @@ public class Chef extends Actor {
         GameState.addItem("chef_permission");
         GameState.addFlag("taken_boss_food");
         return new InteractionResult(
-                new Dialogue.Actor(this.getName(), "Yeah, actually, can you deliver this food to the big boss? " +
+                new Dialogue.Actor(this.name, "Yeah, actually, can you deliver this food to the big boss? " +
                         "Here's a permission note so security will let you through."),
                 InteractionTransition.NONE,
                 null

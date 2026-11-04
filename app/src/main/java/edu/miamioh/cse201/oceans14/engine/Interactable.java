@@ -1,6 +1,7 @@
 package edu.miamioh.cse201.oceans14.engine;
 
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -9,18 +10,26 @@ import java.util.List;
  * to interact with them through a consistent interface.
  */
 public abstract class Interactable {
+    public final String id;
+    public final String name;
+
+    /**
+     * Constructs a new interactable.
+     *
+     * @param id The unique identifier for this interactable.
+     * @param name The user-facing name of this interactable.
+     */
+    protected Interactable(String id, String name) {
+        this.id = Objects.requireNonNull(id);
+        this.name = Objects.requireNonNull(name);
+    }
+
     /**
      * Returns a description of the current interaction
      * @return A string representing the description of the current action.
      */
 
     public abstract String getDescription();
-
-    /**
-     * Gives the ID of the current interactable
-     * @return the ID of the current interactable.
-     */
-    public abstract String getID();
 
     /**
      * Returns the current list of available actions.

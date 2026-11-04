@@ -22,7 +22,7 @@ public class GameEngine {
 
         // Add the starting room to the interaction stack
         this.interactionStack.push(startingRoom);
-        GameState.setCurrentRoomID(startingRoom.getID());
+        GameState.setCurrentRoomID(startingRoom.id);
     }
 
     /**
@@ -89,7 +89,7 @@ public class GameEngine {
             // interactable onto the top of the interactionStack.
             case PUSH:
                 // Verify the target is not null, then verify it exists.
-                if (result.target() == null || !GameWorld.interactableExists(result.target().getID())) {
+                if (result.target() == null || !GameWorld.interactableExists(result.target().id)) {
                     throw new IllegalArgumentException("PUSH requires a valid target");
                 }
                 interactionStack.push(result.target());
@@ -97,12 +97,12 @@ public class GameEngine {
             // Used when a change of the root room is requested.
             // This is called when the player is shifting what room they are in.
             case CHANGE_ROOM:
-                if (result.target() == null || !GameWorld.roomExists(result.target().getID())) {
+                if (result.target() == null || !GameWorld.roomExists(result.target().id)) {
                     throw new IllegalArgumentException("CHANGE_ROOM requires a valid target");
                 }
                 interactionStack.clear();
                 interactionStack.push(result.target());
-                GameState.setCurrentRoomID(result.target().getID());
+                GameState.setCurrentRoomID(result.target().id);
                 break;
             // Used when no change in the controlling interactable is in order.
             case NONE:
