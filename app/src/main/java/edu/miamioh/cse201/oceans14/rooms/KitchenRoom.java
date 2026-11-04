@@ -52,7 +52,7 @@ public class KitchenRoom extends Room {
         // Return a No Such Action Exists InteractionResult.
         if(!this.hasValidAction(actionID)) {
             return new InteractionResult(
-                    "No Such Action Exists",
+                    new Dialogue.Error("No Such Action Exists"),
                     InteractionTransition.NONE,
                     null
             );
@@ -81,7 +81,7 @@ public class KitchenRoom extends Room {
      */
     private InteractionResult enterStaffRoom() {
         return new InteractionResult(
-                "You leave the bustling kitchen and enter the staff room",
+                new Dialogue.System("You leave the bustling kitchen and enter the staff room"),
                 InteractionTransition.CHANGE_ROOM,
                 GameWorld.getRoom("staff_room")
         );
@@ -94,7 +94,7 @@ public class KitchenRoom extends Room {
      */
     private InteractionResult enterBarRoom() {
         return new InteractionResult(
-                "You push through the swinging door and head to the bar",
+                new Dialogue.System("You push through the swinging door and head to the bar"),
                 InteractionTransition.CHANGE_ROOM,
                 GameWorld.getRoom("bar_room")
         );
@@ -107,7 +107,7 @@ public class KitchenRoom extends Room {
      */
     private InteractionResult talkToChef() {
         return new InteractionResult(
-                "You walk up to the chef running the kitchen",
+                new Dialogue.System("You walk up to the chef running the kitchen"),
                 InteractionTransition.PUSH,
                 GameWorld.getActor("chef")
         );

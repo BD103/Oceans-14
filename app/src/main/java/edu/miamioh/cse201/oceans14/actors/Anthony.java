@@ -1,9 +1,6 @@
 package edu.miamioh.cse201.oceans14.actors;
 
-import edu.miamioh.cse201.oceans14.engine.ActionOption;
-import edu.miamioh.cse201.oceans14.engine.GameState;
-import edu.miamioh.cse201.oceans14.engine.InteractionResult;
-import edu.miamioh.cse201.oceans14.engine.InteractionTransition;
+import edu.miamioh.cse201.oceans14.engine.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +55,7 @@ public class Anthony extends Actor {
         // Return a No Such Action Exists InteractionResult.
         if(!this.hasValidAction(actionID)) {
             return new InteractionResult(
-                    "No Such Action Exists",
+                    new Dialogue.Error("No Such Action Exists"),
                     InteractionTransition.NONE,
                     null
             );
@@ -89,7 +86,7 @@ public class Anthony extends Actor {
      */
     private InteractionResult askAboutDay() {
         return new InteractionResult(
-                "My day? Eh, I've had better, and I've had worse.",
+                new Dialogue.Actor(this.getName(), "My day? Eh, I've had better, and I've had worse."),
                 InteractionTransition.NONE,
                 null
         );
@@ -108,7 +105,7 @@ public class Anthony extends Actor {
         GameState.addItem("screwdriver");
         GameState.addFlag("taken_screwdriver");
         return new InteractionResult(
-                "Oh shoot, I forgot I borrowed that! Here you go. Just return it to the storage room when you're done.",
+                new Dialogue.Actor(this.getName(), "Oh shoot, I forgot I borrowed that! Here you go. Just return it to the storage room when you're done."),
                 InteractionTransition.NONE,
                 null
         );
@@ -121,7 +118,7 @@ public class Anthony extends Actor {
      */
     private InteractionResult endConversation() {
         return new InteractionResult(
-                "Anthony wishes you luck before returning to Candy Crush.",
+                new Dialogue.System("Anthony wishes you luck before returning to Candy Crush."),
                 InteractionTransition.POP,
                 null
         );

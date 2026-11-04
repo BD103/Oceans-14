@@ -63,7 +63,7 @@ public class CasinoRoom extends Room {
         // Return a No Such Action Exists InteractionResult.
         if(!this.hasValidAction(actionID)) {
             return new InteractionResult(
-                    "No Such Action Exists",
+                    new Dialogue.Error("No Such Action Exists"),
                     InteractionTransition.NONE,
                     null
             );
@@ -98,7 +98,7 @@ public class CasinoRoom extends Room {
      */
     private InteractionResult exitCasino() {
         return new InteractionResult(
-                "You leave the casino and enter the street",
+                new Dialogue.System("You leave the casino and enter the street"),
                 InteractionTransition.CHANGE_ROOM,
                 GameWorld.getRoom("entrance_room")
         );
@@ -115,13 +115,13 @@ public class CasinoRoom extends Room {
     private InteractionResult enterStaffRoom() {
         if (GameState.hasItem("staff_room_keycard")) {
             return new InteractionResult(
-                    "You swipe in using your stolen keycard",
+                    new Dialogue.System("You swipe in using your stolen keycard"),
                     InteractionTransition.CHANGE_ROOM,
                     GameWorld.getRoom("staff_room")
             );
         } else {
             return new InteractionResult(
-                    "You walk up to the staff door, but you don't have a keycard",
+                    new Dialogue.System("You walk up to the staff door, but you don't have a keycard"),
                     InteractionTransition.NONE,
                     null
             );
@@ -134,7 +134,7 @@ public class CasinoRoom extends Room {
      */
     private InteractionResult enterBarRoom() {
         return new InteractionResult(
-                "You walk into the hotel bar",
+                new Dialogue.System("You walk into the hotel bar"),
                 InteractionTransition.CHANGE_ROOM,
                 GameWorld.getRoom("bar_room")
         );
@@ -151,13 +151,13 @@ public class CasinoRoom extends Room {
     private InteractionResult enterHighRollersRoom() {
         if (GameState.hasItem("high_rollers_card")) {
             return new InteractionResult(
-                    "You enter the high rollers room",
+                    new Dialogue.System("You enter the high rollers room"),
                     InteractionTransition.CHANGE_ROOM,
                     GameWorld.getRoom("high_rollers_room")
             );
         } else {
             return new InteractionResult(
-                    "The bouncer denies you access, you don't have sufficient status",
+                     new Dialogue.System("The bouncer denies you access, you don't have sufficient status"),
                     InteractionTransition.NONE,
                     null
             );
@@ -170,7 +170,7 @@ public class CasinoRoom extends Room {
      */
     private InteractionResult enterCashOutRoom() {
         return new InteractionResult(
-                "You head to the cash out room",
+                new Dialogue.System("You head to the cash out room"),
                 InteractionTransition.CHANGE_ROOM,
                 GameWorld.getRoom("cash_out_room")
         );
@@ -192,7 +192,7 @@ public class CasinoRoom extends Room {
     private InteractionResult enterPanopticonRoom() {
         if (GameState.hasItem("level_two_disguise")) {
             return new InteractionResult(
-                    "Your fellow guard nods and lets you in",
+                    new Dialogue.System("Your fellow guard nods and lets you in"),
                     InteractionTransition.CHANGE_ROOM,
                     GameWorld.getRoom("panopticon_room")
             );
@@ -201,13 +201,13 @@ public class CasinoRoom extends Room {
                 GameState.hasItem("level_one_disguise") &&
                 GameState.hasItem("chef_permission")) {
             return new InteractionResult(
-                    "The guard nodes you in and points you toward the bosses room",
+                    new Dialogue.System("The guard nods you in and points you toward the bosses room"),
                     InteractionTransition.CHANGE_ROOM,
                     GameWorld.getRoom("panopticon_room")
             );
         } else {
             return new InteractionResult(
-                    "Hold up there buddy, you can't come in here",
+                    new Dialogue.Actor("Guard", "Hold up there buddy, you can't come in here"),
                     InteractionTransition.NONE,
                     null
             );
@@ -225,13 +225,13 @@ public class CasinoRoom extends Room {
     private InteractionResult enterMaintenanceRoom() {
         if (GameState.hasItem("maintenance_key")) {
             return new InteractionResult(
-                    "You use the key to enter the maintenance room",
+                    new Dialogue.System("You use the key to enter the maintenance room"),
                     InteractionTransition.CHANGE_ROOM,
                     GameWorld.getRoom("maintenance_room")
             );
         } else {
             return new InteractionResult(
-                    "You attempt to turn the door key, but its locked",
+                    new Dialogue.System("You attempt to turn the door key, but its locked"),
                     InteractionTransition.NONE,
                     null
             );
@@ -244,7 +244,7 @@ public class CasinoRoom extends Room {
      */
     private InteractionResult enterHotelLobbyRoom() {
         return new InteractionResult(
-                "You enter the hotel lobby",
+                new Dialogue.System("You enter the hotel lobby"),
                 InteractionTransition.CHANGE_ROOM,
                 GameWorld.getRoom("hotel_lobby_room")
         );
@@ -256,7 +256,7 @@ public class CasinoRoom extends Room {
      */
     private InteractionResult talkToContractors() {
         return new InteractionResult(
-                "You walk up to the contractors",
+                new Dialogue.System("You walk up to the contractors"),
                 InteractionTransition.PUSH,
                 GameWorld.getActor("contractors")
         );
@@ -264,7 +264,7 @@ public class CasinoRoom extends Room {
     // TODO reminder to make the gambling system.
     private InteractionResult startGambling() {
         return new InteractionResult(
-                "NOT IMPLEMENTED, JUST A PLACEHOLDER",
+                new Dialogue.Error("NOT IMPLEMENTED, JUST A PLACEHOLDER"),
                 InteractionTransition.NONE,
                 null
         );

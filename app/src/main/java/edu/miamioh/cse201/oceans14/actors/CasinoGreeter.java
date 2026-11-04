@@ -1,9 +1,6 @@
 package edu.miamioh.cse201.oceans14.actors;
 
-import edu.miamioh.cse201.oceans14.engine.ActionOption;
-import edu.miamioh.cse201.oceans14.engine.GameState;
-import edu.miamioh.cse201.oceans14.engine.InteractionResult;
-import edu.miamioh.cse201.oceans14.engine.InteractionTransition;
+import edu.miamioh.cse201.oceans14.engine.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +51,7 @@ public class CasinoGreeter extends Actor{
         // Return a No Such Action Exists InteractionResult.
         if(!this.hasValidAction(actionID)) {
             return new InteractionResult(
-                    "No Such Action Exists",
+                    new Dialogue.Error("No Such Action Exists"),
                     InteractionTransition.NONE,
                     null
             );
@@ -84,8 +81,8 @@ public class CasinoGreeter extends Actor{
     private InteractionResult askAboutCasino() {
         // TODO change hotel info
         return new InteractionResult(
-                "This is the Hotel Vista, the gem of Atlantic City. This is your top location for all" +
-                        " your gaming desires. A place where the daring come out with riches untold",
+                new Dialogue.Actor(this.getName(), "This is the Hotel Vista, the gem of Atlantic City. This is your top location for all" +
+                        " your gaming desires. A place where the daring come out with riches untold"),
                 InteractionTransition.NONE,
                 null
         );
@@ -102,8 +99,8 @@ public class CasinoGreeter extends Actor{
     private InteractionResult pickpocketGreeter() {
         GameState.addItem("staff_room_keycard");
         return new InteractionResult(
-                "You ask the greeter about the building's architecture. As he turns to examine "
-                        + "the archway you're pointing at, you slip his staff keycard out of his pocket.",
+                new Dialogue.System("You ask the greeter about the building's architecture. As he turns to examine "
+                        + "the archway you're pointing at, you slip his staff keycard out of his pocket."),
                 InteractionTransition.NONE,
                 null
         );
@@ -116,7 +113,7 @@ public class CasinoGreeter extends Actor{
      */
     private InteractionResult endConversation() {
         return new InteractionResult(
-                "You thank the greeter and go on your merry way.",
+                new Dialogue.System("You thank the greeter and go on your merry way."),
                 InteractionTransition.POP,
                 null
         );

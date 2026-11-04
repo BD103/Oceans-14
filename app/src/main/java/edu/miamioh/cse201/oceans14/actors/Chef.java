@@ -1,9 +1,6 @@
 package edu.miamioh.cse201.oceans14.actors;
 
-import edu.miamioh.cse201.oceans14.engine.ActionOption;
-import edu.miamioh.cse201.oceans14.engine.GameState;
-import edu.miamioh.cse201.oceans14.engine.InteractionResult;
-import edu.miamioh.cse201.oceans14.engine.InteractionTransition;
+import edu.miamioh.cse201.oceans14.engine.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +49,7 @@ public class Chef extends Actor {
         // Return a No Such Action Exists InteractionResult.
         if(!this.hasValidAction(actionID)) {
             return new InteractionResult(
-                    "No Such Action Exists",
+                    new Dialogue.Error("No Such Action Exists"),
                     InteractionTransition.NONE,
                     null
             );
@@ -88,8 +85,8 @@ public class Chef extends Actor {
         GameState.addItem("chef_permission");
         GameState.addFlag("taken_boss_food");
         return new InteractionResult(
-                "Yeah, actually, can you deliver this food to the big boss? " +
-                        "Here's a permission note so security will let you through.",
+                new Dialogue.Actor(this.getName(), "Yeah, actually, can you deliver this food to the big boss? " +
+                        "Here's a permission note so security will let you through."),
                 InteractionTransition.NONE,
                 null
         );
@@ -102,7 +99,7 @@ public class Chef extends Actor {
      */
     private InteractionResult endConversation() {
         return new InteractionResult(
-                "Chef looks away as he gets back to work",
+                new Dialogue.System("Chef looks away as he gets back to work"),
                 InteractionTransition.POP,
                 null
         );

@@ -1,9 +1,6 @@
 package edu.miamioh.cse201.oceans14.actors;
 
-import edu.miamioh.cse201.oceans14.engine.ActionOption;
-import edu.miamioh.cse201.oceans14.engine.GameState;
-import edu.miamioh.cse201.oceans14.engine.InteractionResult;
-import edu.miamioh.cse201.oceans14.engine.InteractionTransition;
+import edu.miamioh.cse201.oceans14.engine.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +111,7 @@ public class TemplateActor extends Actor {
         // Return a No Such Action Exists InteractionResult.
         if(!this.hasValidAction(actionID)) {
             return new InteractionResult(
-                    "No Such Action Exists",
+                    new Dialogue.Error("No Such Action Exists"),
                     InteractionTransition.NONE,
                     null
             );
@@ -146,8 +143,8 @@ public class TemplateActor extends Actor {
      */
     private InteractionResult functionName() {
         return new InteractionResult(
-                // TODO change function description
-                "THIS SHOULD NOT BE SHOWN CHECK" + this.getID(),
+                // TODO change dialogue message / type
+                new Dialogue.System("This is a system message for " + this.getID()),
                 // TODO Make sure the InteractionTransition is correct
                 InteractionTransition.CHANGE_ROOM,
                 // TODO make sure we point to the right room / actor
@@ -161,8 +158,8 @@ public class TemplateActor extends Actor {
      */
     private InteractionResult functionNameTwo() {
         return new InteractionResult(
-                // TODO change function description
-                "THIS SHOULD NOT BE SHOWN CHECK" + this.getID(),
+                // TODO change dialogue message / type
+                new Dialogue.Actor(this.getName(), "This is an actor message for " + this.getID()),
                 // TODO Make sure the InteractionTransition is correct
                 InteractionTransition.CHANGE_ROOM,
                 // TODO make sure we point to the right room / actor
@@ -178,7 +175,7 @@ public class TemplateActor extends Actor {
     private InteractionResult endConversation() {
         // TODO update end convo text
         return new InteractionResult(
-                "REPLACE ME",
+                new Dialogue.System("REPLACE ME"),
                 InteractionTransition.POP,
                 null
         );

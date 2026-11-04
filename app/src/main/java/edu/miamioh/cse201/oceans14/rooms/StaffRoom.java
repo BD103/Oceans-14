@@ -58,7 +58,7 @@ public class StaffRoom extends Room {
         // Return a No Such Action Exists InteractionResult.
         if(!this.hasValidAction(actionID)) {
             return new InteractionResult(
-                    "No Such Action Exists",
+                    new Dialogue.Error("No Such Action Exists"),
                     InteractionTransition.NONE,
                     null
             );
@@ -87,7 +87,7 @@ public class StaffRoom extends Room {
      */
     private InteractionResult enterCasinoRoom() {
         return new InteractionResult(
-                "You leave the staff room for the main casino area.",
+                new Dialogue.System("You leave the staff room for the main casino area."),
                 InteractionTransition.CHANGE_ROOM,
                 GameWorld.getRoom("casino_room")
         );
@@ -106,13 +106,13 @@ public class StaffRoom extends Room {
         // Validate having the level_one_disguise
         if (!GameState.hasItem("level_one_disguise")) {
             return new InteractionResult(
-                    "Anthony: Hey buddy, you might want to suit up first",
+                    new Dialogue.Actor(GameWorld.getActor("anthony").getName(), "Hey buddy, you might want to suit up first"),
                     InteractionTransition.NONE,
                     null
             );
         } else {
             return new InteractionResult(
-                    "You leave the staff area for the kitchen",
+                    new Dialogue.System("You leave the staff area for the kitchen"),
                     InteractionTransition.CHANGE_ROOM,
                     GameWorld.getRoom("kitchen_room")
             );
@@ -125,7 +125,7 @@ public class StaffRoom extends Room {
      */
     private InteractionResult talkToAnthony() {
         return new InteractionResult(
-                "You walk up to the bored looking staff member",
+                new Dialogue.System("You walk up to the bored looking staff member"),
                 InteractionTransition.PUSH,
                 GameWorld.getActor("anthony")
         );
@@ -143,7 +143,7 @@ public class StaffRoom extends Room {
         GameState.addItem("level_one_disguise");
         GameState.addFlag("taken_level_one_disguise");
         return new InteractionResult(
-                "After shuffling around through a few lockers, you find a waiter outfit in your size",
+                new Dialogue.System("After shuffling around through a few lockers, you find a waiter outfit in your size"),
                 InteractionTransition.NONE,
                 null
         );
