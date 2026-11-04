@@ -1,5 +1,7 @@
-package edu.miamioh.cse201.oceans14.ui;
+package edu.miamioh.cse201.oceans14.ui.views;
 
+import edu.miamioh.cse201.oceans14.ui.Rect;
+import edu.miamioh.cse201.oceans14.ui.View;
 import org.jline.terminal.Terminal;
 import org.jline.utils.InfoCmp.Capability;
 
@@ -32,12 +34,7 @@ public class StatsView implements View {
     }
 
     @Override
-    public void computeViewport(Rect parentViewport) {
-        int x = parentViewport.width() * 2 / 3 + 3;
-        int y = parentViewport.y() + 1;
-        int width = parentViewport.width() - x - 3;
-        int height = parentViewport.height() - 4;
-
-        this.viewport = new Rect(x, y, width, height);
+    public void resize(Rect viewport) {
+        this.viewport = viewport;
     }
 }

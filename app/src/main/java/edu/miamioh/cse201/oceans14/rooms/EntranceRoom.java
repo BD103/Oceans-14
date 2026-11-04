@@ -4,6 +4,7 @@ import edu.miamioh.cse201.oceans14.engine.ActionOption;
 import edu.miamioh.cse201.oceans14.engine.GameWorld;
 import edu.miamioh.cse201.oceans14.engine.InteractionResult;
 import edu.miamioh.cse201.oceans14.engine.InteractionTransition;
+import edu.miamioh.cse201.oceans14.engine.Dialogue;
 
 
 import java.util.List;
@@ -55,7 +56,7 @@ public class EntranceRoom extends Room {
         // Return a No Such Action Exists InteractionResult.
         if(!this.hasValidAction(actionID)) {
             return new InteractionResult(
-                    "No Such Action Exists",
+                    new Dialogue.Error("No Such Action Exists"),
                     InteractionTransition.NONE,
                     null
             );
@@ -87,7 +88,7 @@ public class EntranceRoom extends Room {
      */
     private InteractionResult enterCasino() {
         return new InteractionResult(
-                "You walk through the glass door and enter the casino.",
+                new Dialogue.System("You walk through the glass door and enter the casino."),
                 InteractionTransition.CHANGE_ROOM,
                 GameWorld.getRoom("casino_room")
                 );
@@ -101,7 +102,7 @@ public class EntranceRoom extends Room {
      */
     private InteractionResult talkToCrazy() {
         return new InteractionResult(
-                "The old man doesn't currently seem interested in talking",
+                new Dialogue.System("The old man doesn't currently seem interested in talking"),
                 InteractionTransition.NONE,
                 null// TODO add the crazy old man.
         );
@@ -113,7 +114,7 @@ public class EntranceRoom extends Room {
      */
     private InteractionResult talkToGreeter() {
         return new InteractionResult(
-                "You walk up to the Casino greeter.",
+                new Dialogue.System("You walk up to the Casino greeter."),
                 InteractionTransition.PUSH,
                 GameWorld.getActor("casino_greeter")
         );

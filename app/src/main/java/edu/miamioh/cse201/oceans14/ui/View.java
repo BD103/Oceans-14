@@ -9,7 +9,7 @@ import org.jline.terminal.Terminal;
  * <p>
  * Each view has a viewport, a {@link Rect} that represents a portion of the screen the view will
  * draw to. Well-behaved views do not draw outside their viewport. Views should store their
- * viewport as a private instance variable that is set by {@link computeViewport}.
+ * viewport as a private instance variable that is set by {@link resize}.
  */
 public interface View {
     /**
@@ -20,10 +20,10 @@ public interface View {
     void draw(Terminal term);
 
     /**
-     * Re-calculates the viewport, called when the view is first constructed and when the terminal
-     * has resized.
+     * Recalculates the size of child views, called when the view is first constructed and when the
+     * terminal has resized.
      *
-     * @param parentViewport The viewport of the parent view.
+     * @param viewport The new viewport of this view.
      */
-    void computeViewport(Rect parentViewport);
+    void resize(Rect viewport);
 }
