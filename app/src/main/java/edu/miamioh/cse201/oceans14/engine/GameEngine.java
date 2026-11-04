@@ -22,6 +22,7 @@ public class GameEngine {
 
         // Add the starting room to the interaction stack
         this.interactionStack.push(startingRoom);
+        GameState.setCurrentRoomID(startingRoom.getID());
     }
 
     /**
@@ -110,5 +111,11 @@ public class GameEngine {
 
         // return the InteractionResult
         return result;
+    }
+
+    public void reset() {
+        GameState.reset();
+        interactionStack.clear();
+        interactionStack.push(GameWorld.getRoom(GameState.getCurrentRoomID()));
     }
 }
