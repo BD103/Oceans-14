@@ -204,6 +204,8 @@ public class UI implements AutoCloseable {
     }
 
     private void processCommand(String command) {
+        this.dialogue.add(new Dialogue.Command(command));
+
         if (command.equals("help")) {
             this.dialogue.add(new Dialogue.System("help: shows available commands"));
             this.dialogue.add(new Dialogue.System("describe: describes current interaction"));
