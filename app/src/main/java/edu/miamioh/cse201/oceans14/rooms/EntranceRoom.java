@@ -76,7 +76,7 @@ public class EntranceRoom extends Room {
             // This is the case that we has programmers messed up. It gives an error
             // message so we can make sure all valid action ID's have corresponding functions.
             default -> throw new IllegalStateException(
-                    "A valid action does not exist in the performAction for " + this.getID() +
+                    "A valid action does not exist in the performAction for " + this.id +
                             "\n Please make sure the list of available actions all have an action function."
             );
         };

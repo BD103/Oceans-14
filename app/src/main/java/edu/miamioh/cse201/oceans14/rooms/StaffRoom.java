@@ -75,7 +75,7 @@ public class StaffRoom extends Room {
             case "grab_staff_uniform" -> grabStaffUniform();
             // Detect action IDs that are available but lack an implementation.
             default -> throw new IllegalStateException(
-                    "A valid action does not exist in the performAction for " + this.getID() +
+                    "A valid action does not exist in the performAction for " + this.id +
                             "\n Please make sure the list of available actions all have an action function."
             );
         };
@@ -106,7 +106,7 @@ public class StaffRoom extends Room {
         // Validate having the level_one_disguise
         if (!GameState.hasItem("level_one_disguise")) {
             return new InteractionResult(
-                    new Dialogue.Actor(GameWorld.getActor("anthony").getName(), "Hey buddy, you might want to suit up first"),
+                    new Dialogue.Actor(GameWorld.getActor("anthony").name, "Hey buddy, you might want to suit up first"),
                     InteractionTransition.NONE,
                     null
             );

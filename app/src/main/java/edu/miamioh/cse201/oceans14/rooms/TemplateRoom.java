@@ -49,7 +49,7 @@ public class TemplateRoom extends Room {
     @Override
     public String getDescription() {
         // TODO Replace the description Text
-        return "Replace the template text for " + this.getID();
+        return "Replace the template text for " + this.id;
     }
 
     /**
@@ -101,7 +101,7 @@ public class TemplateRoom extends Room {
             case "function_name_two" -> functionNameTwo();
             // Detect action IDs that are available but lack an implementation.
             default -> throw new IllegalStateException(
-                    "A valid action does not exist in the performAction for " + this.getID() +
+                    "A valid action does not exist in the performAction for " + this.id +
                             "\n Please make sure the list of available actions all have an action function."
             );
         };
@@ -115,7 +115,7 @@ public class TemplateRoom extends Room {
     private InteractionResult functionName() {
         return new InteractionResult(
                 // TODO change dialogue message / type
-                new Dialogue.System("This is a system message for " + this.getID()),
+                new Dialogue.System("This is a system message for " + this.id),
                 // TODO Make sure the InteractionTransition is correct
                 InteractionTransition.CHANGE_ROOM,
                 // TODO make sure we point to the right room / actor
@@ -130,7 +130,7 @@ public class TemplateRoom extends Room {
     private InteractionResult functionNameTwo() {
         return new InteractionResult(
                 // TODO change dialogue message / type
-                new Dialogue.Actor("Actor Name", "This is an actor message for " + this.getID()),
+                new Dialogue.Actor("Actor Name", "This is an actor message for " + this.id),
                 // TODO Make sure the InteractionTransition is correct
                 InteractionTransition.CHANGE_ROOM,
                 // TODO make sure we point to the right room / actor

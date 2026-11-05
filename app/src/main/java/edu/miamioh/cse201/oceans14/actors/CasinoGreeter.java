@@ -67,7 +67,7 @@ public class CasinoGreeter extends Actor{
             case "end_conversation" -> endConversation();
             // Detect action IDs that are available but lack an implementation.
             default -> throw new IllegalStateException(
-                    "A valid action does not exist in the performAction for " + this.getID() +
+                    "A valid action does not exist in the performAction for " + this.id +
                             "\n Please make sure the list of available actions all have an action function."
             );
         };
@@ -81,7 +81,7 @@ public class CasinoGreeter extends Actor{
     private InteractionResult askAboutCasino() {
         // TODO change hotel info
         return new InteractionResult(
-                new Dialogue.Actor(this.getName(), "This is the Hotel Vista, the gem of Atlantic City. This is your top location for all" +
+                new Dialogue.Actor(this.name, "This is the Hotel Vista, the gem of Atlantic City. This is your top location for all" +
                         " your gaming desires. A place where the daring come out with riches untold"),
                 InteractionTransition.NONE,
                 null

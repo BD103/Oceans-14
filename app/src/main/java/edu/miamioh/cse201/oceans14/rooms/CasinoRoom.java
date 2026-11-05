@@ -86,7 +86,7 @@ public class CasinoRoom extends Room {
             case "start_gambling" -> startGambling(); // TODO replace me
             // Detect action IDs that are available but lack an implementation.
             default -> throw new IllegalStateException(
-                    "A valid action does not exist in the performAction for " + this.getID() +
+                    "A valid action does not exist in the performAction for " + this.id +
                             "\n Please make sure the list of available actions all have an action function."
             );
         };

@@ -74,7 +74,7 @@ public class TemplateActor extends Actor {
     @Override
     public String getDescription() {
         // TODO replace description text
-        return "Replace the template text for " + this.getID();
+        return "Replace the template text for " + this.id;
     }
 
     // TODO update getAvailableActions
@@ -130,7 +130,7 @@ public class TemplateActor extends Actor {
             case "end_conversation" -> endConversation();
             // Detect action IDs that are available but lack an implementation.
             default -> throw new IllegalStateException(
-                    "A valid action does not exist in the performAction for " + this.getID() +
+                    "A valid action does not exist in the performAction for " + this.id +
                             "\n Please make sure the list of available actions all have an action function."
             );
         };
@@ -144,7 +144,7 @@ public class TemplateActor extends Actor {
     private InteractionResult functionName() {
         return new InteractionResult(
                 // TODO change dialogue message / type
-                new Dialogue.System("This is a system message for " + this.getID()),
+                new Dialogue.System("This is a system message for " + this.id),
                 // TODO Make sure the InteractionTransition is correct
                 InteractionTransition.CHANGE_ROOM,
                 // TODO make sure we point to the right room / actor
@@ -159,7 +159,7 @@ public class TemplateActor extends Actor {
     private InteractionResult functionNameTwo() {
         return new InteractionResult(
                 // TODO change dialogue message / type
-                new Dialogue.Actor(this.getName(), "This is an actor message for " + this.getID()),
+                new Dialogue.Actor(this.name, "This is an actor message for " + this.id),
                 // TODO Make sure the InteractionTransition is correct
                 InteractionTransition.CHANGE_ROOM,
                 // TODO make sure we point to the right room / actor
