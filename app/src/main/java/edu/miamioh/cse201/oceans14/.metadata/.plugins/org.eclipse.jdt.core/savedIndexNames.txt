@@ -1,0 +1,5 @@
+INDEX VERSION 1.134+C:\Users\lrrot\Oceans-14\app\src\main\java\edu\miamioh\cse201\oceans14\.metadata\.plugins\org.eclipse.jdt.core
+3653075399.index
+1865797976.index
+1879934116.index
+544466835.index

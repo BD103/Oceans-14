@@ -176,7 +176,7 @@ public class UI implements AutoCloseable {
         if (input instanceof Input.Special inputSpecial) {
             switch (inputSpecial) {
                 case ENTER -> {
-                    // TODO: sent buffer's contents to command parsing system
+                    Dialogue.interpret(input, )
                     this.commandBuffer.clear();
                     this.drawRequested = true;
                 }
