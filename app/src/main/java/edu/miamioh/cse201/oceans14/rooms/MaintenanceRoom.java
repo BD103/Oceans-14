@@ -5,6 +5,11 @@ import edu.miamioh.cse201.oceans14.engine.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The maintenance room, which contains the Anthony's sticky note about borrowing the screwdriver
+ * and the vent entrance into the secure vent room. This room is inaccessible without the
+ * maintenance key.
+ */
 public class MaintenanceRoom extends Room {
     public MaintenanceRoom() {
         super("maintenance_room", "Maintenance Room");
