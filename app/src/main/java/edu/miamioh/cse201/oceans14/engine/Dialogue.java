@@ -40,6 +40,18 @@ public sealed interface Dialogue {
     }
 
     /**
+     * Represents a command that was run by the player.
+     *
+     * @param command The command run.
+     */
+    record Command(String command) implements Dialogue {
+        @Override
+        public String display() {
+            return "> " + this.command;
+        }
+    }
+
+    /**
      * An error message.
      * <p>
      * This should be used when the player tries to do something impossible, such as typing in an
