@@ -45,6 +45,7 @@ public class GameWorld {
         registerRoom(new CasinoRoom());
         registerRoom(new StaffRoom());
         registerRoom(new KitchenRoom());
+        registerRoom(new MaintenanceRoom());
     }
 
     /**
@@ -98,7 +99,6 @@ public class GameWorld {
     private static void registerFlags() {
         registerFlag("taken_level_one_disguise");
         registerFlag("taken_boss_food");
-        registerFlag("taken_screwdriver");
     }
 
     // Registration Methods
