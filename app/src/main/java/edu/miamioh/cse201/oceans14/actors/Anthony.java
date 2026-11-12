@@ -32,7 +32,7 @@ public class Anthony extends Actor {
         // Area for conditional Interactions
 
         // Only offer screwdriver once
-        if (!GameState.flagIsActive("taken_screwdriver") && GameState.hasItem("screwdriver_checkout_note")) {
+        if (!GameState.hasItem("screwdriver") && GameState.hasItem("screwdriver_checkout_note")) {
             actions.add(new ActionOption("ask_for_screwdriver", "Ask For Screwdriver"));
         }
 
@@ -95,15 +95,13 @@ public class Anthony extends Actor {
     /**
      * Allows the player to retrieve the screwdriver from Anthony.
      *
-     * Requires the player to possess the screwdriver checkout note.
-     * Adds the screwdriver to the player's inventory and activates
-     * the taken_screwdriver flag, preventing repeated collection.
+     * Requires the player to possess the screwdriver checkout note and not the screwdriver item.
+     * Adds the screwdriver to the player's inventory.
      *
      * @return a NONE result confirming the screwdriver was received
      */
     private InteractionResult askForScrewdriver() {
         GameState.addItem("screwdriver");
-        GameState.addFlag("taken_screwdriver");
         return new InteractionResult(
                 new Dialogue.Actor(this.getName(), "Oh shoot, I forgot I borrowed that! Here you go. Just return it to the storage room when you're done."),
                 InteractionTransition.NONE,

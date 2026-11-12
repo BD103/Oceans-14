@@ -98,7 +98,6 @@ public class GameWorld {
     private static void registerFlags() {
         registerFlag("taken_level_one_disguise");
         registerFlag("taken_boss_food");
-        registerFlag("taken_screwdriver");
     }
 
     // Registration Methods
