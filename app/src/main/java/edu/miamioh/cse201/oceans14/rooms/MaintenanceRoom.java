@@ -49,7 +49,7 @@ public class MaintenanceRoom extends Room {
             case "inspect_vent" -> inspectVent();
             case "inspect_workbench" -> inspectWorkbench();
             case "inspect_shelves" -> inspectShelves();
-            case "exit_maintenance_room" -> exitRoom();
+            case "enter_casino_room" -> enterCasinoRoom();
             // Detect action IDs that are available but lack an implementation.
             default -> throw new IllegalStateException(
                     "A valid action does not exist in the performAction for " + this.getID() +
@@ -91,7 +91,7 @@ public class MaintenanceRoom extends Room {
         );
     }
 
-    private InteractionResult exitRoom() {
+    private InteractionResult enterCasinoRoom() {
         return new InteractionResult(
                 new Dialogue.System("You leave the maintenance room."),
                 InteractionTransition.CHANGE_ROOM,
