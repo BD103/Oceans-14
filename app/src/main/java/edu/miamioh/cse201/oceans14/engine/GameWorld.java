@@ -45,6 +45,7 @@ public class GameWorld {
         registerRoom(new CasinoRoom());
         registerRoom(new StaffRoom());
         registerRoom(new KitchenRoom());
+        registerRoom(new MaintenanceRoom());
     }
 
     /**
