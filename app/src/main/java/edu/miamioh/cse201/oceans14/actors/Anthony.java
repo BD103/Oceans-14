@@ -73,7 +73,7 @@ public class Anthony extends Actor {
             case "end_conversation" -> endConversation();
             // Detect action IDs that are available but lack an implementation.
             default -> throw new IllegalStateException(
-                    "A valid action does not exist in the performAction for " + this.getID() +
+                    "A valid action does not exist in the performAction for " + this.id +
                             "\n Please make sure the list of available actions all have an action function."
             );
         };
@@ -86,7 +86,7 @@ public class Anthony extends Actor {
      */
     private InteractionResult askAboutDay() {
         return new InteractionResult(
-                new Dialogue.Actor(this.getName(), "My day? Eh, I've had better, and I've had worse."),
+                new Dialogue.Actor(this.name, "My day? Eh, I've had better, and I've had worse."),
                 InteractionTransition.NONE,
                 null
         );
@@ -103,7 +103,7 @@ public class Anthony extends Actor {
     private InteractionResult askForScrewdriver() {
         GameState.addItem("screwdriver");
         return new InteractionResult(
-                new Dialogue.Actor(this.getName(), "Oh shoot, I forgot I borrowed that! Here you go. Just return it to the storage room when you're done."),
+                new Dialogue.Actor(this.name, "Oh shoot, I forgot I borrowed that! Here you go. Just return it to the storage room when you're done."),
                 InteractionTransition.NONE,
                 null
         );
