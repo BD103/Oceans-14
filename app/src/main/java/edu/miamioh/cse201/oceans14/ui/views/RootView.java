@@ -1,5 +1,6 @@
 package edu.miamioh.cse201.oceans14.ui.views;
 
+import edu.miamioh.cse201.oceans14.engine.GameEngine;
 import edu.miamioh.cse201.oceans14.ui.DialogueEntries;
 import edu.miamioh.cse201.oceans14.ui.Rect;
 import edu.miamioh.cse201.oceans14.ui.View;
@@ -21,12 +22,13 @@ public class RootView implements View {
 
     // Child views
     private final DialogueView dialogueView;
-    private final StatsView statsView = new StatsView();
+    private final StatsView statsView;
     private final CommandView commandView;
 
-    public RootView(CommandBuffer commandBuffer, DialogueEntries dialogue) {
+    public RootView(CommandBuffer commandBuffer, DialogueEntries dialogue, GameEngine engine) {
         this.dialogueView = new DialogueView(dialogue);
-        commandView = new CommandView(commandBuffer);
+        this.statsView = new StatsView(engine);
+        this.commandView = new CommandView(commandBuffer);
     }
 
     @Override

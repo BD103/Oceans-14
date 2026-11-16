@@ -1,5 +1,6 @@
 package edu.miamioh.cse201.oceans14.ui.views;
 
+import edu.miamioh.cse201.oceans14.engine.GameEngine;
 import edu.miamioh.cse201.oceans14.ui.Rect;
 import edu.miamioh.cse201.oceans14.ui.View;
 import org.jline.terminal.Terminal;
@@ -12,8 +13,13 @@ import java.io.PrintWriter;
  */
 public class StatsView implements View {
     private Rect viewport;
+    private final GameEngine engine;
 
     private final static String TITLE = "Ocean's 14";
+
+    public StatsView(GameEngine engine) {
+        this.engine = engine;
+    }
 
     @Override
     public void draw(Terminal term) {
