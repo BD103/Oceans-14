@@ -18,9 +18,8 @@ public class Elevator extends Actor {
      */
     @Override
     public String getDescription() {
-        // TODO replace description text
         if (GameState.flagIsActive("elevator_broken")) {
-            return "The elevator is broken. The doors are stuck and command console unresponsive.";
+            return "The elevator is broken. The doors are stuck, and the control panel is unresponsive.";
         } else {
             return "An old elevator way past its prime. Its worn control panel has a numeric keypad. Enter a floor number to operate it.";
         }
@@ -72,11 +71,10 @@ public class Elevator extends Actor {
     }
 
     /**
-     * Performs the action ID requested
-     * @param actionID The string ID of the interaction to run
-     * @return InteractionResult representing the outcome of the action.
-     *         In the case of an invalid action returns "No Such Action Exists" in the form
-     *         of an interaction result.
+     * Handles a floor number or the command to leave the elevator.
+     *
+     * @param actionID the floor number or exit command entered by the player
+     * @return the interaction result, or an error if the input is invalid
      */
     @Override
     public InteractionResult performAction(String actionID) {
@@ -203,14 +201,9 @@ public class Elevator extends Actor {
     }
 
     /**
-     * Ends the conversation
-     *
-     * @return a POP result returning to the previous interaction
-     */
-    /**
      * Ends the elevator interaction and returns the player to the hotel lobby.
      *
-     * @return a POP result returning to the previous interaction.
+     * @return a result that pops the elevator off the interaction stack
      */
     private InteractionResult endConversation() {
         return new InteractionResult(

@@ -157,7 +157,7 @@ public class Contractors extends Actor {
     private InteractionResult reportBrokenElevator() {
         GameState.addFlag("vault_security_disabled");
         return new InteractionResult(
-                new Dialogue.System("You inform the contractors the elevator is broken again. After some frustrated aruging a set of them go off to investigate. Not long after the lights flicker and a few systems seem to go dark. It appears they have shut down some of the power to security systems while they make their repairs."),
+                new Dialogue.System("You tell the contractors the elevator is broken again. After some arguing, a few of them go to investigate. A moment later, the lights flicker. It looks like they’ve cut power to some of the security systems while they make repairs."),
                 InteractionTransition.NONE,
                 null
         );
