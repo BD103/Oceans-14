@@ -129,22 +129,21 @@ public class Contractors extends Actor {
      * @return a NONE result describing the outcome of the transaction.
      */
     private InteractionResult purchaseVentMap() {
-        if (GameState.getChipCount() < VENT_MAP_PRICE) {
+        if (GameState.removeChips(VENT_MAP_PRICE)) {
+            GameState.addItem("vent_map");
+
+            return new InteractionResult(
+                    new Dialogue.Actor("Contractor", "Pleasure doing business with you. Now, keep that thing hidden, alright? Officially, this map doesn't exist, and we never had this conversation. If the boss asks, I was on my lunch break."),
+                    InteractionTransition.NONE,
+                    null
+            );
+        } else {
             return new InteractionResult(
                     new Dialogue.Actor("Contractor", "Hey, I said " + VENT_MAP_PRICE + " chips. I'm not risking my job for pocket change. Come back when you've got the money, and don't go telling the other guys what we talked about."),
                     InteractionTransition.NONE,
                     null
             );
         }
-
-        GameState.removeChips(VENT_MAP_PRICE);
-        GameState.addItem("vent_map");
-
-        return new InteractionResult(
-                new Dialogue.Actor("Contractor", "Pleasure doing business with you. Now, keep that thing hidden, alright? Officially, this map doesn't exist, and we never had this conversation. If the boss asks, I was on my lunch break."),
-                InteractionTransition.NONE,
-                null
-        );
     }
 
     /**
