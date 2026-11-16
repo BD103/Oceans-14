@@ -18,7 +18,6 @@ public class HotelStaff extends Actor {
      */
     @Override
     public String getDescription() {
-        // TODO replace description text
         return "Two ladies behind the hotel front desk, whispering about the latest casino gossip.";
     }
 
