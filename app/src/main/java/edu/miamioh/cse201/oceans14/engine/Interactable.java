@@ -10,8 +10,8 @@ import java.util.Objects;
  * to interact with them through a consistent interface.
  */
 public abstract class Interactable {
-    public final String id;
-    public final String name;
+    private final String id;
+    private final String name;
 
     /**
      * Constructs a new interactable.
@@ -22,6 +22,20 @@ public abstract class Interactable {
     protected Interactable(String id, String name) {
         this.id = Objects.requireNonNull(id);
         this.name = Objects.requireNonNull(name);
+    }
+
+    /**
+     * @return The internal identifier of the interactable.
+     */
+    public String getID() {
+        return id;
+    }
+
+    /**
+     * @return The player-facing name of the interactable.
+     */
+    public String getName() {
+        return name;
     }
 
     /**

@@ -121,9 +121,9 @@ public class GameWorld {
      * @throws IllegalArgumentException if the given room ID already exists
      */
     private static void registerRoom(Room room) {
-        Room previous = rooms.putIfAbsent(room.id, room);
+        Room previous = rooms.putIfAbsent(room.getID(), room);
         if (previous != null) {
-            throw new IllegalArgumentException("Duplicate Room ID: " + room.id);
+            throw new IllegalArgumentException("Duplicate Room ID: " + room.getID());
         }
     }
 
@@ -133,9 +133,9 @@ public class GameWorld {
      * @throws IllegalArgumentException if the given actor ID already exists
      */
     private static void registerActor(Actor actor) {
-        Actor previous = actors.putIfAbsent(actor.id, actor);
+        Actor previous = actors.putIfAbsent(actor.getID(), actor);
         if (previous != null) {
-            throw new IllegalArgumentException("Duplicate Actor ID: " + actor.id);
+            throw new IllegalArgumentException("Duplicate Actor ID: " + actor.getID());
         }
     }
 
