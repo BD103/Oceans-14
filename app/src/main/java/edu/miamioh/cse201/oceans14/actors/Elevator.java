@@ -38,6 +38,7 @@ public class Elevator extends Actor {
     public List<ActionOption> getAvailableActions() {
         List<ActionOption> actions = new ArrayList<>();
 
+        // TODO: rephrase this so that the player doesn't confuse the elevator for a person
         actions.add(new ActionOption("end_conversation", "End the conversation"));
 
         return List.copyOf(actions);
@@ -206,12 +207,19 @@ public class Elevator extends Actor {
      * @return a result that pops the elevator off the interaction stack
      */
     private InteractionResult endConversation() {
-        return new InteractionResult(
-                new Dialogue.System("You step away from the elevator and return to the hotel lobby."),
-                InteractionTransition.POP,
-                null
-        );
+        if (GameState.flagIsActive("elevator_broken")) {
+            return new InteractionResult(
+                    new Dialogue.System("You pry open the doors of the broken elevator and return to the hotel lobby."),
+                    InteractionTransition.POP,
+                    null
+            );
+        } else {
+            return new InteractionResult(
+                    new Dialogue.System("You step out of the elevator and return to the hotel lobby."),
+                    InteractionTransition.POP,
+                    null
+            );
+        }
+
     }
-
-
 }

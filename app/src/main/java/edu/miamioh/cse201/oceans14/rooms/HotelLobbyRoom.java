@@ -169,7 +169,7 @@ public class HotelLobbyRoom extends Room {
      */
     private InteractionResult talkToElevator() {
         return new InteractionResult(
-                new Dialogue.System(GameWorld.getActor("elevator").getDescription()),
+                new Dialogue.System("You walk into the elevator."),
                 InteractionTransition.PUSH,
                 GameWorld.getActor("elevator")
         );
