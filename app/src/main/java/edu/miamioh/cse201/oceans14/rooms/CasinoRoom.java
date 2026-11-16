@@ -256,11 +256,12 @@ public class CasinoRoom extends Room {
      */
     private InteractionResult talkToContractors() {
         return new InteractionResult(
-                new Dialogue.System("You walk up to the contractors"),
+                new Dialogue.System("You walk over to the contractors working on the casino floor."),
                 InteractionTransition.PUSH,
                 GameWorld.getActor("contractors")
         );
     }
+
     // TODO reminder to make the gambling system.
     private InteractionResult startGambling() {
         return new InteractionResult(

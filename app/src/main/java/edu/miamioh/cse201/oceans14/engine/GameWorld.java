@@ -46,6 +46,7 @@ public class GameWorld {
         registerRoom(new StaffRoom());
         registerRoom(new KitchenRoom());
         registerRoom(new MaintenanceRoom());
+        registerRoom(new HotelLobbyRoom());
     }
 
     /**
@@ -55,6 +56,9 @@ public class GameWorld {
         registerActor(new CasinoGreeter());
         registerActor(new Anthony());
         registerActor(new Chef());
+        registerActor(new HotelStaff());
+        registerActor(new Elevator());
+        registerActor(new Contractors());
     }
 
     /**
@@ -94,11 +98,18 @@ public class GameWorld {
                 "screwdriver_checkout_note",
                 "Checkout Note",
                 "Yo, borrowing this to fix a shelf - Anthony"));
+        registerItem(new Item("vent_map",
+                "Vent Map",
+                "A detailed map of the casino's ventilation system, including the locations of its security lasers."));
     }
 
     private static void registerFlags() {
         registerFlag("taken_level_one_disguise");
         registerFlag("taken_boss_food");
+        registerFlag("pickpocketed_hotel_guest");
+        registerFlag("elevator_broken");
+        registerFlag("contractor_map_offer");
+        registerFlag("vault_security_disabled");
     }
 
     // Registration Methods
