@@ -63,13 +63,6 @@ public class GameEngine {
     public InteractionResult performAction(String actionToPerform) {
         Interactable controllingInteractable = getCurrentInteractable();
 
-        // Validate that the desired action actually exists and is valid to run
-        if (!(controllingInteractable.hasValidAction(actionToPerform))) {
-            // If the action is none-existent or contains unmet requirements
-            // returns an InteractionResult with the message "Invalid Action"
-            return new InteractionResult(new Dialogue.Error("Invalid Action"), InteractionTransition.NONE, null);
-        }
-
         // If the action is valid, tell the interactable to run.
         InteractionResult result = controllingInteractable.performAction(actionToPerform);
 
