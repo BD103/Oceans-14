@@ -40,6 +40,9 @@ public class InputParser {
             case 8:
             case 127:
                 return Input.Special.DELETE;
+            // HT (Horizontal Tab)
+            case 9:
+                return Input.Special.TAB;
             // EOF or Ctrl+C
             case -1:
             case 3:

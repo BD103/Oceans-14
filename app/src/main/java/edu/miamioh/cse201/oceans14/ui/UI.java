@@ -191,6 +191,9 @@ public class UI implements AutoCloseable {
                     this.commandBuffer.delete();
                     this.drawRequested = true;
                 }
+                case TAB -> {
+                    // TODO: auto-complete
+                }
                 case LEFT -> {
                     this.commandBuffer.left();
                     this.drawRequested = true;
