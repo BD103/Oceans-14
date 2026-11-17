@@ -89,7 +89,7 @@ public class HighRollersRoom extends Room{
      */
     private InteractionResult talkToDealer() {
         return new InteractionResult(
-                new Dialogue.System("The old man doesn't currently seem interested in talking"),
+                new Dialogue.System("You walk up to the primly dressed casino dealer."),
                 InteractionTransition.PUSH,
                 GameWorld.getActor("dealer")
         );
