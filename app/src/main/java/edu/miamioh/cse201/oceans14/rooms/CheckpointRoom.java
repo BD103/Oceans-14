@@ -56,13 +56,13 @@ public class CheckpointRoom extends Room {
     private InteractionResult talkToGuard() {
         if (GameState.hasItem("level_two_disguise")) {
             return new InteractionResult(
-                    new Dialogue.System("You walk up to the guard at the end of the hallway"),
+                    new Dialogue.System("You walk up to the guard at the end of the hallway."),
                     InteractionTransition.PUSH,
                     GameWorld.getActor("checkpoint_guard")
             );
         } else {
             return new InteractionResult(
-                    new Dialogue.Actor(GameWorld.getActor("checkpoint_guard").getName(), "Hey, you're not a guard! Go back to the casino floor!"),
+                    new Dialogue.Actor("Guard", "Hey, you're not a guard! Go back to the casino floor!"),
                     InteractionTransition.CHANGE_ROOM,
                     GameWorld.getRoom("casino_room")
             );

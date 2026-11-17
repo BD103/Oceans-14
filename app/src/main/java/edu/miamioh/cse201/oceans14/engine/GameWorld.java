@@ -57,6 +57,7 @@ public class GameWorld {
         registerActor(new CasinoGreeter());
         registerActor(new Anthony());
         registerActor(new Chef());
+        registerActor(new CheckpointGuard());
         registerActor(new HotelStaff());
         registerActor(new Elevator());
         registerActor(new Contractors());
@@ -111,6 +112,7 @@ public class GameWorld {
         registerFlag("elevator_broken");
         registerFlag("contractor_map_offer");
         registerFlag("vault_security_disabled");
+        registerFlag("password_told_to_checkpoint_guard");
     }
 
     // Registration Methods
