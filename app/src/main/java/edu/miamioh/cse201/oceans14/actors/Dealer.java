@@ -30,9 +30,6 @@ public class Dealer extends Actor{
         //Can ask for rules any number of times, only after asking about the games
         if(GameState.flagIsActive("asked_about_games")) {
             actions.add(new ActionOption("rules_for_slots", "Ask her about the rules of the slot machines"));
-        }
-
-        if(GameState.flagIsActive("asked_about_games")) {
             actions.add(new ActionOption("rules_for_blackjack", "Ask her about the rules of blackjack"));
         }
 
@@ -106,8 +103,6 @@ public class Dealer extends Actor{
         // TODO temp dialogue, change later
         GameState.addFlag("asked_about_games");
         return new InteractionResult(
-                new Dialogue.Actor(this.getName(), "There are three major games offered here: blackjack, slots, and +" +
-                        " baccarat."),
                 InteractionTransition.NONE,
                 null
         );

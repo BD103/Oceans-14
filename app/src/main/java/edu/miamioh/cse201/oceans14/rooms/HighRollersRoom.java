@@ -62,8 +62,8 @@ public class HighRollersRoom extends Room{
         // Additional Note: this is an "enhanced" switch statement which helps prevent fall through.
         // Pretty neat idea!
         return switch (actionID) {
-            case "enter_casino" -> enterCasinoRoom();
-            case "talk_to_crazy" -> talkToDealer();
+            case "enter_main_room" -> enterCasinoRoom();
+            case "talk_to_dealer" -> talkToDealer();
             default -> throw new IllegalStateException(
                     "A valid action does not exist in the performAction for " + this.getID() +
                             "\n Please make sure the list of available actions all have an action function."
@@ -89,7 +89,7 @@ public class HighRollersRoom extends Room{
      */
     private InteractionResult talkToDealer() {
         return new InteractionResult(
-                new Dialogue.System("The old man doesn't currently seem interested in talking"),
+                new Dialogue.System("You walk up to the primly dressed casino dealer."),
                 InteractionTransition.PUSH,
                 GameWorld.getActor("dealer")
         );
