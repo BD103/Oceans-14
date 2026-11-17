@@ -1,5 +1,7 @@
 package edu.miamioh.cse201.oceans14.ui.views;
 
+import edu.miamioh.cse201.oceans14.engine.GameEngine;
+import edu.miamioh.cse201.oceans14.engine.GameWorld;
 import edu.miamioh.cse201.oceans14.ui.DialogueEntries;
 import edu.miamioh.cse201.oceans14.ui.Rect;
 import edu.miamioh.cse201.oceans14.ui.TermSnapshot;
@@ -17,7 +19,7 @@ public class TestRootView {
         Size size = term.getSize();
         Rect viewport = new Rect(0, 0, size.getColumns(), size.getRows());
 
-        RootView view = new RootView(new CommandBuffer(), new DialogueEntries());
+        RootView view = new RootView(new CommandBuffer(), new DialogueEntries(), new GameEngine(GameWorld.getRoom("entrance_room")));
         view.resize(viewport);
         view.draw(term);
     }
@@ -27,7 +29,7 @@ public class TestRootView {
         Size size = term.getSize();
         Rect viewport = new Rect(0, 0, size.getColumns(), size.getRows());
 
-        RootView view = new RootView(new CommandBuffer(), new DialogueEntries());
+        RootView view = new RootView(new CommandBuffer(), new DialogueEntries(), new GameEngine(GameWorld.getRoom("entrance_room")));
         view.resize(viewport);
         view.draw(term);
     }
