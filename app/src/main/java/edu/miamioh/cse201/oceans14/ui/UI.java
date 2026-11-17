@@ -194,9 +194,10 @@ public class UI implements AutoCloseable {
                 }
                 case TAB -> {
                     // Tries to find a match that would complete this command at the cursor.
-                    String match = Completions.complete(this.commandBuffer.getBufferToCursor(), this.engine);
+                    String match = Completions.complete(this.commandBuffer.getBuffer(), this.engine);
 
                     if (match != null) {
+                        this.commandBuffer.toEnd();
                         this.commandBuffer.insert(match);
                         this.drawRequested = true;
                     }

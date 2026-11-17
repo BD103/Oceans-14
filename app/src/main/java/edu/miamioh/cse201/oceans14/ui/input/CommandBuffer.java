@@ -76,22 +76,17 @@ public class CommandBuffer {
     }
 
     /**
+     * Moves the cursor to the very end of the buffer on the right.
+     */
+    public void toEnd() {
+        this.cursor = this.buffer.length();
+    }
+
+    /**
      * @return The contents of the buffer.
      */
     public String getBuffer() {
         return this.buffer.toString();
-    }
-
-    /**
-     * This returns a string of all characters to the left of the cursor in the buffer.
-     * <p>
-     * For example, if the cursor was set to 0, this would return an empty string. If the cursor
-     * was in the middle of the buffer, this will return the first half as a string.
-     *
-     * @return The contents of the buffer to the left of the cursor.
-     */
-    public String getBufferToCursor() {
-        return this.buffer.substring(0, this.cursor);
     }
 
     /**
