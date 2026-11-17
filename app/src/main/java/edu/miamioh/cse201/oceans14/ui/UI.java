@@ -34,10 +34,9 @@ public class UI implements AutoCloseable {
 
     private final InputParser parser;
     private final CommandBuffer commandBuffer = new CommandBuffer();
-
     private final DialogueEntries dialogue = new DialogueEntries();
 
-    private final RootView rootView = new RootView(this.commandBuffer, this.dialogue);
+    private final RootView rootView;
 
     /**
      * Set to true when the terminal is resized, signals that the UI should be redrawn.
@@ -65,6 +64,8 @@ public class UI implements AutoCloseable {
         // Put the terminal in application mode. This ensures that both Windows and Unix input
         // arrow keys using the same format (`\x1bOC` instead of `\x1b[C`, for example).
         this.term.puts(Capability.keypad_xmit);
+
+        this.rootView = new RootView(this.commandBuffer, this.dialogue, this.engine);
 
         // Configure the root view (and all of its children) with the terminal's current size.
         this.resize();
