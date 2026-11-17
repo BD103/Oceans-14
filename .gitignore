@@ -10,4 +10,4 @@ build
 # IntelliJ IDEA user-specific configuration
 .idea
 
-#.metadata/
+.metadata/
