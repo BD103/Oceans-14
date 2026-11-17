@@ -84,7 +84,7 @@ public class CasinoRoom extends Room {
             case "enter_maintenance_room" -> enterMaintenanceRoom();
             case "enter_hotel_lobby_room" -> enterHotelLobbyRoom();
             case "talk_to_contractors" -> talkToContractors();
-            case "talk_to_dealer" -> startGambling();
+            case "talk_to_dealer" -> talkToDealer();
             // Detect action IDs that are available but lack an implementation.
             default -> throw new IllegalStateException(
                     "A valid action does not exist in the performAction for " + this.getID() +
@@ -263,9 +263,9 @@ public class CasinoRoom extends Room {
         );
     }
     // TODO reminder to make the gambling system.
-    private InteractionResult startGambling() {
+    private InteractionResult talkToDealer() {
         return new InteractionResult(
-                new Dialogue.Error("NOT IMPLEMENTED, JUST A PLACEHOLDER"),
+                new Dialogue.System("You walk to a well-dressed woman who seems to be running the gambling games"),
                 InteractionTransition.PUSH,
                 GameWorld.getActor("dealer")
         );

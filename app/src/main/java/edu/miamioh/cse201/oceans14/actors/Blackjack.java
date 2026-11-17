@@ -112,6 +112,13 @@ public class Blackjack extends Actor {
         };
     }
 
+    private InteractionResult checkOutTables() {
+        return new InteractionResult(new Dialogue.System("There are many tables of blackjack, all for different stakes. " +
+                "Many people are loudly counting their cards"),
+                InteractionTransition.NONE,
+                null);
+    }
+
     //These are the player's and the dealer's hand
     ArrayList<Cards> playerHand = new ArrayList<>();
     ArrayList<Cards> dealerHand = new ArrayList<>();
@@ -222,8 +229,8 @@ public class Blackjack extends Actor {
         if (dealer > 21 || player > dealer) {
             GameState.addChips(2 * bet);
             return new InteractionResult(
-                    new Dialogue.System("Well done, you win! Dealer: " + handToString(dealerHand)
-                            + " Player: " + handToString(playerHand)),
+                    new Dialogue.System("Well done, you win! Player: " + handToString(playerHand)
+                            + " Dealer: " + handToString(dealerHand)),
                     InteractionTransition.NONE,
                     null
             );

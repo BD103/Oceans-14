@@ -74,7 +74,7 @@ public class Slots extends Actor{
         // camel case for the corresponding function.
         // Ex. end_conversation -> endConversation()
         return switch (actionID) {
-            //case "end_conversation" -> endConversation();
+            case "check_out_machines" -> checkOutMachines();
             case "bet_10" -> bet10();
             case "bet_25" -> bet25();
             case "bet_50" -> bet50();
@@ -88,6 +88,12 @@ public class Slots extends Actor{
                             "\n Please make sure the list of available actions all have an action function."
             );
         };
+    }
+
+    private InteractionResult checkOutMachines() {
+        return new InteractionResult(new Dialogue.System("The machines are glowing with bright images and loud sounds effects"),
+                InteractionTransition.NONE,
+                null);
     }
 
     Random rng = new Random();
