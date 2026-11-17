@@ -45,6 +45,7 @@ public class GameWorld {
         registerRoom(new CasinoRoom());
         registerRoom(new StaffRoom());
         registerRoom(new KitchenRoom());
+        registerRoom(new HighRollersRoom());
         registerRoom(new MaintenanceRoom());
         registerRoom(new HotelLobbyRoom());
         registerRoom(new CheckpointRoom());
@@ -59,6 +60,9 @@ public class GameWorld {
         registerActor(new CasinoGreeter());
         registerActor(new Anthony());
         registerActor(new Chef());
+        registerActor(new Dealer());
+        registerActor(new Slots());
+        registerActor(new Blackjack());
         registerActor(new CheckpointGuard());
         registerActor(new HotelStaff());
         registerActor(new Elevator());
@@ -134,6 +138,11 @@ public class GameWorld {
         registerFlag("boss_poisoned");
         registerFlag("has_taken_rat_poison");
         registerFlag("password_told_to_checkpoint_guard");
+        registerFlag("asked_about_games");
+        registerFlag("asked_rules_for_slots");
+        registerFlag("asked_rules_for_blackjack");
+        registerFlag("playing_blackjack");
+        registerFlag("cannot_double_down");
     }
 
     // Registration Methods
