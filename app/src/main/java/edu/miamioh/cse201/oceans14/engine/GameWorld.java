@@ -51,6 +51,9 @@ public class GameWorld {
         registerRoom(new CheckpointRoom());
         registerRoom(new BigBossRoom());
         registerRoom(new VaultRoom());
+        registerRoom(new BarRoom());
+        registerRoom(new CashOutRoom());
+        registerRoom(new VentRoom());
     }
 
     /**
@@ -60,6 +63,8 @@ public class GameWorld {
         registerActor(new CasinoGreeter());
         registerActor(new Anthony());
         registerActor(new Chef());
+        registerActor(new Guard());
+        registerActor(new Teller());
         registerActor(new Dealer());
         registerActor(new Slots());
         registerActor(new Blackjack());
@@ -108,6 +113,14 @@ public class GameWorld {
                 "screwdriver_checkout_note",
                 "Checkout Note",
                 "Yo, borrowing this to fix a shelf - Anthony"));
+        registerItem(new Item(
+                "drink",
+                "Drink",
+                "A one way ticket to Booztown"));
+        registerItem(new Item(
+                "high_roller_card",
+                "High Roller Card",
+                "You sure you're not compensating for something?"));
         registerItem(new Item("vent_map",
                 "Vent Map",
                 "A detailed map of the casino's ventilation system, including the locations of its security lasers."));
@@ -143,6 +156,7 @@ public class GameWorld {
         registerFlag("asked_rules_for_blackjack");
         registerFlag("playing_blackjack");
         registerFlag("cannot_double_down");
+        registerFlag("has_found_drink");
     }
 
     // Registration Methods
