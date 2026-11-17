@@ -106,8 +106,7 @@ public class Dealer extends Actor{
         // TODO temp dialogue, change later
         GameState.addFlag("asked_about_games");
         return new InteractionResult(
-                new Dialogue.Actor(this.getName(), "There are three major games offered here: blackjack, slots, and +" +
-                        " baccarat."),
+                new Dialogue.Actor(this.getName(), "There are three major games offered here: blackjack, slots, and baccarat."),
                 InteractionTransition.NONE,
                 null
         );
