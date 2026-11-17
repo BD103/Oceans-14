@@ -37,11 +37,6 @@ public class VentRoom extends Room {
         actions.add(new ActionOption("go_to_vault", "Head into the vault"));
         actions.add(new ActionOption("go_to_maintenance", "Head into the maintenance room"));
 
-        // Area for conditional Interactions
-        // Only offer function two if player has debug_item
-        if (!GameState.hasItem("debug_item")) {
-            actions.add(new ActionOption("function_name_two", "Function Description Two"));
-        }
         return List.copyOf(actions);
     }
 
@@ -69,9 +64,8 @@ public class VentRoom extends Room {
         // camel case for the corresponding function.
         // Ex. enter_casino -> enterCasino()
         return switch (actionID) {
-            case "go_to_casino" -> goToCasino();
+            case "go_to_maintenance" -> goToMaintenance();
             case "go_to_vault" -> goToVault();
-            case "function_name_two" -> functionNameTwo();
             // Detect action IDs that are available but lack an implementation.
             default -> throw new IllegalStateException(
                     "A valid action does not exist in the performAction for " + this.getID() +
@@ -83,9 +77,9 @@ public class VentRoom extends Room {
      * Lets the player go to maintenance from vent
      * @return The interactionResult room change to maintenance
      */
-    private InteractionResult goToCasino() {
+    private InteractionResult goToMaintenance() {
         return new InteractionResult(
-                new Dialogue.System("You head into the maintenace room..."),
+                new Dialogue.System("You head into the maintenance room..."),
                 InteractionTransition.CHANGE_ROOM,
                 GameWorld.getRoom("CasinoRoom")
         );
@@ -108,16 +102,4 @@ public class VentRoom extends Room {
                 null
         );
     }
-    /**
-     * Debug
-     * @return Debug message
-     */
-    private InteractionResult functionNameTwo() {
-        return new InteractionResult(
-                new Dialogue.Actor("Actor Name", "This is an actor message for " + this.getID()),
-                InteractionTransition.CHANGE_ROOM,
-                null
-        );
-    }
-
 }

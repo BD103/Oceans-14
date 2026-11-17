@@ -36,11 +36,7 @@ public class BarRoom extends Room {
         actions.add(new ActionOption("talk_to_guard", "Talk to the guard"));
         actions.add(new ActionOption("go_to_kitchen", "Head into the kitchen"));
         actions.add(new ActionOption("go_to_casino", "Head into the casino"));
-        // Area for conditional Interactions
-        // Only offer function two if player has debug_item
-        if (!GameState.hasItem("debug_item")) {
-            actions.add(new ActionOption("function_name_two", "Function Description Two"));
-        }
+
         return List.copyOf(actions);
     }
 
@@ -71,7 +67,6 @@ public class BarRoom extends Room {
         return switch (actionID) {
             case "look_for_drink" -> lookForDrink();
             case "talk_to_guard" -> talkToGuard();
-            case "function_name_two" -> functionNameTwo();
             case "go_to_kitchen" -> goToKitchen();
             case "go_to_casino" -> goToCasino();
             // Detect action IDs that are available but lack an implementation.
@@ -88,7 +83,7 @@ public class BarRoom extends Room {
      */
     private InteractionResult lookForDrink() {
         if (!GameState.flagIsActive("has_found_drink")) {
-            GameState.addItem("Drink");
+            GameState.addItem("drink");
             return new InteractionResult(
                     new Dialogue.System("You found a drink. It's five o'clock somewhere..."),
                     InteractionTransition.NONE,
@@ -111,7 +106,7 @@ public class BarRoom extends Room {
         return new InteractionResult(
                 new Dialogue.System("Maybe that guard knows something..."),
                 InteractionTransition.PUSH,
-                GameWorld.getActor("Guard")
+                GameWorld.getActor("guard")
         );
     }
 
@@ -120,10 +115,11 @@ public class BarRoom extends Room {
      * @return The interactionResult room change to kitchen
      */
     private InteractionResult goToKitchen() {
+        // TODO: need to check for level 1 disguise
         return new InteractionResult(
                 new Dialogue.System("You head into the kitchen..."),
                 InteractionTransition.CHANGE_ROOM,
-                GameWorld.getRoom("KitchenRoom")
+                GameWorld.getRoom("kitchen_room")
         );
     }
 
@@ -135,20 +131,7 @@ public class BarRoom extends Room {
         return new InteractionResult(
                 new Dialogue.System("You head into the casino..."),
                 InteractionTransition.CHANGE_ROOM,
-                GameWorld.getRoom("CasinoRoom")
+                GameWorld.getRoom("casino_room")
         );
     }
-
-    /**
-     * Debug
-     * @return Debug message
-     */
-    private InteractionResult functionNameTwo() {
-        return new InteractionResult(
-                new Dialogue.Actor("Actor Name", "This is an actor message for " + this.getID()),
-                InteractionTransition.CHANGE_ROOM,
-                null
-        );
-    }
-
 }
