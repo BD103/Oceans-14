@@ -84,7 +84,7 @@ public class CheckpointGuard extends Actor {
                 return new InteractionResult(
                         new Dialogue.List(List.of(
                                 new Dialogue.System("You walk up to the retina scanner, which has a red error light blinking. You scan your eye, and the device makes a distorted beeping noise. The vault door slowly opens."),
-                                new Dialogue.Actor(this.getName(), "Huh, I've never heard that sound before! I'll need to call in maintenance to inspect it after my shift, it they're not tooling with that damn elevator again.")
+                                new Dialogue.Actor(this.getName(), "Huh, I've never heard that sound before! I'll need to call in maintenance to inspect it after my shift, if they're not tooling with that damn elevator again.")
                         )),
                         InteractionTransition.CHANGE_ROOM,
                         GameWorld.getRoom("vault_room")
