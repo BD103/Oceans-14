@@ -23,7 +23,7 @@ public class EntranceRoom extends Room {
     @Override
     public String getDescription() {
         // TODO change this to reflect better writing, current just placeholder text that makes some sense.
-        return "CHANGE_ME: You stand at the entrance of the CASINO NAME TDB, a massive building, and your Target";
+        return "You stand at the entrance of the Beach View Casino, a massive building, and your Target";
     }
 
     /**
@@ -96,15 +96,14 @@ public class EntranceRoom extends Room {
 
     /**
      * Walk up to the Crazy Gambler / Old Man and begin interacting with him.
-     * // TODO formalize gamblers name / is he an old man or what?
-     * // TODO Actually add the gambler
+     *
      * @return InteractionResult telling GameEngine to talk to the guy.
      */
     private InteractionResult talkToCrazy() {
         return new InteractionResult(
-                new Dialogue.System("The old man doesn't currently seem interested in talking"),
-                InteractionTransition.NONE,
-                null// TODO add the crazy old man.
+                new Dialogue.System("The old man looks up from petting his rat."),
+                InteractionTransition.PUSH,
+                GameWorld.getActor("crazy_gambler")
         );
     }
 

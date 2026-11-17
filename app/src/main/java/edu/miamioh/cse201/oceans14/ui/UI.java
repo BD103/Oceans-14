@@ -1,6 +1,9 @@
 package edu.miamioh.cse201.oceans14.ui;
 
+import edu.miamioh.cse201.oceans14.engine.ActionOption;
 import edu.miamioh.cse201.oceans14.engine.Dialogue;
+import edu.miamioh.cse201.oceans14.engine.GameEngine;
+import edu.miamioh.cse201.oceans14.engine.InteractionResult;
 import edu.miamioh.cse201.oceans14.ui.views.RootView;
 import edu.miamioh.cse201.oceans14.ui.input.CommandBuffer;
 import edu.miamioh.cse201.oceans14.ui.input.Input;
@@ -20,6 +23,7 @@ import java.io.IOException;
  * interfacing with the game engine.
  */
 public class UI implements AutoCloseable {
+    private final GameEngine engine;
     private final Terminal term;
 
     /**
@@ -30,10 +34,9 @@ public class UI implements AutoCloseable {
 
     private final InputParser parser;
     private final CommandBuffer commandBuffer = new CommandBuffer();
-
     private final DialogueEntries dialogue = new DialogueEntries();
 
-    private final RootView rootView = new RootView(this.commandBuffer, this.dialogue);
+    private final RootView rootView;
 
     /**
      * Set to true when the terminal is resized, signals that the UI should be redrawn.
@@ -42,7 +45,9 @@ public class UI implements AutoCloseable {
     private boolean drawRequested = false;
     private boolean exitRequested = false;
 
-    public UI() throws IOException {
+    public UI(GameEngine engine) throws IOException {
+        this.engine = engine;
+
         // Connect to this program's system terminal. `devTty` lets us still draw to the terminal
         // on POSIX systems, even when this program's stdin / stdout is piped.
         this.term = TerminalBuilder.builder().system(true).devTty(true).build();
@@ -59,6 +64,8 @@ public class UI implements AutoCloseable {
         // Put the terminal in application mode. This ensures that both Windows and Unix input
         // arrow keys using the same format (`\x1bOC` instead of `\x1b[C`, for example).
         this.term.puts(Capability.keypad_xmit);
+
+        this.rootView = new RootView(this.commandBuffer, this.dialogue, this.engine);
 
         // Configure the root view (and all of its children) with the terminal's current size.
         this.resize();
@@ -176,7 +183,7 @@ public class UI implements AutoCloseable {
         if (input instanceof Input.Special inputSpecial) {
             switch (inputSpecial) {
                 case ENTER -> {
-                    // TODO: sent buffer's contents to command parsing system
+                    this.processCommand(this.commandBuffer.getBuffer());
                     this.commandBuffer.clear();
                     this.drawRequested = true;
                 }
@@ -194,6 +201,23 @@ public class UI implements AutoCloseable {
                 }
                 case EXIT -> this.exitRequested = true;
             }
+        }
+    }
+
+    private void processCommand(String command) {
+        this.dialogue.add(new Dialogue.Command(command));
+
+        if (command.equals("help")) {
+            this.dialogue.add(new Dialogue.System("help: shows available commands"));
+            this.dialogue.add(new Dialogue.System("describe: describes current interaction"));
+            for (ActionOption option : this.engine.getAvailableActions()) {
+                this.dialogue.add(new Dialogue.System(option.id() + ": " + option.label()));
+            }
+        } else if (command.equals("describe")) {
+            this.dialogue.add(new Dialogue.System(this.engine.getCurrentDescription()));
+        } else {
+            InteractionResult result = this.engine.performAction(command);
+            this.dialogue.add(result.dialogue());
         }
     }
 }

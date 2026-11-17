@@ -45,6 +45,12 @@ public class GameWorld {
         registerRoom(new CasinoRoom());
         registerRoom(new StaffRoom());
         registerRoom(new KitchenRoom());
+        registerRoom(new HighRollersRoom());
+        registerRoom(new MaintenanceRoom());
+        registerRoom(new HotelLobbyRoom());
+        registerRoom(new CheckpointRoom());
+        registerRoom(new BigBossRoom());
+        registerRoom(new VaultRoom());
     }
 
     /**
@@ -56,6 +62,15 @@ public class GameWorld {
         registerActor(new Chef());
         registerActor(new Guard());
         registerActor(new Teller());
+        registerActor(new Dealer());
+        registerActor(new Slots());
+        registerActor(new Blackjack());
+        registerActor(new CheckpointGuard());
+        registerActor(new HotelStaff());
+        registerActor(new Elevator());
+        registerActor(new Contractors());
+        registerActor(new CrazyGambler());
+        registerActor(new BigBoss());
     }
 
     /**
@@ -103,12 +118,41 @@ public class GameWorld {
                 "high_roller_card",
                 "High Roller Card",
                 "You sure you're not compensating for something?"));
+        registerItem(new Item("vent_map",
+                "Vent Map",
+                "A detailed map of the casino's ventilation system, including the locations of its security lasers."));
+        registerItem(new Item(
+                "lucky_rock",
+                "Gambler's Lucky Rock",
+                "A small yellow rock that makes your fingers tingly, but it promises to bring great fortune."));
+        registerItem(new Item(
+                "high_rollers_card",
+                "The High Rollers Card",
+                "A card symbolizing your gambling addiction. . . i mean great skill in the ways of profiteering!"));
+        registerItem(new Item(
+                "rat_poison",
+                "Rat Poison",
+                "A unlabeled bottle described to be rat poison. Was being used by the casino to deal with their vermin infestation."));
+
+
     }
 
     private static void registerFlags() {
         registerFlag("taken_level_one_disguise");
         registerFlag("taken_boss_food");
-        registerFlag("taken_screwdriver");
+        registerFlag("pickpocketed_hotel_guest");
+        registerFlag("elevator_broken");
+        registerFlag("contractor_map_offer");
+        registerFlag("vault_security_disabled");
+        registerFlag("boss_interaction_complete");
+        registerFlag("boss_poisoned");
+        registerFlag("has_taken_rat_poison");
+        registerFlag("password_told_to_checkpoint_guard");
+        registerFlag("asked_about_games");
+        registerFlag("asked_rules_for_slots");
+        registerFlag("asked_rules_for_blackjack");
+        registerFlag("playing_blackjack");
+        registerFlag("cannot_double_down");
         registerFlag("has_found_drink");
     }
 
