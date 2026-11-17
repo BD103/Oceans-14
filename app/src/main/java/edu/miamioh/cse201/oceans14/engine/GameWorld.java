@@ -59,6 +59,7 @@ public class GameWorld {
         registerActor(new CasinoGreeter());
         registerActor(new Anthony());
         registerActor(new Chef());
+        registerActor(new CheckpointGuard());
         registerActor(new HotelStaff());
         registerActor(new Elevator());
         registerActor(new Contractors());
@@ -132,6 +133,7 @@ public class GameWorld {
         registerFlag("boss_interaction_complete");
         registerFlag("boss_poisoned");
         registerFlag("has_taken_rat_poison");
+        registerFlag("password_told_to_checkpoint_guard");
     }
 
     // Registration Methods
