@@ -45,6 +45,7 @@ public class GameWorld {
         registerRoom(new CasinoRoom());
         registerRoom(new StaffRoom());
         registerRoom(new KitchenRoom());
+        registerRoom(new HighRollersRoom());
     }
 
     /**
@@ -54,6 +55,9 @@ public class GameWorld {
         registerActor(new CasinoGreeter());
         registerActor(new Anthony());
         registerActor(new Chef());
+        registerActor(new Dealer());
+        registerActor(new Slots());
+        registerActor(new Blackjack());
     }
 
     /**
@@ -99,6 +103,11 @@ public class GameWorld {
         registerFlag("taken_level_one_disguise");
         registerFlag("taken_boss_food");
         registerFlag("taken_screwdriver");
+        registerFlag("asked_about_games");
+        registerFlag("asked_rules_for_slots");
+        registerFlag("asked_rules_for_blackjack");
+        registerFlag("playing_blackjack");
+        registerFlag("cannot_double_down");
     }
 
     // Registration Methods
