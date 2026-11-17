@@ -51,6 +51,9 @@ public class GameWorld {
         registerRoom(new CheckpointRoom());
         registerRoom(new BigBossRoom());
         registerRoom(new VaultRoom());
+        registerRoom(new BarRoom());
+        registerRoom(new CashOutRoom());
+        registerRoom(new VentRoom());
     }
 
     /**
