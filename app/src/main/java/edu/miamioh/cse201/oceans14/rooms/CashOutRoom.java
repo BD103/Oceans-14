@@ -34,14 +34,9 @@ public class CashOutRoom extends Room {
         List<ActionOption> actions = new ArrayList<>();
 
         //Area for always present interactions
-        actions.add(new ActionOption("go_to_vault", "Head into the vault"));
+        actions.add(new ActionOption("go_to_vault_checkpoint", "Head into the vault checkpoint"));
         actions.add(new ActionOption("go_to_casino", "Head into the casino"));
 
-        // Area for conditional Interactions
-        // Only offer function two if player has debug_item
-        if (!GameState.hasItem("debug_item")) {
-            actions.add(new ActionOption("function_name_two", "Function Description Two"));
-        }
         return List.copyOf(actions);
     }
 
@@ -70,8 +65,7 @@ public class CashOutRoom extends Room {
         // Ex. enter_casino -> enterCasino()
         return switch (actionID) {
             case "go_to_casino" -> goToCasino();
-            case "go_to_vault" -> goToVault();
-            case "function_name_two" -> functionNameTwo();
+            case "go_to_vault_checkpoint" -> goToVaultCheckpoint();
             // Detect action IDs that are available but lack an implementation.
             default -> throw new IllegalStateException(
                     "A valid action does not exist in the performAction for " + this.getID() +
@@ -87,30 +81,18 @@ public class CashOutRoom extends Room {
         return new InteractionResult(
                 new Dialogue.System("You head into the casino..."),
                 InteractionTransition.CHANGE_ROOM,
-                GameWorld.getRoom("CasinoRoom")
+                GameWorld.getRoom("casino_room")
         );
     }
     /**
      * Lets the player go to vault from cash out
      * @return The interactionResult room change to vault
      */
-    private InteractionResult goToVault() {
+    private InteractionResult goToVaultCheckpoint() {
         return new InteractionResult(
                 new Dialogue.System("You head into the vault..."),
                 InteractionTransition.CHANGE_ROOM,
-                GameWorld.getRoom("VaultRoom")
+                GameWorld.getRoom("checkpoint_room")
         );
     }
-    /**
-     * Debug
-     * @return Debug message
-     */
-    private InteractionResult functionNameTwo() {
-        return new InteractionResult(
-                new Dialogue.Actor("Actor Name", "This is an actor message for " + this.getID()),
-                InteractionTransition.CHANGE_ROOM,
-                null
-        );
-    }
-
 }
