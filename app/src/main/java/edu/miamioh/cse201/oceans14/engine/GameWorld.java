@@ -54,6 +54,8 @@ public class GameWorld {
         registerActor(new CasinoGreeter());
         registerActor(new Anthony());
         registerActor(new Chef());
+        registerActor(new Guard());
+        registerActor(new Teller());
     }
 
     /**
@@ -93,12 +95,21 @@ public class GameWorld {
                 "screwdriver_checkout_note",
                 "Checkout Note",
                 "Yo, borrowing this to fix a shelf - Anthony"));
+        registerItem(new Item(
+                "drink",
+                "Drink",
+                "A one way ticket to Booztown"));
+        registerItem(new Item(
+                "high_roller_card",
+                "High Roller Card",
+                "You sure you're not compensating for something?"));
     }
 
     private static void registerFlags() {
         registerFlag("taken_level_one_disguise");
         registerFlag("taken_boss_food");
         registerFlag("taken_screwdriver");
+        registerFlag("has_found_drink");
     }
 
     // Registration Methods
