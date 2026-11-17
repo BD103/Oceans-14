@@ -43,7 +43,7 @@ public class CasinoRoom extends Room {
                 new ActionOption("enter_bar_room", "Enter Hotel Bar"),
                 new ActionOption("enter_high_rollers_room", "Enter High Rollers Room"),
                 new ActionOption("enter_cash_out_room", "Enter Cash Out Room"),
-                new ActionOption("enter_panopticon_room", "Enter Panopticon"),
+                new ActionOption("enter_big_boss_room", "Enter the Big Boss's Room"),
                 new ActionOption("enter_maintenance_room", "Enter Maintenance Room"),
                 new ActionOption("enter_hotel_lobby_room", "Enter Hotel Lobby"),
                 new ActionOption("talk_to_contractors", "Talk to Contractors"),
@@ -80,7 +80,7 @@ public class CasinoRoom extends Room {
             case "enter_bar_room" -> enterBarRoom();
             case "enter_high_rollers_room" -> enterHighRollersRoom();
             case "enter_cash_out_room" -> enterCashOutRoom();
-            case "enter_panopticon_room" -> enterPanopticonRoom();
+            case "enter_big_boss_room" -> enterPanopticonRoom();
             case "enter_maintenance_room" -> enterMaintenanceRoom();
             case "enter_hotel_lobby_room" -> enterHotelLobbyRoom();
             case "talk_to_contractors" -> talkToContractors();
@@ -178,6 +178,7 @@ public class CasinoRoom extends Room {
     }
 
     /**
+     * TODO switch this to panopticon as it is temporarily the bigboss room.
      * Attempts to enter the panopticon.
      *
      * Access is granted if the player meets either requirement:
@@ -195,7 +196,7 @@ public class CasinoRoom extends Room {
             return new InteractionResult(
                     new Dialogue.System("Your fellow guard nods and lets you in"),
                     InteractionTransition.CHANGE_ROOM,
-                    GameWorld.getRoom("panopticon_room")
+                    GameWorld.getRoom("big_boss_room")
             );
         } else if (
                 GameState.hasItem("boss_food") &&
@@ -204,7 +205,7 @@ public class CasinoRoom extends Room {
             return new InteractionResult(
                     new Dialogue.System("The guard nods you in and points you toward the bosses room"),
                     InteractionTransition.CHANGE_ROOM,
-                    GameWorld.getRoom("panopticon_room")
+                    GameWorld.getRoom("big_boss_room")
             );
         } else {
             return new InteractionResult(
@@ -257,11 +258,12 @@ public class CasinoRoom extends Room {
      */
     private InteractionResult talkToContractors() {
         return new InteractionResult(
-                new Dialogue.System("You walk up to the contractors"),
+                new Dialogue.System("You walk over to the contractors working on the casino floor."),
                 InteractionTransition.PUSH,
                 GameWorld.getActor("contractors")
         );
     }
+
     // TODO reminder to make the gambling system.
     private InteractionResult startGambling() {
         return new InteractionResult(

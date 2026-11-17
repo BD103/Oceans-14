@@ -18,7 +18,7 @@ public class GameState {
     private static String currentRoomID = STARTING_ROOM;
     private static final Set<String> inventory = new HashSet<>();
     private static final Set<String> activeFlags = new HashSet<>();
-
+    private static int vaultPasswordGuesses = 0;
 
     // All Methods Dealing with Chips ---------------------------------------------------
 
@@ -166,6 +166,22 @@ public class GameState {
         currentRoomID = newRoomID;
     }
 
+    // All methods for tracking how many times you guessed the vault password -----------
+
+    /**
+     * @return The number of times the player incorrectly guessed the vault password.
+     */
+    public static int getVaultPasswordGuesses() {
+        return vaultPasswordGuesses;
+    }
+
+    /**
+     * Increases the number of times the player incorrectly guessed the vault password by 1.
+     */
+    public static void incrementVaultPasswordGuesses() {
+        vaultPasswordGuesses++;
+    }
+
     /**
      * Resets the current game state, useful in the case of a game over.
      */
@@ -174,9 +190,6 @@ public class GameState {
         currentRoomID = STARTING_ROOM;
         inventory.clear();
         activeFlags.clear();
+        vaultPasswordGuesses = 0;
     }
-
-
-
-
 }
