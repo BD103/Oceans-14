@@ -32,7 +32,7 @@ public class MaintenanceRoom extends Room {
 
         actions.add(new ActionOption("inspect_workbench", "Inspect the workbench"));
         actions.add(new ActionOption("inspect_shelves", "Inspect the shelving unit of slot machine parts"));
-        actions.add(new ActionOption("exit_maintenance_room", "Return to the main casino floor"));
+        actions.add(new ActionOption("enter_casino_room", "Return to the main casino floor"));
 
         return actions;
     }
