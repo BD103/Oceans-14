@@ -1,5 +1,6 @@
 package edu.miamioh.cse201.oceans14.rooms;
 
+import edu.miamioh.cse201.oceans14.actors.Dealer;
 import edu.miamioh.cse201.oceans14.engine.*;
 
 
@@ -46,7 +47,7 @@ public class CasinoRoom extends Room {
                 new ActionOption("enter_maintenance_room", "Enter Maintenance Room"),
                 new ActionOption("enter_hotel_lobby_room", "Enter Hotel Lobby"),
                 new ActionOption("talk_to_contractors", "Talk to Contractors"),
-                new ActionOption("start_gambling", "Start Gambling")
+                new ActionOption("talk_to_dealer", "Talk to the dealer")
         );
     }
 
@@ -83,7 +84,7 @@ public class CasinoRoom extends Room {
             case "enter_maintenance_room" -> enterMaintenanceRoom();
             case "enter_hotel_lobby_room" -> enterHotelLobbyRoom();
             case "talk_to_contractors" -> talkToContractors();
-            case "start_gambling" -> startGambling(); // TODO replace me
+            case "talk_to_dealer" -> startGambling();
             // Detect action IDs that are available but lack an implementation.
             default -> throw new IllegalStateException(
                     "A valid action does not exist in the performAction for " + this.getID() +
@@ -265,8 +266,8 @@ public class CasinoRoom extends Room {
     private InteractionResult startGambling() {
         return new InteractionResult(
                 new Dialogue.Error("NOT IMPLEMENTED, JUST A PLACEHOLDER"),
-                InteractionTransition.NONE,
-                null
+                InteractionTransition.PUSH,
+                GameWorld.getActor("dealer")
         );
     }
 
