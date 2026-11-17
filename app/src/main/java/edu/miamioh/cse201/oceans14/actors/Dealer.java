@@ -30,9 +30,6 @@ public class Dealer extends Actor{
         //Can ask for rules any number of times, only after asking about the games
         if(GameState.flagIsActive("asked_about_games")) {
             actions.add(new ActionOption("rules_for_slots", "Ask her about the rules of the slot machines"));
-        }
-
-        if(GameState.flagIsActive("asked_about_games")) {
             actions.add(new ActionOption("rules_for_blackjack", "Ask her about the rules of blackjack"));
         }
 
