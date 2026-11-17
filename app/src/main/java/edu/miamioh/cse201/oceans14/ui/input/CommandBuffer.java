@@ -7,7 +7,7 @@ package edu.miamioh.cse201.oceans14.ui.input;
  * whatever was previous at that position is shifted to the right. This matches the behavior of
  * text editors like Notepad, VSCode, and Nano.
  *
- * @see edu.miamioh.cse201.oceans14.ui.CommandView
+ * @see edu.miamioh.cse201.oceans14.ui.views.CommandView
  */
 public class CommandBuffer {
     /** The editable text buffer. */
@@ -28,6 +28,15 @@ public class CommandBuffer {
     public void insert(char c) {
         this.buffer.insert(this.cursor, c);
         this.cursor++;
+    }
+
+    /**
+     * Inserts a string at the cursor's position.
+     *
+     * @param s The string to insert.
+     */
+    public void insert(String s) {
+        s.chars().forEach(c -> this.insert((char)c));
     }
 
     /**
@@ -71,6 +80,18 @@ public class CommandBuffer {
      */
     public String getBuffer() {
         return this.buffer.toString();
+    }
+
+    /**
+     * This returns a string of all characters to the left of the cursor in the buffer.
+     * <p>
+     * For example, if the cursor was set to 0, this would return an empty string. If the cursor
+     * was in the middle of the buffer, this will return the first half as a string.
+     *
+     * @return The contents of the buffer to the left of the cursor.
+     */
+    public String getBufferToCursor() {
+        return this.buffer.substring(0, this.cursor);
     }
 
     /**
