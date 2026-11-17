@@ -22,7 +22,7 @@ public class StatsView implements View {
     private final GameEngine engine;
 
     private final WrapParagraph title = new WrapParagraph("Ocean's 14", 80);
-    private final WrapParagraph commands = new WrapParagraph("Commands:", 80);
+    private final WrapParagraph actionsTitle = new WrapParagraph("Actions:", 80);
 
     public StatsView(GameEngine engine) {
         this.engine = engine;
@@ -40,7 +40,7 @@ public class StatsView implements View {
         y = this.drawChips(term, y);
         y = this.drawInventory(term, y) + 1;
 
-        y = this.drawCommands(term, y);
+        y = this.drawActions(term, y);
     }
 
     /**
@@ -156,11 +156,11 @@ public class StatsView implements View {
      * @param y The y coordinate of the line this will draw to.
      * @return The next available y coordinate to draw to.
      */
-    private int drawCommands(Terminal term, int y) {
-        // Draw "Commands:"
-        y = this.drawParagraph(term, y, this.commands);
+    private int drawActions(Terminal term, int y) {
+        // Draw "Actions:"
+        y = this.drawParagraph(term, y, this.actionsTitle);
 
-        // Draw list of commands
+        // Draw list of actions
         for (ActionOption option : this.engine.getAvailableActions()) {
             // TODO: improve bullet list formatting by indenting line breaks by 2 characters
             y = this.drawParagraph(term, y, new WrapParagraph("- " + option.id(), this.viewport.width()));
@@ -198,6 +198,6 @@ public class StatsView implements View {
     public void resize(Rect viewport) {
         this.viewport = viewport;
         this.title.resize(this.viewport.width());
-        this.commands.resize(this.viewport.width());
+        this.actionsTitle.resize(this.viewport.width());
     }
 }
