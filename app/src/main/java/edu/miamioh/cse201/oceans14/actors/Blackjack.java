@@ -17,9 +17,6 @@ public class Blackjack extends Actor {
     public List<ActionOption> getAvailableActions() {
         List<ActionOption> actions = new ArrayList<>();
 
-        //Area for always present interactions
-        actions.add(new ActionOption("check_out_tables", "Check out the different tables"));
-
         // Tiered amounts for the bets
         // I don't want to have to do multiple inputs at once or two inputs in a row
         // 5, 25 50 are low rollers

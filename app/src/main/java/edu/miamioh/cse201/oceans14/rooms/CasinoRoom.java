@@ -1,6 +1,5 @@
 package edu.miamioh.cse201.oceans14.rooms;
 
-import edu.miamioh.cse201.oceans14.actors.Dealer;
 import edu.miamioh.cse201.oceans14.engine.*;
 
 
@@ -263,7 +262,6 @@ public class CasinoRoom extends Room {
         );
     }
 
-    // TODO reminder to make the gambling system.
     private InteractionResult talkToDealer() {
         return new InteractionResult(
                 new Dialogue.System("You walk to a well-dressed woman who seems to be running the gambling games"),
