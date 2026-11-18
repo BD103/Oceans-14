@@ -1,5 +1,7 @@
 package edu.miamioh.cse201.oceans14.ui.views;
 
+import edu.miamioh.cse201.oceans14.engine.GameEngine;
+import edu.miamioh.cse201.oceans14.engine.GameWorld;
 import edu.miamioh.cse201.oceans14.ui.Rect;
 import edu.miamioh.cse201.oceans14.ui.TermSnapshot;
 import edu.miamioh.cse201.oceans14.ui.TermSnapshotExtension;
@@ -26,7 +28,7 @@ public class TestCommandView {
 
         this.buffer = new CommandBuffer();
 
-        this.commandView = new CommandView(this.buffer);
+        this.commandView = new CommandView(this.buffer, new GameEngine(GameWorld.getRoom("entrance_room")));
         this.commandView.resize(this.viewport);
     }
 
@@ -69,6 +71,13 @@ public class TestCommandView {
 
         this.buffer.delete();
 
+        this.commandView.draw(this.term);
+    }
+
+    @Test
+    void drawAutoComplete() {
+        // Should auto-complete to "enter_casino".
+        this.buffer.insert("enter");
         this.commandView.draw(this.term);
     }
 }
