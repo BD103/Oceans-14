@@ -28,7 +28,7 @@ public class RootView implements View {
     public RootView(CommandBuffer commandBuffer, DialogueEntries dialogue, GameEngine engine) {
         this.dialogueView = new DialogueView(dialogue);
         this.statsView = new StatsView(engine);
-        this.commandView = new CommandView(commandBuffer);
+        this.commandView = new CommandView(commandBuffer, engine);
     }
 
     @Override

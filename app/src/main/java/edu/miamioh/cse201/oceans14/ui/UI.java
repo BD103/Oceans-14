@@ -4,6 +4,7 @@ import edu.miamioh.cse201.oceans14.engine.ActionOption;
 import edu.miamioh.cse201.oceans14.engine.Dialogue;
 import edu.miamioh.cse201.oceans14.engine.GameEngine;
 import edu.miamioh.cse201.oceans14.engine.InteractionResult;
+import edu.miamioh.cse201.oceans14.ui.input.Completions;
 import edu.miamioh.cse201.oceans14.ui.views.RootView;
 import edu.miamioh.cse201.oceans14.ui.input.CommandBuffer;
 import edu.miamioh.cse201.oceans14.ui.input.Input;
@@ -190,6 +191,16 @@ public class UI implements AutoCloseable {
                 case DELETE -> {
                     this.commandBuffer.delete();
                     this.drawRequested = true;
+                }
+                case TAB -> {
+                    // Tries to find a match that would complete this command at the cursor.
+                    String match = Completions.complete(this.commandBuffer.getBuffer(), this.engine);
+
+                    if (match != null) {
+                        this.commandBuffer.toEnd();
+                        this.commandBuffer.insert(match);
+                        this.drawRequested = true;
+                    }
                 }
                 case LEFT -> {
                     this.commandBuffer.left();
