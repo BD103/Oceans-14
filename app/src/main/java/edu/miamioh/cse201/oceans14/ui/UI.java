@@ -36,6 +36,7 @@ public class UI implements AutoCloseable {
     private final InputParser parser;
     private final CommandBuffer commandBuffer = new CommandBuffer();
     private final DialogueEntries dialogue = new DialogueEntries();
+    private final History<String> commandHistory = new History<>(250);
 
     private final RootView rootView;
 
@@ -184,8 +185,13 @@ public class UI implements AutoCloseable {
         if (input instanceof Input.Special inputSpecial) {
             switch (inputSpecial) {
                 case ENTER -> {
-                    this.processCommand(this.commandBuffer.getBuffer());
+                    String command = this.commandBuffer.getBuffer();
                     this.commandBuffer.clear();
+
+                    this.processCommand(command);
+
+                    this.commandHistory.add(command);
+
                     this.drawRequested = true;
                 }
                 case DELETE -> {
