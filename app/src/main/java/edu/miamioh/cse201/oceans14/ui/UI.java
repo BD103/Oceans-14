@@ -216,6 +216,12 @@ public class UI implements AutoCloseable {
                     this.commandBuffer.right();
                     this.drawRequested = true;
                 }
+                case UP -> {
+                    // TODO
+                }
+                case DOWN -> {
+                    // TODO
+                }
                 case EXIT -> {
                     this.dialogue.add(new Dialogue.Error("To quit the game, enter the 'quit' command."));
                     this.drawRequested = true;
