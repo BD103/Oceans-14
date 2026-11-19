@@ -36,7 +36,7 @@ public class UI implements AutoCloseable {
     private final InputParser parser;
     private final CommandBuffer commandBuffer = new CommandBuffer();
     private final DialogueEntries dialogue = new DialogueEntries();
-    private final FixedCapacityList<String> commandHistory = new FixedCapacityList<>(250);
+    private final CommandHistory commandHistory = new CommandHistory();
 
     private final RootView rootView;
 
