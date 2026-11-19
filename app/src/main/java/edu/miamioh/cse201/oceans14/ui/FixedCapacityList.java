@@ -53,6 +53,13 @@ public class FixedCapacityList<T> implements Iterable<T> {
     }
 
     /**
+     * @return The number of elements in the list.
+     */
+    public int size() {
+        return this.data.size();
+    }
+
+    /**
      * @return An iterator over all elements in the list, ordered newest to oldest.
      */
     @Override
