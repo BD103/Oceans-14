@@ -191,6 +191,7 @@ public class UI implements AutoCloseable {
                     this.processCommand(command);
 
                     this.commandHistory.add(command);
+                    this.commandHistory.clearScroll();
 
                     this.drawRequested = true;
                 }
@@ -217,10 +218,22 @@ public class UI implements AutoCloseable {
                     this.drawRequested = true;
                 }
                 case UP -> {
-                    // TODO
+                    String entry = this.commandHistory.scrollUp();
+
+                    if (entry != null) {
+                        this.commandBuffer.clear();
+                        this.commandBuffer.insert(entry);
+                        this.drawRequested = true;
+                    }
                 }
                 case DOWN -> {
-                    // TODO
+                    String entry = this.commandHistory.scrollDown();
+
+                    if (entry != null) {
+                        this.commandBuffer.clear();
+                        this.commandBuffer.insert(entry);
+                        this.drawRequested = true;
+                    }
                 }
                 case EXIT -> this.exitRequested = true;
             }
