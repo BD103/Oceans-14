@@ -9,7 +9,7 @@ import java.util.ListIterator;
  * A list of dialogue entries, rendered for the user interface.
  */
 public class DialogueEntries {
-    private final History<WrapParagraph> entries = new History<>(500);
+    private final FixedCapacityList<WrapParagraph> entries = new FixedCapacityList<>(500);
     private int maxWidth;
 
     /**
