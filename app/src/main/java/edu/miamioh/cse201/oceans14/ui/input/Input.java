@@ -41,6 +41,8 @@ public sealed interface Input {
         TAB,
         LEFT,
         RIGHT,
+        UP,
+        DOWN,
         EXIT;
     }
 }

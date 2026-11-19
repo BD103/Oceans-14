@@ -81,6 +81,10 @@ public class InputParser {
         int input = reader.read(READ_TIMEOUT);
 
         return switch (input) {
+            // ESC O A
+            case 'A' -> Input.Special.UP;
+            // ESC O B
+            case 'B' -> Input.Special.DOWN;
             // ESC O C
             case 'C' -> Input.Special.RIGHT;
             // ESC O D
