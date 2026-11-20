@@ -76,22 +76,13 @@ tasks.register<Exec>("jpackage") {
         "--resource-dir", layout.projectDirectory.dir("resources").asFile.absolutePath,
         // Write the generated package to `build/package`.
         "--dest", layout.buildDirectory.dir("package").get().asFile.absolutePath,
+        // Create a folder with the executable and resources, but don't create an installer.
+        "--type", "app-image",
         "--verbose",
     )
 
-    val os = DefaultNativePlatform.getCurrentOperatingSystem()
-
-    if (os.isMacOsX) {
-        args = args + listOf(
-            "--type", "app-image",
-        )
-    } else if (os.isWindows) {
-        args = args + listOf(
-            "--type", "app-image",
-            "--win-console",
-        )
-    } else if (os.isLinux) {
-        // TODO
+    if (DefaultNativePlatform.getCurrentOperatingSystem().isWindows) {
+        args.add("--win-console")
     }
 }
 
