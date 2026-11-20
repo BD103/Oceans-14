@@ -87,6 +87,7 @@ tasks.register<Exec>("jpackage") {
         )
     } else if (os.isWindows) {
         args = args + listOf(
+            "--type", "app-image",
             "--win-console",
         )
     } else if (os.isLinux) {
