@@ -55,7 +55,11 @@ tasks.register("package") {
     group = "Package"
     description = "Bundles the Jar into complete user-facing application."
 
-    dependsOn("jpackage", "copyLaunchWithTerminalMacOS")
+    dependsOn("jpackage")
+
+    if (DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX) {
+        dependsOn("copyLaunchWithTerminalMacOS", "resignPackageMacOS")
+    }
 }
 
 tasks.register<Exec>("jpackage") {
@@ -95,12 +99,29 @@ tasks.register<Delete>("cleanPackage") {
 
 tasks.register<Copy>("copyLaunchWithTerminalMacOS") {
     group = "Package"
-    description = "Copies launch_with_terminal.sh to the generated package on MacOS, does nothing on other platforms."
+    description = "Copies launch_with_terminal.sh to the generated package on MacOS."
 
     dependsOn("jpackage")
 
-    if (DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX) {
-        from(layout.projectDirectory.dir("resources").file("launch_with_terminal.sh"))
-        into(layout.buildDirectory.dir("package/Oceans14.app/Contents/MacOS"))
-    }
+    from(layout.projectDirectory.dir("resources").file("launch_with_terminal.sh"))
+    into(layout.buildDirectory.dir("package/Oceans14.app/Contents/MacOS"))
+}
+
+tasks.register<Exec>("resignPackageMacOS") {
+    group = "Package"
+    description = "Forcibly signs the package after modification on MacOS."
+
+    dependsOn("copyLaunchWithTerminalMacOS")
+
+    executable = "codesign"
+    args = listOf(
+        // Ad-hoc signing, don't use an identity.
+        "--sign", "-",
+        // Replace existing signature, since we made modifications after it was made.
+        "--force",
+        // Very verbose output.
+        "-vvvv",
+        // Path to the app we're signing.
+        layout.buildDirectory.dir("package/Oceans14.app").get().asFile.absolutePath,
+    )
 }
