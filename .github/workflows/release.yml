@@ -19,7 +19,7 @@ jobs:
             java-version: 17
           - os: macos-latest
             java-version: 17
-          - os: windows-latest, windows-11-arm
+          - os: windows-latest
             java-version: 17
           - os: windows-11-arm
             java-version: 21
