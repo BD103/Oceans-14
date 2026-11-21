@@ -41,9 +41,7 @@ jobs:
 #        if: ${{ matrix.os != 'windows-latest' && matrix.os != 'windows-11-arm' }}
 #        run: ./gradlew package
 
-      - run: |
-          ./gradlew jar
-          jpackage --name Oceans14 --input app/build/libs --main-jar app.jar --add-modules java.base --resource-dir app/resources --dest app/build/package --type app-image --verbose
+      - run: ./gradlew jpackage
 
       - run: |
           ls -R app/build/package
