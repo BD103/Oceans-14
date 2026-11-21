@@ -58,7 +58,10 @@ tasks.register("package") {
     dependsOn("jpackage")
 
     if (DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX) {
-        dependsOn("copyLaunchWithTerminalMacOS", "resignPackageMacOS")
+        dependsOn(
+//            "copyLaunchWithTerminalMacOS",
+            "resignPackageMacOS"
+        )
     }
 }
 
@@ -114,7 +117,10 @@ tasks.register<Exec>("resignPackageMacOS") {
     group = "Package"
     description = "Forcibly signs the package after modification on MacOS."
 
-    dependsOn("copyLaunchWithTerminalMacOS")
+    dependsOn(
+//        "copyLaunchWithTerminalMacOS",
+        "jpackage"
+    )
 
     executable = "codesign"
     args = listOf(

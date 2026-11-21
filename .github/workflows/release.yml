@@ -33,15 +33,13 @@ jobs:
           java-version: ${{ matrix.java-version }}
           distribution: temurin
 
-#      - name: Build Package (Windows)
-#        if: ${{ matrix.os == 'windows-latest' || matrix.os == 'windows-11-arm' }}
-#        run: .\gradlew package
-#
-#      - name: Build Package (Non-Windows)
-#        if: ${{ matrix.os != 'windows-latest' && matrix.os != 'windows-11-arm' }}
-#        run: ./gradlew package
+      - name: Build Package (Windows)
+        if: ${{ matrix.os == 'windows-latest' || matrix.os == 'windows-11-arm' }}
+        run: .\gradlew package
 
-      - run: ./gradlew jpackage
+      - name: Build Package (Non-Windows)
+        if: ${{ matrix.os != 'windows-latest' && matrix.os != 'windows-11-arm' }}
+        run: ./gradlew package
 
       - run: |
           ls -R app/build/package
