@@ -1,8 +1,9 @@
 name: Package Release
 
 on:
-  # TODO: remove this after testing
-  pull_request:
+  # Run when pushed to the `main` branch.
+  push:
+    branches: [main]
   # Allow running manually.
   workflow_dispatch:
 
