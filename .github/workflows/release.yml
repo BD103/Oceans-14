@@ -13,16 +13,16 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-latest
-            java-version: 17
-          - os: ubuntu-24.04-arm
-            java-version: 17
+#          - os: ubuntu-latest
+#            java-version: 17
+#          - os: ubuntu-24.04-arm
+#            java-version: 17
           - os: macos-latest
             java-version: 17
-          - os: windows-latest
-            java-version: 17
-          - os: windows-11-arm
-            java-version: 21
+#          - os: windows-latest
+#            java-version: 17
+#          - os: windows-11-arm
+#            java-version: 21
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -33,17 +33,19 @@ jobs:
           java-version: ${{ matrix.java-version }}
           distribution: temurin
 
-      - name: Build Package (Windows)
-        if: ${{ matrix.os == 'windows-latest' || matrix.os == 'windows-11-arm' }}
-        run: .\gradlew package
+#      - name: Build Package (Windows)
+#        if: ${{ matrix.os == 'windows-latest' || matrix.os == 'windows-11-arm' }}
+#        run: .\gradlew package
+#
+#      - name: Build Package (Non-Windows)
+#        if: ${{ matrix.os != 'windows-latest' && matrix.os != 'windows-11-arm' }}
+#        run: ./gradlew package
 
-      - name: Build Package (Non-Windows)
-        if: ${{ matrix.os != 'windows-latest' && matrix.os != 'windows-11-arm' }}
-        run: ./gradlew package
+      - run: |
+          ./gradlew jar
+          jpackage --name Oceans14 --input app/build/libs --main-jar app.jar --add-modules java.base --resource-dir app/resources --dest app/build/package --type app-image --verbose
 
-      - name: Test binary file exists
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: |
+      - run: |
           ls -R app/build/package
           test -f app/build/package/Oceans14.app/Contents/MacOS/Oceans14
 
