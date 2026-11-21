@@ -89,7 +89,7 @@ tasks.register<Exec>("jpackage") {
     )
 
     if (DefaultNativePlatform.getCurrentOperatingSystem().isWindows) {
-        args.add("--win-console")
+        args = args + listOf("--win-console")
     }
 }
 
