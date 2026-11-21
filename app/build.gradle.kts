@@ -75,6 +75,9 @@ tasks.register<Exec>("jpackage") {
         "--input", layout.buildDirectory.dir("libs").get().asFile.absolutePath,
         // Package the Jar built with the "jar" task.
         "--main-jar", tasks.jar.get().archiveFileName.get(),
+        // By default, jpackage includes a bunch of modules in the package that we don't use. By
+        // telling it we only use java.base, we shave >100 MB off of the package size.
+        "--add-modules", "java.base",
         // Load resource overrides from `resources`.
         // <https://docs.oracle.com/en/java/javase/17/jpackage/override-jpackage-resources.html>
         "--resource-dir", layout.projectDirectory.dir("resources").asFile.absolutePath,
