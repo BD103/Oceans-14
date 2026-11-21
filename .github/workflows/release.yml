@@ -47,3 +47,4 @@ jobs:
           name: Oceans-14-${{ matrix.os }}
           path: app/build/package
           if-no-files-found: error
+          include-hidden-files: true
