@@ -58,14 +58,16 @@ tasks.register("package") {
     dependsOn("jpackage")
 
     if (DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX) {
-        dependsOn(
-//            "copyLaunchWithTerminalMacOS",
-            "resignPackageMacOS"
-        )
+        dependsOn("copyLaunchWithTerminalMacOS", "resignPackageMacOS")
     }
 }
 
-tasks.register<Exec>("jpackage") {
+abstract class JPackage : Exec() {
+    @get:OutputDirectory
+    abstract val outputDirectory: DirectoryProperty
+}
+
+tasks.register<JPackage>("jpackage") {
     group = "Package"
     description = "Runs jpackage on the Jar."
 
@@ -94,6 +96,8 @@ tasks.register<Exec>("jpackage") {
     if (DefaultNativePlatform.getCurrentOperatingSystem().isWindows) {
         args = args + listOf("--win-console")
     }
+
+    outputDirectory.set(layout.buildDirectory.dir("package"))
 }
 
 tasks.register<Delete>("cleanPackage") {
@@ -113,14 +117,16 @@ tasks.register<Copy>("copyLaunchWithTerminalMacOS") {
     into(layout.buildDirectory.dir("package/Oceans14.app/Contents/MacOS"))
 }
 
-tasks.register<Exec>("resignPackageMacOS") {
+abstract class Codesign : Exec() {
+    @get:OutputDirectories
+    abstract val outputDirectories: ConfigurableFileCollection
+}
+
+tasks.register<Codesign>("resignPackageMacOS") {
     group = "Package"
     description = "Forcibly signs the package after modification on MacOS."
 
-    dependsOn(
-//        "copyLaunchWithTerminalMacOS",
-        "jpackage"
-    )
+    dependsOn("copyLaunchWithTerminalMacOS", "jpackage")
 
     executable = "codesign"
     args = listOf(
@@ -132,5 +138,10 @@ tasks.register<Exec>("resignPackageMacOS") {
         "-vvvv",
         // Path to the app we're signing.
         layout.buildDirectory.dir("package/Oceans14.app").get().asFile.absolutePath,
+    )
+
+    outputDirectories.setFrom(
+        layout.buildDirectory.dir("package/Oceans14.app/Contents/_CodeSignature"),
+        layout.buildDirectory.dir("package/Oceans14.app/Contents/runtime/Contents/_CodeSignature")
     )
 }
