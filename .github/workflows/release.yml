@@ -41,10 +41,15 @@ jobs:
         if: ${{ matrix.os != 'windows-latest' && matrix.os != 'windows-11-arm' }}
         run: ./gradlew package
 
+      - name: Test binary file exists
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          ls -R app/build/package
+          test -f app/build/package/Oceans14.app/Contents/MacOS/Oceans14
+
       - name: Upload Package
         uses: actions/upload-artifact@v7
         with:
           name: Oceans-14-${{ matrix.os }}
           path: app/build/package
           if-no-files-found: error
-          include-hidden-files: true
