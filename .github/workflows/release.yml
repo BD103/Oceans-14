@@ -13,16 +13,17 @@ jobs:
     strategy:
       matrix:
         include:
-#          - os: ubuntu-latest
-#            java-version: 17
-#          - os: ubuntu-24.04-arm
-#            java-version: 17
+          - os: ubuntu-latest
+            java-version: 17
+          - os: ubuntu-24.04-arm
+            java-version: 17
           - os: macos-latest
             java-version: 17
-#          - os: windows-latest
-#            java-version: 17
-#          - os: windows-11-arm
-#            java-version: 21
+          - os: windows-latest
+            java-version: 17
+          - os: windows-11-arm
+            # Java 17 isn't available for Windows Arm.
+            java-version: 21
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -41,14 +42,10 @@ jobs:
         if: ${{ matrix.os != 'windows-latest' && matrix.os != 'windows-11-arm' }}
         run: ./gradlew package
 
-      - run: |
-          ls -R app/build/package
-          test -f app/build/package/Oceans14.app/Contents/MacOS/Oceans14
-
       - name: Upload Package
         uses: actions/upload-artifact@v7
         with:
           name: Oceans-14-${{ matrix.os }}
           path: app/build/package
-          if-no-files-found: error
           include-hidden-files: true
+          if-no-files-found: error

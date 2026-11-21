@@ -20,20 +20,12 @@
   <string>Oceans14</string>
   <key>CFBundlePackageType</key>
   <string>APPL</string>
-  <key>CFBundleShortVersionString</key>
-  <string>1.0</string>
   <key>CFBundleSignature</key>
   <string>????</string>
   <!-- See https://developer.apple.com/app-store/categories/ for list of AppStore categories -->
   <key>LSApplicationCategoryType</key>
-  <string>public.app-category.utilities</string>
-  <key>CFBundleVersion</key>
-  <string>1.0</string>
-  <key>NSHumanReadableCopyright</key>
-  <string>Copyright (C) 2026</string>
+  <string>public.app-category.games</string>
   <key>NSHighResolutionCapable</key>
   <string>true</string>
-  <key>NSMicrophoneUsageDescription</key>
-  <string>The application Oceans14 is requesting access to the microphone.</string>
  </dict>
 </plist>

@@ -94,6 +94,7 @@ tasks.register<JPackage>("jpackage") {
     )
 
     if (DefaultNativePlatform.getCurrentOperatingSystem().isWindows) {
+        // Open the terminal when the exe is run on Windows.
         args = args + listOf("--win-console")
     }
 
@@ -104,6 +105,7 @@ tasks.register<Delete>("cleanPackage") {
     group = "Package"
     description = "Deletes the package directory."
 
+    // jpackage errors if the destination directory isn't empty, so we delete it first.
     delete(layout.buildDirectory.dir("package"))
 }
 
