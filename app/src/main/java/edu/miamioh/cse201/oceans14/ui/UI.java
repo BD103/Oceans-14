@@ -210,7 +210,10 @@ public class UI implements AutoCloseable {
                     this.commandBuffer.right();
                     this.drawRequested = true;
                 }
-                case EXIT -> this.exitRequested = true;
+                case EXIT -> {
+                    this.dialogue.add(new Dialogue.Error("To quit the game, enter the 'quit' command."));
+                    this.drawRequested = true;
+                }
             }
         }
     }
@@ -221,11 +224,14 @@ public class UI implements AutoCloseable {
         if (command.equals("help")) {
             this.dialogue.add(new Dialogue.System("help: shows available commands"));
             this.dialogue.add(new Dialogue.System("describe: describes current interaction"));
+            this.dialogue.add(new Dialogue.System("quit: exit the game (progress will be lost)"));
             for (ActionOption option : this.engine.getAvailableActions()) {
                 this.dialogue.add(new Dialogue.System(option.id() + ": " + option.label()));
             }
         } else if (command.equals("describe")) {
             this.dialogue.add(new Dialogue.System(this.engine.getCurrentDescription()));
+        } else if (command.equals("quit")) {
+            this.exitRequested = true;
         } else {
             InteractionResult result = this.engine.performAction(command);
             this.dialogue.add(result.dialogue());

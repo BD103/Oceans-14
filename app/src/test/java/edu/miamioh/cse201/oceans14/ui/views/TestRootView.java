@@ -19,7 +19,7 @@ public class TestRootView {
         Size size = term.getSize();
         Rect viewport = new Rect(0, 0, size.getColumns(), size.getRows());
 
-        RootView view = new RootView(new CommandBuffer(), new DialogueEntries(), new GameEngine(GameWorld.getRoom("entrance_room")));
+        RootView view = new RootView(new CommandBuffer(), new DialogueEntries(), new GameEngine());
         view.resize(viewport);
         view.draw(term);
     }
@@ -29,7 +29,7 @@ public class TestRootView {
         Size size = term.getSize();
         Rect viewport = new Rect(0, 0, size.getColumns(), size.getRows());
 
-        RootView view = new RootView(new CommandBuffer(), new DialogueEntries(), new GameEngine(GameWorld.getRoom("entrance_room")));
+        RootView view = new RootView(new CommandBuffer(), new DialogueEntries(), new GameEngine());
         view.resize(viewport);
         view.draw(term);
     }

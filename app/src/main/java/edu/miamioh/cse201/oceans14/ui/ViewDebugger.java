@@ -21,18 +21,20 @@ public class ViewDebugger {
      */
     public static void fillViewport(Terminal term, Rect viewport) {
         PrintWriter writer = term.writer();
-        String debugColor = "\033[38;5;" + Math.abs(viewport.hashCode()) % 256 + "m";
+
+        // Set cursor color to a random 8-bit color.
+        // <https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit>
+        writer.print("\033[38;5;" + Math.abs(viewport.hashCode()) % 256 + "m");
 
         for (int y = viewport.y(); y < viewport.y() + viewport.height(); y++) {
             term.puts(Capability.cursor_address, y, viewport.x());
 
-            writer.print(debugColor);
             for (int x = viewport.x(); x < viewport.x() + viewport.width(); x++) {
                 writer.print('X');
             }
-            writer.print("\033[0m");
-
-            term.puts(Capability.orig_pair);
         }
+
+        // Reset cursor color.
+        writer.print("\033[0m");
     }
 }
