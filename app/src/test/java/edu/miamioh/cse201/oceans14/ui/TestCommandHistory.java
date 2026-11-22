@@ -46,7 +46,7 @@ public class TestCommandHistory {
     }
 
     @Test
-    void clearScroll() {
+    void stopScrolling() {
         CommandHistory history = new CommandHistory();
 
         history.add("enter_casino");
@@ -55,7 +55,7 @@ public class TestCommandHistory {
         Assertions.assertEquals("talk_to_contractors", history.scrollUp());
         Assertions.assertEquals("enter_casino", history.scrollUp());
 
-        history.clearScroll();
+        history.stopScrolling();
 
         Assertions.assertEquals("talk_to_contractors", history.scrollUp());
     }

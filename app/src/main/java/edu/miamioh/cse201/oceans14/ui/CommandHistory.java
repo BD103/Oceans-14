@@ -42,10 +42,9 @@ public class CommandHistory {
             return null;
         }
 
-        if (this.it == null) {
+        if (!this.isScrolling()) {
             // Initialize the iterator.
-            this.it = this.entries.listIterator();
-            this.cursorPosition = CursorPosition.AfterCurrent;
+            startScrolling();
         }
 
         if (this.cursorPosition == CursorPosition.BeforeCurrent) {
@@ -68,7 +67,7 @@ public class CommandHistory {
      * @return The latter command, or null if there is no command available.
      */
     public String scrollDown() {
-        if (this.it == null) {
+        if (!this.isScrolling()) {
             // We aren't scrolling, don't do anything.
             return null;
         }
@@ -83,8 +82,7 @@ public class CommandHistory {
             return this.it.previous();
         } else {
             // At the very beginning of the list, stop scrolling and give a blank line.
-            this.it = null;
-            this.cursorPosition = null;
+            this.stopScrolling();
             return "";
         }
     }
@@ -92,9 +90,24 @@ public class CommandHistory {
     /**
      * Resets scrolling.
      */
-    public void clearScroll() {
+    public void stopScrolling() {
         this.it = null;
         this.cursorPosition = null;
+    }
+
+    /**
+     * Begins scrolling through the history.
+     */
+    private void startScrolling() {
+        this.it = this.entries.listIterator();
+        this.cursorPosition = CursorPosition.AfterCurrent;
+    }
+
+    /**
+     * @return True if we're currently scrolling through the history.
+     */
+    private boolean isScrolling() {
+        return this.it != null;
     }
 
     /**

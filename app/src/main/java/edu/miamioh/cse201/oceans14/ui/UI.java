@@ -191,7 +191,7 @@ public class UI implements AutoCloseable {
                     this.processCommand(command);
 
                     this.commandHistory.add(command);
-                    this.commandHistory.clearScroll();
+                    this.commandHistory.stopScrolling();
 
                     this.drawRequested = true;
                 }
