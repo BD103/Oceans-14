@@ -29,6 +29,7 @@ public class HotelStaff extends Actor {
         actions.add(new ActionOption("ask_about_contractors", "Ask About the Contractors"));
         actions.add(new ActionOption("ask_about_casino_staff", "Ask About Casino Staff"));
         actions.add(new ActionOption("ask_about_security", "Ask About Casino Security"));
+        actions.add(new ActionOption("ask_about_gameplay", "Ask about Gameplay"));
 
         // End conversation
         actions.add(new ActionOption("end_conversation", "End the conversation"));
@@ -60,6 +61,7 @@ public class HotelStaff extends Actor {
             case "ask_about_contractors" -> askAboutContractors();
             case "ask_about_casino_staff" -> askAboutCasinoStaff();
             case "ask_about_security" -> askAboutSecurity();
+            case "ask_about_gameplay" -> askAboutGameplay();
 
             // End the conversation always exists
             case "end_conversation" -> endConversation();
@@ -123,6 +125,17 @@ public class HotelStaff extends Actor {
     private InteractionResult askAboutSecurity() {
         return new InteractionResult(
                 new Dialogue.Actor("Second Receptionist", "That new article is talking all about how the new security is state-of-the-art and impenetrable, all while one of the guards is getting wasted at the bar. Rumor has it his wife is ruthless about child support. The guy is really loose-lipped after a few drinks."),
+                InteractionTransition.NONE,
+                null
+        );
+    }
+
+    private InteractionResult askAboutGameplay() {
+        return new InteractionResult(
+                new Dialogue.List(List.of(
+                        new Dialogue.Actor("First Receptionist", "An old hermit once told me: 'Press TAB to auto-complete actions.' I never figured out what he was talking about."),
+                        new Dialogue.Actor("Second Receptionist", "Wisdom of the elders, I suppose!")
+                )),
                 InteractionTransition.NONE,
                 null
         );
