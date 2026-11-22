@@ -28,7 +28,7 @@ public class TestCommandView {
 
         this.buffer = new CommandBuffer();
 
-        this.commandView = new CommandView(this.buffer, new GameEngine(GameWorld.getRoom("entrance_room")));
+        this.commandView = new CommandView(this.buffer, new GameEngine());
         this.commandView.resize(this.viewport);
     }
 

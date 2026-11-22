@@ -11,7 +11,7 @@ public class TestCompletions {
 
     @BeforeEach
     void beforeEach() {
-        this.engine = new GameEngine(GameWorld.getRoom("entrance_room"));
+        this.engine = new GameEngine();
     }
 
     @Test
