@@ -32,6 +32,8 @@ java {
 }
 
 tasks.jar {
+    archiveBaseName = "Oceans14"
+
     manifest {
         // Configure entrypoint when jar is run.
         attributes("Main-Class" to "edu.miamioh.cse201.oceans14.Main")

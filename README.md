@@ -35,11 +35,11 @@ You can compile and run the project with the following command:
 ```bash
 # Linux, MacOS, or Git Bash on Windows
 ./gradlew jar
-java -jar app/build/libs/app.jar
+java -jar app/build/libs/Oceans14.jar
 
 # Windows
 gradlew.bat jar
-java -jar app\build\libs\app.jar
+java -jar app\build\libs\Oceans14.jar
 ```
 
 Some IDEs such as IntelliJ IDEA integrate directly with Gradle, and let you run the project using their UI rather than through the terminal.
