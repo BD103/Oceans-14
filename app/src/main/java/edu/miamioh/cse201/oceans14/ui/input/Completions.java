@@ -21,17 +21,24 @@ public class Completions {
         String match = null;
 
         for (ActionOption option : engine.getAvailableActions()) {
+            // If one of the available actions starts with the text the player has typed, it is a
+            // candidate auto-complete.
             if (option.id().startsWith(buffer)) {
+                // Check if this is the first candidate found.
                 if (match == null) {
-                    // There's at least one match.
+                    // This is the first candidate we found. Compute the substring required to
+                    // auto-complete the buffer.
                     match = option.id().substring(buffer.length());
                 } else {
-                    // Multiple matches, don't complete anything.
+                    // We can't auto-complete if there is more than one candidate, so we exit and
+                    // don't do anything.
                     return null;
                 }
             }
         }
 
+        // If we get to this point, there are either zero candidates to auto-complete (in which
+        // case `match == null`) or there is exactly one candidate.
         return match;
     }
 }
