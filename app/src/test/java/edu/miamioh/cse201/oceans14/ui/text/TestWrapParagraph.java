@@ -97,6 +97,20 @@ public class TestWrapParagraph {
     }
 
     @Test
+    void manualNewlines() {
+        WrapParagraph wrapped = new WrapParagraph("Favorite colors:\n- \033[31mRed\033[0m\n- \033[32mGreen\033[0m\n- \033[34mBlue\033[0m", 20);
+        Assertions.assertLinesMatch(
+                List.of(
+                        "Favorite colors:",
+                        "- \033[31mRed\033[0m",
+                        "- \033[32mGreen\033[0m",
+                        "- \033[34mBlue\033[0m"
+                ),
+                wrapped.getLines()
+        );
+    }
+
+    @Test
     void colorBeforeLineBreak() {
         WrapParagraph wrapped = new WrapParagraph("\033[31mHi\033[0m Nayrb!", 6);
         Assertions.assertLinesMatch(
@@ -147,6 +161,30 @@ public class TestWrapParagraph {
                 ),
                 wrapped.getLines()
         );
+    }
+
+    @Test
+    void hardBreakWithColor() {
+        WrapParagraph wrapped = new WrapParagraph(
+                "\033[35mABCD\033[32mEFGHI",
+                3
+        );
+
+        Assertions.assertLinesMatch(
+                List.of(
+                        "\033[35mAB-\033[0m",
+                        "\033[35mCD\033[32m\033[0m",
+                        "\033[32mEF-\033[0m",
+                        "\033[32mGHI\033[0m"
+                ),
+                wrapped.getLines()
+        );
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "✨", "\1", "\r", "🧑‍🧑‍🧒‍🧒" })
+    void invalid(String input) {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new WrapParagraph(input, 20));
     }
 
     @ParameterizedTest

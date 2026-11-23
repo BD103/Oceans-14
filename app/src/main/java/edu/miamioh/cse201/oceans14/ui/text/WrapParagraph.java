@@ -136,7 +136,7 @@ public class WrapParagraph {
                 if (this.lineIsEmpty()) {
                     // There's not enough room to include the word. Introduce a hard break,
                     // splitting the word in two.
-                    this.hardBreak(lineStart + maxWidth - 1);
+                    this.hardBreak(lineStart + this.invisibleChars + maxWidth - 1);
 
                     // Process the remaining word.
                     this.processWord(new Token.Word(lineStart, word.end()));
@@ -207,7 +207,11 @@ public class WrapParagraph {
         }
 
         private boolean lineIsEmpty() {
-            return this.lineStart == this.lineEnd;
+            return this.lineLength() == 0;
+        }
+
+        private void growLine(int newEnd) {
+            this.lineEnd = newEnd;
         }
 
         private void softBreak(int newStart) {
@@ -259,10 +263,6 @@ public class WrapParagraph {
 
             // Reset invisible chars.
             this.invisibleChars = 0;
-        }
-
-        private void growLine(int newEnd) {
-            this.lineEnd = newEnd;
         }
 
         private boolean lineStartsStyled() {
