@@ -42,7 +42,7 @@ public class TestTextTokenizer {
         List<Token> tokens = TextTokenizer.tokenize("\n");
 
         Assertions.assertIterableEquals(
-                List.of(new Token.Newline()),
+                List.of(new Token.Newline(0, 1)),
                 tokens
         );
     }
@@ -78,7 +78,7 @@ public class TestTextTokenizer {
                         new Token.Word(0, 6),
                         new Token.Whitespace(6, 7),
                         new Token.Word(7, 13),
-                        new Token.Newline(),
+                        new Token.Newline(13, 14),
                         new Token.EscapeCode(14, 19),
                         new Token.Word(19, 24),
                         new Token.EscapeCode(24, 28)
@@ -95,7 +95,7 @@ public class TestTextTokenizer {
                 List.of(
                         new Token.EscapeCode(0, 5),
                         new Token.Word(5, 8),
-                        new Token.Newline()
+                        new Token.Newline(8, 9)
                 ),
                 tokens
         );

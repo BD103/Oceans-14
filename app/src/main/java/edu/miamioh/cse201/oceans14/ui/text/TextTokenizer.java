@@ -65,7 +65,7 @@ public class TextTokenizer {
 
         // Parse newlines.
         if (c == '\n') {
-            return new Token.Newline();
+            return new Token.Newline(start, this.i);
         }
 
         // Parse escape codes, which are in the format "\033[...m" where an arbitrary number of

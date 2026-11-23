@@ -25,8 +25,11 @@ public sealed interface Token {
 
     /**
      * A manual newline in the text, represented by a "\n" character.
+     *
+     * @param start The start (inclusive) of the newline.
+     * @param end The end (exclusive) of the newline.
      */
-    record Newline() implements Token {}
+    record Newline(int start, int end) implements Token {}
 
     /**
      * A Select Graphic Rendition (SGR) escape code, in the format of "\033[...m".
