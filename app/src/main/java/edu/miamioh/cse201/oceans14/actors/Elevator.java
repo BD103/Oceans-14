@@ -117,7 +117,7 @@ public class Elevator extends Actor {
             case 13 -> breakElevator();
 
             case 7 -> new InteractionResult(
-                    new Dialogue.System("You press 7. The elevator lets out a cheerful ding, and the display flashes three lucky sevens. Somewhere in the distance, a slot machine hits the jackpot. Unfortunately, you don't."),
+                    new Dialogue.System("You press 7. The elevator lets out a cheerful \033[33mding\033[0m, and the display flashes three lucky sevens. Somewhere in the distance, a slot machine hits the jackpot. Unfortunately, you don't."),
                     InteractionTransition.NONE,
                     null
             );
@@ -129,13 +129,13 @@ public class Elevator extends Actor {
             );
 
             case 69 -> new InteractionResult(
-                    new Dialogue.System("You press 69. The elevator pauses for an unusually long moment before displaying a single word: NICE."),
+                    new Dialogue.System("You press 69. The elevator pauses for an unusually long moment before displaying a single word: \033[36mNICE\033[0m."),
                     InteractionTransition.NONE,
                     null
             );
 
             case 67 -> new InteractionResult(
-                    new Dialogue.System("You press 67. The elevator lets out an obnoxiously loud 'SIX SEVEN!' before displaying the words: ARE YOU FOUR YEARS OLD?"),
+                    new Dialogue.System("You press 67. The elevator lets out an obnoxiously loud '\033[35mSIX SEVEN!\033[0m' before displaying the words: \033[35mARE YOU FOUR YEARS OLD?\033[0m"),
                     InteractionTransition.NONE,
                     null
             );
@@ -153,13 +153,13 @@ public class Elevator extends Actor {
             );
 
             case 404 -> new InteractionResult(
-                    new Dialogue.System("You press 404. The elevator freezes for a moment before displaying: ERROR 404 — FLOOR NOT FOUND. Please contact your system administrator."),
+                    new Dialogue.System("You press 404. The elevator freezes for a moment before displaying: \033[31mERROR 404 - FLOOR NOT FOUND\033[0m. Please contact your system administrator."),
                     InteractionTransition.NONE,
                     null
             );
 
             case 777 -> new InteractionResult(
-                    new Dialogue.System("You press 777. The elevator erupts into flashing lights and triumphant casino music. JACKPOT! A small receipt prints from the control panel. It reads: 'Congratulations! You've won absolutely nothing.'"),
+                    new Dialogue.System("You press 777. The elevator erupts into flashing lights and triumphant casino music. \033[33mJACKPOT!\033[0m A small receipt prints from the control panel. It reads: 'Congratulations! You've won absolutely nothing.'"),
                     InteractionTransition.NONE,
                     null
             );
@@ -195,7 +195,7 @@ public class Elevator extends Actor {
         GameState.addFlag("elevator_broken");
 
         return new InteractionResult(
-                new Dialogue.System("You press 13. The elevator begins ascending before an awful screech echoes through the shaft, followed by a deafening crash. The control panel flickers and goes dark. It looks like you've broken the elevator."),
+                new Dialogue.System("You press 13. The elevator begins ascending before an awful screech echoes through the shaft, followed by a deafening crash. The control panel flickers and goes dark. It looks like you've \033[1mbroken the elevator\033[0m."),
                 InteractionTransition.NONE,
                 null
         );

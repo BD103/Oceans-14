@@ -103,7 +103,7 @@ public class Anthony extends Actor {
     private InteractionResult askForScrewdriver() {
         GameState.addItem("screwdriver");
         return new InteractionResult(
-                new Dialogue.Actor(this.getName(), "Oh shoot, I forgot I borrowed that! Here you go. Just return it to the storage room when you're done."),
+                new Dialogue.Actor(this.getName(), "Oh shoot, I forgot I borrowed that! Here you go. Just \033[1mreturn it to the storage room\033[0m when you're done."),
                 InteractionTransition.NONE,
                 null
         );

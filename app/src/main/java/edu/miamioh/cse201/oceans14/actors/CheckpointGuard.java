@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class CheckpointGuard extends Actor {
     /** The password used to enter the vault. */
-    private static final String PASSWORD = "password123";
+    public static final String PASSWORD = "password123";
 
     public CheckpointGuard() {
         super("checkpoint_guard", "Beard");
@@ -83,7 +83,7 @@ public class CheckpointGuard extends Actor {
             if (GameState.flagIsActive("vault_security_disabled")) {
                 return new InteractionResult(
                         new Dialogue.List(List.of(
-                                new Dialogue.System("You walk up to the retina scanner, which has a red error light blinking. You scan your eye, and the device makes a distorted beeping noise. The vault door slowly opens."),
+                                new Dialogue.System("You walk up to the retina scanner, which has a red error light blinking. You scan your eye, and the device makes a distorted beeping noise. \033[1mThe vault door slowly opens.\033[0m"),
                                 new Dialogue.Actor(this.getName(), "Huh, I've never heard that sound before! I'll need to call in maintenance to inspect it after my shift, if they're not tooling with that damn elevator again.")
                         )),
                         InteractionTransition.CHANGE_ROOM,
@@ -91,14 +91,14 @@ public class CheckpointGuard extends Actor {
                 );
             } else {
                 return new InteractionResult(
-                        new Dialogue.System("You look past the guard and see a retina scanner with a glowing green light. You won't be able to enter the vault without disabling that scanner. Somehow..."),
+                        new Dialogue.System("You look past the guard and see a retina scanner with a glowing green light. You won't be able to enter the vault without \033[1mdisabling that scanner\033[0m. Somehow..."),
                         InteractionTransition.NONE,
                         null
                 );
             }
         } else {
             return new InteractionResult(
-                    new Dialogue.Actor(this.getName(), "Sorry, I can't let you in if you don't tell me the password, which only specific guards know."),
+                    new Dialogue.Actor(this.getName(), "Sorry, I can't let you in if you don't tell me the \033[1mpassword\033[0m, which only \033[1mspecific guards\033[0m know."),
                     InteractionTransition.NONE,
                     null
             );
@@ -131,7 +131,7 @@ public class CheckpointGuard extends Actor {
             GameState.addFlag("password_told_to_checkpoint_guard");
 
             return new InteractionResult(
-                    new Dialogue.Actor(this.getName(), "That's correct! You may enter the vault."),
+                    new Dialogue.Actor(this.getName(), "That's \033[1mcorrect\033[0m! You may enter the vault."),
                     InteractionTransition.NONE,
                     null
             );
@@ -153,7 +153,7 @@ public class CheckpointGuard extends Actor {
                 );
             } else {
                 return new InteractionResult(
-                        new Dialogue.Actor(this.getName(), "That's it, stop trying to guess the password! Go find a guard who knows it and leave me alone."),
+                        new Dialogue.Actor(this.getName(), "That's it, \033[31mstop trying to guess the password\033[0m! Go find a guard who knows it and leave me alone."),
                         InteractionTransition.POP,
                         null
                 );

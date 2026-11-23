@@ -85,7 +85,7 @@ public class Chef extends Actor {
         GameState.addItem("chef_permission");
         GameState.addFlag("taken_boss_food");
         return new InteractionResult(
-                new Dialogue.Actor(this.getName(), "Yeah, actually, can you deliver this food to the big boss? You can get to his office through the Panopticon room. Here's a permission note so security will let you through."),
+                new Dialogue.Actor(this.getName(), "Yeah, actually, can you deliver this \033[1mfood\033[0m to the \033[1mBig Boss\033[0m? You can get to his office through the \033[1mPanopticon room\033[0m. Here's a \033[1mpermission note\033[0m so security will let you through."),
                 InteractionTransition.NONE,
                 null
         );

@@ -86,7 +86,7 @@ public class BigBoss extends Actor {
      */
     private InteractionResult askAboutCasino() {
         return new InteractionResult(
-                new Dialogue.Actor("Big Boss", "My Granddad started this casino 88 years ago. The Beach View Hotel is the premier spot for gambling in luxury. Too bad he picked New Jersey to settle. Something, something about lower taxes than New York. Almost lost this place when some rat bastard came in here with a \"Lucky Rock\" and nearly gambled his way to the top. A good sock to the head solved that. Anyways, do you have my food ready?"),
+                new Dialogue.Actor("Big Boss", "My Granddad started this casino 88 years ago. The Beach View Hotel is the premier spot for gambling in luxury. Too bad he picked New Jersey to settle. Something, something about lower taxes than New York. Almost lost this place when some rat bastard came in here with a \033[1m'Lucky Rock'\033[0m and nearly gambled his way to the top. A good sock to the head solved that. Anyways, do you have my \033[1mfood\033[0m ready?"),
                 InteractionTransition.NONE,
                 null
         );
@@ -107,7 +107,7 @@ public class BigBoss extends Actor {
         GameState.addItem("maintenance_key");
         GameState.addFlag("boss_interaction_complete");
         return new InteractionResult(
-                new Dialogue.Actor("Big Boss", "Mmmm, that is the good stuff. Oh by the way the chef had mentioned to me that he was having some kind of vermin problem with the vents, here is a key to the maintenance room, go grab a screwdriver and fix up those vents. Wouldn't want one to get loose. Now scram!"),
+                new Dialogue.Actor("Big Boss", "Mmmm, that is the good stuff. Oh by the way the chef had mentioned to me that he was having some kind of vermin problem with the vents, here is a \033[1mkey to the maintenance room\033[0m, go grab a \033[1mscrewdriver\033[0m and fix up those \033[1mvents\033[0m. Wouldn't want one to get loose. Now scram!"),
                 // Note for reviewer, change room automatically clears the interaction stack so it is fine to call it here.
                 InteractionTransition.CHANGE_ROOM,
                 GameWorld.getRoom("casino_room")
@@ -131,8 +131,8 @@ public class BigBoss extends Actor {
         GameState.addFlag("boss_poisoned");
         return new InteractionResult(
                 new Dialogue.List(List.of(
-                        new Dialogue.Actor("Big Boss", "Uhhhhhhh, I am not feeling so -BLOUGHHHHHHHHHHHH"),
-                        new Dialogue.System("Big Boss Is curled on the floor and unconscious, that definitely wasn't standard rat poison. Better Flee before catching a murder charge")
+                        new Dialogue.Actor("Big Boss", "Uhhhhhhh, I am not feeling so -\033[32mBLOUGHHHHHHHHHHHH\033[0m"),
+                        new Dialogue.System("Big Boss Is curled on the floor and unconscious, that definitely wasn't standard rat poison. Better flee before catching a murder charge")
                 )),
                 InteractionTransition.NONE,
                 null

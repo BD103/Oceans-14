@@ -94,13 +94,13 @@ public class Guard extends Actor {
             if (GameState.hasItem("drink")) {
                 GameState.removeItem("drink");
                 return new InteractionResult(
-                        new Dialogue.System("HEYYYYYY- yeah yeah thanks for the drink the password is 1234!"),
+                        new Dialogue.System("HEYYYYYY- yeah yeah thanks for the drink the password is \033[1m" + CheckpointGuard.PASSWORD + "\033[0m!"),
                         InteractionTransition.NONE,
                         null
                 );
             } else {
                 return new InteractionResult(
-                        new Dialogue.System("you already forgot? the password is 1234!"),
+                        new Dialogue.System("you already forgot? the password is \033[1m" + CheckpointGuard.PASSWORD + "\033[0m!"),
                         InteractionTransition.NONE,
                         null
                 );
@@ -130,7 +130,7 @@ public class Guard extends Actor {
             );
         } else {
             return new InteractionResult(
-                    new Dialogue.System("Cheapskate... I'm not handing this over for only " + Integer.toString(GameState.getChipCount()) + " chips!"),
+                    new Dialogue.System("Cheapskate... I'm not handing this over for only " + GameState.getChipCount() + " chips!"),
                     InteractionTransition.NONE,
                     null
             );
