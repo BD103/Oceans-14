@@ -59,7 +59,7 @@ public class TestTextTokenizer {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { "\t", "\r", "\u007f", "\033" })
+    @ValueSource(strings = { "\t", "\r", "\u007f", "\033", "\033[" })
     void invalid(String text) {
         List<Token> tokens = TextTokenizer.tokenize(text);
 
