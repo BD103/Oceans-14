@@ -132,6 +132,23 @@ public class TestWrapParagraph {
         );
     }
 
+    @Test
+    void longColor() {
+        WrapParagraph wrapped = new WrapParagraph(
+                "You \033[31mstand at the entrance\033[0m of the Beach View Casino",
+                24
+        );
+
+        Assertions.assertLinesMatch(
+                List.of(
+                        "You \033[31mstand at the \033[0m",
+                        "\033[31mentrance\033[0m of the Beach ",
+                        "View Casino"
+                ),
+                wrapped.getLines()
+        );
+    }
+
     @ParameterizedTest
     @ValueSource(ints = {-1, 0, 1})
     void tooSmallMaxWidth(int maxWidth) {

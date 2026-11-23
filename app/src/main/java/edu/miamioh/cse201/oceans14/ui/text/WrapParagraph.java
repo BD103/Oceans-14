@@ -211,11 +211,12 @@ public class WrapParagraph {
         }
 
         private void softBreak(int newStart) {
-            String line = paragraph.substring(lineStart, lineEnd);
+            String line = paragraph.substring(this.lineStart, this.lineEnd);
 
             if (this.lineStartsStyled()) {
                 // Prepend style to the beginning of line.
                 line = styleToAnsi(this.lineStartStyle) + line;
+                this.lineStartStyle = AttributedStyle.DEFAULT;
             }
 
             if (this.lineEndsStyled()) {
@@ -228,16 +229,20 @@ public class WrapParagraph {
             lines.add(line);
 
             // Configure the index of the next line.
-            lineStart = lineEnd = newStart;
+            this.lineStart = this.lineEnd = newStart;
+
+            // Reset invisible chars.
+            this.invisibleChars = 0;
         }
 
         private void hardBreak(int newStart) {
             // Add "-" to the end of the line to signal the word is being split in two.
-            String line = paragraph.substring(lineStart, newStart) + "-";
+            String line = paragraph.substring(this.lineStart, newStart) + "-";
 
             if (this.lineStartsStyled()) {
                 // Prepend style to the beginning of line.
                 line = styleToAnsi(this.lineStartStyle) + line;
+                this.lineStartStyle = AttributedStyle.DEFAULT;
             }
 
             if (this.lineEndsStyled()) {
@@ -250,7 +255,10 @@ public class WrapParagraph {
             lines.add(line);
 
             // Configure the index of the next line.
-            lineStart = lineEnd = newStart;
+            this.lineStart = this.lineEnd = newStart;
+
+            // Reset invisible chars.
+            this.invisibleChars = 0;
         }
 
         private void growLine(int newEnd) {
