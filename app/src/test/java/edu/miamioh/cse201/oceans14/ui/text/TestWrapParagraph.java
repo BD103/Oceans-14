@@ -13,7 +13,7 @@ public class TestWrapParagraph {
     void emptyParagraph() {
         WrapParagraph wrapped = new WrapParagraph("", 10);
         Assertions.assertLinesMatch(
-                List.of(""),
+                List.of(),
                 wrapped.getLines()
         );
     }
@@ -33,10 +33,10 @@ public class TestWrapParagraph {
         Assertions.assertLinesMatch(
                 List.of(
                         "A AB",
-                        "ABC",
+                        "ABC ",
                         "AB A",
                         "ABCD",
-                        "A A",
+                        "A A ",
                         "A"
                 ),
                 wrapped.getLines()
@@ -61,7 +61,7 @@ public class TestWrapParagraph {
         WrapParagraph wrapped = new WrapParagraph("A REALLYLONGWORD", 7);
         Assertions.assertLinesMatch(
                 List.of(
-                        "A",
+                        "A ",
                         "REALLY-",
                         "LONGWO-",
                         "RD"
@@ -77,7 +77,7 @@ public class TestWrapParagraph {
                 List.of(
                         "A AAA",
                         "A  AA",
-                        "AA   ",
+                        "AA",
                         "AAAAA"
                 ),
                 wrapped.getLines()

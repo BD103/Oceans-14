@@ -8,19 +8,22 @@ import java.util.List;
  * Represents a paragraph that is wrapped so each line is no longer than a specified maximum width.
  */
 public class WrapParagraph {
-    /** The original, unwrapped paragraph. It should contain no newlines. */
+    /** The original, unwrapped paragraph. */
     private final String paragraph;
+    /** The paragraph parsed as a list of {@link Token}s. */
+    private final List<Token> tokens;
     /** The wrapped paragraph, where each line is a separate entry in the list. */
     private final List<String> lines = new ArrayList<>();
 
     /**
      * Creates a new wrapped paragraph.
      *
-     * @param paragraph The text to wrap. This must not contain any line breaks {@code '\n'}.
+     * @param paragraph The text to wrap.
      * @param maxWidth The initial max width of the wrapped paragraph.
      */
     public WrapParagraph(String paragraph, int maxWidth) {
         this.paragraph = paragraph;
+        this.tokens = TextTokenizer.tokenize(this.paragraph);
         this.resize(maxWidth);
     }
 
@@ -49,63 +52,82 @@ public class WrapParagraph {
 
         this.lines.clear();
 
-        // There are two spans represented here. The span of the line being constructed,
-        // [lineStart, lineEndWordStart), and the span of the next word found,
-        // [lineEndWordStart, wordEnd).
+        // The beginning index (inclusive) of the current line being processed.
         int lineStart = 0;
-        int lineEndWordStart = 0;
-        int wordEnd;
+        // The ending index (exclusive) of the current line being processed.
+        int lineEnd = 0;
 
-        // Repeat until there are no more words that haven't been emitted as lines.
-        while (true) {
-            // Find where the next word ends by looking for the next space.
-            wordEnd = this.paragraph.indexOf(' ', lineEndWordStart + 1);
+        // The index of the token currently being processed.
+        int i = 0;
 
-            // If no space is found, the word spans to the end of the paragraph.
-            if (wordEnd < 0) {
-                wordEnd = this.paragraph.length();
-            }
+        while (i < this.tokens.size()) {
+            Token token = this.tokens.get(i);
 
-            // Next word is empty, we're reached the end of the paragraph. Add the last line and
-            // exit.
-            if (lineEndWordStart == wordEnd) {
-                // Add a new line with a soft break at the end.
-                lines.add(this.paragraph.substring(lineStart, lineEndWordStart));
-                break;
-            }
+            if (token instanceof Token.Word word) {
+                // Check if there's not enough room to include the word on the line.
+                if (word.end() - lineStart > maxWidth) {
+                    // Check if the line is currently empty. If it is, that means the word itself
+                    // is longer than the max width and requires a hard break.
+                    if (lineStart == lineEnd) {
+                        // There's not enough room to include the word. Introduce a hard break,
+                        // splitting the word in two, adding a "-" on the end of the line.
+                        this.lines.add(this.paragraph.substring(lineStart, lineStart + maxWidth - 1) + "-");
 
-            // If adding the word would cause the line to grow to long.
-            if (wordEnd - lineStart > maxWidth) {
-                // If the word itself is longer than the max width, we need to insert a hard break.
-                // This condition evaluates to true when we just added a break, but we need another
-                // break due to word being too large.
-                if (lineStart == lineEndWordStart) {
-                    // Add a new line for the portion of the word. We're including only
-                    // maxWidth - 1 characters in this line, as the hard break will add an "-" at
-                    // the end.
-                    lines.add(this.paragraph.substring(lineStart, lineStart + maxWidth - 1) + "-");
+                        // Move parser to middle of word, where the hard break was.
+                        lineStart = lineEnd = lineStart + maxWidth - 1;
+                    } else {
+                        // There's not enough room to include the word. Introduce a soft break
+                        // before the word.
+                        this.lines.add(this.paragraph.substring(lineStart, lineEnd));
 
-                    // Start the next blank line immediately where we left off.
-                    lineStart = lineStart + maxWidth - 1;
-                } else {
-                    // Complete current line, adding a soft break at the end.
-                    lines.add(this.paragraph.substring(lineStart, lineEndWordStart));
-
-                    // Create new blank line, skipping the space.
-                    lineStart = lineEndWordStart + 1;
-
-                    // If there are multiple spaces, keep skipping forward until a non-space is
-                    // found, or we reach EOF.
-                    while (lineStart < this.paragraph.length() && this.paragraph.charAt(lineStart) == ' ') {
-                        lineStart++;
+                        // Move parser directly before word.
+                        lineStart = lineEnd = word.start();
                     }
+                } else {
+                    // Grow line to include word.
+                    lineEnd = word.end();
+
+                    // Move on to the next token.
+                    i++;
+                }
+            } else if (token instanceof Token.Whitespace whitespace) {
+                // Check if there's not enough room to include the whitespace on the line.
+                if (whitespace.end() - lineStart > maxWidth) {
+                    // There's not enough room on the line to include the whitespace. Coerce the
+                    // whitespace into a soft break and start a new line.
+                    this.lines.add(this.paragraph.substring(lineStart, lineEnd));
+
+                    // Move parser directly after whitespace.
+                    lineStart = lineEnd = whitespace.end();
+                } else {
+                    // Grow line to include whitespace.
+                    lineEnd = whitespace.end();
                 }
 
-                lineEndWordStart = lineStart;
+                // Move on to the next token.
+                i++;
+            } else if (token instanceof Token.Newline newline) {
+                // Explicitly newline, add a soft break.
+                this.lines.add(this.paragraph.substring(lineStart, lineEnd));
+
+                // Move parser to directly after newline.
+                lineStart = lineEnd = newline.end();
+
+                // Move on to the next token.
+                i++;
+            } else if (token instanceof Token.EscapeCode escapeCode) {
+                // TODO
+                // Move on to the next token.
+                i++;
             } else {
-                // Grow line to include word.
-                lineEndWordStart = wordEnd;
+                // Invalid token, skip it and move on to the next.
+                i++;
             }
+        }
+
+        // Add the leftover line at the end, if it exists.
+        if (lineStart != lineEnd) {
+            this.lines.add(this.paragraph.substring(lineStart, lineEnd));
         }
     }
 }
