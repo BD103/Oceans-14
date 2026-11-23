@@ -85,7 +85,7 @@ class LineBreaks {
 
         // Add the leftover line at the end, if it exists.
         if (!this.lineIsEmpty()) {
-            this.softBreak(this.lineEnd);
+            this.breakLine(this.lineEnd, BreakKind.Soft);
         }
     }
 
@@ -95,16 +95,19 @@ class LineBreaks {
             // Check if the line is currently empty. If it is, that means the word itself
             // is longer than the max width and requires a hard break.
             if (this.lineIsEmpty()) {
-                // There's not enough room to include the word. Introduce a hard break,
-                // splitting the word in two.
-                this.hardBreak(lineStart + this.invisibleChars + maxWidth - 1);
+                // There's not enough room to include the full word. Grow the line to include as
+                // much of the word as possible.
+                this.growLine(lineStart + this.invisibleChars + maxWidth - 1);
+
+                // Introduce a hard break, splitting the word in two.
+                this.breakLine(lineStart + this.invisibleChars + maxWidth - 1, BreakKind.Hard);
 
                 // Process the remaining word.
                 this.processWord(new Token.Word(lineStart, word.end()));
             } else {
                 // There's not enough room to include the word. Introduce a soft break
                 // before the word.
-                this.softBreak(word.start());
+                this.breakLine(word.start(), BreakKind.Soft);
             }
         } else {
             // Grow line to include word.
@@ -120,7 +123,7 @@ class LineBreaks {
         if (this.lineLength() + whitespace.length() > maxWidth) {
             // There's not enough room on the line to include the whitespace. Coerce the
             // whitespace into a soft break and start a new line.
-            this.softBreak(whitespace.end());
+            this.breakLine(whitespace.end(), BreakKind.Soft);
         } else {
             // Grow line to include whitespace.
             this.growLine(whitespace.end());
@@ -132,7 +135,7 @@ class LineBreaks {
 
     private void processNewline(Token.Newline newline) {
         // Explicitly newline, add a soft break.
-        this.softBreak(newline.end());
+        this.breakLine(newline.end(), BreakKind.Soft);
 
         // Move on to the next token.
         this.consumeCurrentToken();
@@ -155,29 +158,67 @@ class LineBreaks {
         throw new IllegalArgumentException("Found invalid token " + paragraph.substring(invalid.start(), invalid.end()) + " at " + invalid);
     }
 
+    /**
+     * @return The current token being processed.
+     * @see consumeCurrentToken
+     */
     private Token getCurrentToken() {
         return tokens.get(this.i);
     }
 
+    /**
+     * Marks the current token as processed, moving on to the next one.
+     *
+     * @see getCurrentToken
+     */
     private void consumeCurrentToken() {
         this.i++;
     }
 
+    /**
+     * Calculates the display length of the current line, when printed to the terminal.
+     * <p>
+     * Note that the reported length may be smaller than the characters in the line. This is
+     * because some characters may be invisible, and won't render when printed to the terminal.
+     *
+     * @return The line length.
+     */
     private int lineLength() {
+        // The line may contain "invisible characters", which usually ANSI escape codes that don't
+        // take up any space when printed to the terminal.
         return this.lineEnd - this.lineStart - this.invisibleChars;
     }
 
+    /**
+     * @return True if the line is visually empty (it may still contain invisible characters).
+     */
     private boolean lineIsEmpty() {
         return this.lineLength() == 0;
     }
 
+    /**
+     * Grows the length of the current line to end at a new index.
+     *
+     * @param newEnd The new end index of the line (exclusive).
+     */
     private void growLine(int newEnd) {
         this.lineEnd = newEnd;
     }
 
-    private void softBreak(int newStart) {
+    /**
+     * Introduce a new line break, ending the current line and starting a new one.
+     *
+     * @param newStart The index to start the new line at.
+     * @param breakKind Whether this is a soft break or a hard break.
+     */
+    private void breakLine(int newStart, BreakKind breakKind) {
         String line = paragraph.substring(this.lineStart, this.lineEnd);
 
+        if (breakKind == BreakKind.Hard) {
+            // Add "-" to the end of the line to signal the word is being split in two.
+            line += "-";
+        }
+
         if (this.lineStartsStyled()) {
             // Prepend style to the beginning of line.
             line = styleToAnsi(this.lineStartStyle) + line;
@@ -186,7 +227,7 @@ class LineBreaks {
 
         if (this.lineEndsStyled()) {
             // Reset style at the end and record what style the next line should begin with.
-            line = line + "\033[0m";
+            line += "\033[0m";
             this.lineStartStyle = this.styleTracker.style();
         }
 
@@ -200,44 +241,44 @@ class LineBreaks {
         this.invisibleChars = 0;
     }
 
-    private void hardBreak(int newStart) {
-        // Add "-" to the end of the line to signal the word is being split in two.
-        String line = paragraph.substring(this.lineStart, newStart) + "-";
-
-        if (this.lineStartsStyled()) {
-            // Prepend style to the beginning of line.
-            line = styleToAnsi(this.lineStartStyle) + line;
-            this.lineStartStyle = AttributedStyle.DEFAULT;
-        }
-
-        if (this.lineEndsStyled()) {
-            // Reset style at the end and record what style the next line should begin with.
-            line = line + "\033[0m";
-            this.lineStartStyle = this.styleTracker.style();
-        }
-
-        // Commit current line.
-        lines.add(line);
-
-        // Configure the index of the next line.
-        this.lineStart = this.lineEnd = newStart;
-
-        // Reset invisible chars.
-        this.invisibleChars = 0;
-    }
-
+    /**
+     * @return True if the current line starts with a non-default style.
+     */
     private boolean lineStartsStyled() {
         return !this.lineStartStyle.equals(AttributedStyle.DEFAULT);
     }
 
+    /**
+     * @return True if the current line ends with a non-default style.
+     */
     private boolean lineEndsStyled() {
         return !this.styleTracker.style().equals(AttributedStyle.DEFAULT);
     }
 
+    /**
+     * Converts an {@link AttributedStyle} into an ANSI escape code.
+     *
+     * @param style The style to convert.
+     * @return The ANSI escape code for that style.
+     */
     private static String styleToAnsi(AttributedStyle style) {
+        // Render the style on a string. If the style was `AttributedStyle.BOLD`, for example, this
+        // string would be "\033[1m \033[0m".
         String ansi = new AttributedString(" ", style)
                 .toAnsi(AttributedCharSequence.TRUE_COLORS, AttributedCharSequence.ForceMode.None);
 
+        // Return only the escape code before the space. If `ansi` was "\033[1m \033[0m", this
+        // would return "\033[1m".
         return ansi.substring(0, ansi.indexOf(' '));
+    }
+
+    /**
+     * Represents the kind of line break.
+     */
+    private enum BreakKind {
+        /** A soft break, where the paragraph is split on whitespace. */
+        Soft,
+        /** A hard break, where the paragraph is split in the middle of a word. */
+        Hard;
     }
 }
