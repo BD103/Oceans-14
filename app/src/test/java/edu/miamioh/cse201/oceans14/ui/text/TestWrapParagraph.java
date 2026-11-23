@@ -96,6 +96,42 @@ public class TestWrapParagraph {
         );
     }
 
+    @Test
+    void colorBeforeLineBreak() {
+        WrapParagraph wrapped = new WrapParagraph("\033[31mHi\033[0m Nayrb!", 6);
+        Assertions.assertLinesMatch(
+                List.of(
+                        "\033[31mHi\033[0m ",
+                        "Nayrb!"
+                ),
+                wrapped.getLines()
+        );
+    }
+
+    @Test
+    void colorAcrossLines() {
+        WrapParagraph wrapped = new WrapParagraph("\033[32mSome text", 4);
+        Assertions.assertLinesMatch(
+                List.of(
+                        "\033[32mSome\033[0m",
+                        "\033[32mtext\033[0m"
+                ),
+                wrapped.getLines()
+        );
+    }
+
+    @Test
+    void fgBgColorMerge() {
+        WrapParagraph wrapped = new WrapParagraph("\033[35mYes \033[41mthere is", 9);
+        Assertions.assertLinesMatch(
+                List.of(
+                        "\033[35mYes \033[41mthere\033[0m",
+                        "\033[35;41mis\033[0m"
+                ),
+                wrapped.getLines()
+        );
+    }
+
     @ParameterizedTest
     @ValueSource(ints = {-1, 0, 1})
     void tooSmallMaxWidth(int maxWidth) {

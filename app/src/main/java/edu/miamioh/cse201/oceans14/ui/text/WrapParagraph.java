@@ -1,5 +1,10 @@
 package edu.miamioh.cse201.oceans14.ui.text;
 
+import org.jline.utils.AttributedCharSequence;
+import org.jline.utils.AttributedString;
+import org.jline.utils.AttributedStringBuilder;
+import org.jline.utils.AttributedStyle;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -67,6 +72,21 @@ public class WrapParagraph {
 
         /** The index of the token currently being processed. */
         private int i = 0;
+
+        /**
+         * A mutable string containing every processed escape code. It is used to compute the
+         * current style across line breaks with {@link AttributedStringBuilder#style()}.
+         */
+        private final AttributedStringBuilder styleTracker = new AttributedStringBuilder(0);
+
+        /**
+         * The number of invisible characters in the current line, which don't contribute to the
+         * width of the line.
+         */
+        private int invisibleChars = 0;
+
+        /** The style of the beginning of the line. */
+        private AttributedStyle lineStartStyle = AttributedStyle.DEFAULT;
 
         public LineBreaks(int maxWidth) throws IllegalArgumentException {
             if (maxWidth < 2) {
@@ -158,7 +178,15 @@ public class WrapParagraph {
         }
 
         private void processEscapeCode(Token.EscapeCode escapeCode) {
-            // TODO
+            // Add escape code to the style tracker.
+            this.styleTracker.appendAnsi(paragraph.substring(escapeCode.start(), escapeCode.end()));
+
+            // Record how many invisible chars this escape code takes up. (This number is used to
+            // track a line's length in characters vs. its width when printed to the terminal.)
+            this.invisibleChars += escapeCode.length();
+
+            // Commit this escape code to the line, consuming it.
+            this.growLine(escapeCode.end());
             this.consumeCurrentToken();
         }
 
@@ -175,7 +203,7 @@ public class WrapParagraph {
         }
 
         private int lineLength() {
-            return this.lineEnd - this.lineStart;
+            return this.lineEnd - this.lineStart - this.invisibleChars;
         }
 
         private boolean lineIsEmpty() {
@@ -183,16 +211,43 @@ public class WrapParagraph {
         }
 
         private void softBreak(int newStart) {
-            // Commit the current line.
-            lines.add(paragraph.substring(lineStart, lineEnd));
+            String line = paragraph.substring(lineStart, lineEnd);
+
+            if (this.lineStartsStyled()) {
+                // Prepend style to the beginning of line.
+                line = styleToAnsi(this.lineStartStyle) + line;
+            }
+
+            if (this.lineEndsStyled()) {
+                // Reset style at the end and record what style the next line should begin with.
+                line = line + "\033[0m";
+                this.lineStartStyle = this.styleTracker.style();
+            }
+
+            // Commit current line.
+            lines.add(line);
 
             // Configure the index of the next line.
             lineStart = lineEnd = newStart;
         }
 
         private void hardBreak(int newStart) {
-            // Commit current line, adding a "-" at the end to signal a word is being split in two.
-            lines.add(paragraph.substring(lineStart, newStart) + "-");
+            // Add "-" to the end of the line to signal the word is being split in two.
+            String line = paragraph.substring(lineStart, newStart) + "-";
+
+            if (this.lineStartsStyled()) {
+                // Prepend style to the beginning of line.
+                line = styleToAnsi(this.lineStartStyle) + line;
+            }
+
+            if (this.lineEndsStyled()) {
+                // Reset style at the end and record what style the next line should begin with.
+                line = line + "\033[0m";
+                this.lineStartStyle = this.styleTracker.style();
+            }
+
+            // Commit current line.
+            lines.add(line);
 
             // Configure the index of the next line.
             lineStart = lineEnd = newStart;
@@ -200,6 +255,21 @@ public class WrapParagraph {
 
         private void growLine(int newEnd) {
             this.lineEnd = newEnd;
+        }
+
+        private boolean lineStartsStyled() {
+            return !this.lineStartStyle.equals(AttributedStyle.DEFAULT);
+        }
+
+        private boolean lineEndsStyled() {
+            return !this.styleTracker.style().equals(AttributedStyle.DEFAULT);
+        }
+
+        private static String styleToAnsi(AttributedStyle style) {
+            String ansi = new AttributedString(" ", style)
+                    .toAnsi(AttributedCharSequence.TRUE_COLORS, AttributedCharSequence.ForceMode.None);
+
+            return ansi.substring(0, ansi.indexOf(' '));
         }
     }
 }

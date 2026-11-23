@@ -5,7 +5,8 @@ package edu.miamioh.cse201.oceans14.ui.text;
  */
 public sealed interface Token {
     /**
-     * @return How many cells this token requires when printed to the terminal.
+     * @return The length of the token in characters. (Note that the token may take up less space
+     *         when printed to the terminal.)
      */
     int length();
 
@@ -62,8 +63,7 @@ public sealed interface Token {
     record EscapeCode(int start, int end) implements Token {
         @Override
         public int length() {
-            // Escape codes configure the terminal and don't actually print anything to the screen.
-            return 0;
+            return this.end - this.start;
         }
     }
 
