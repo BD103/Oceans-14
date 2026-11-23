@@ -15,7 +15,7 @@ public sealed interface Dialogue {
      * This should be used when describing objects such as actors, rooms, and items to the player.
      * It should also be used to describe the player moving between locations.
      *
-     * @param message The message to be displayed, should not contain any newlines.
+     * @param message The message to be displayed.
      */
     record System(String message) implements Dialogue {
         @Override
@@ -30,7 +30,7 @@ public sealed interface Dialogue {
      * This should be used when an actor speaks to the player.
      *
      * @param actorName The name of the actor.
-     * @param message The message the actor says, should not contain any newlines.
+     * @param message The message the actor says.
      */
     record Actor(String actorName, String message) implements Dialogue {
         @Override
@@ -59,7 +59,7 @@ public sealed interface Dialogue {
      * player doesn't have the requirements to perform an action, such as entering a locked door
      * without the key, use {@link System} instead.
      *
-     * @param message The message to be displayed, should not contain any newlines.
+     * @param message The message to be displayed.
      */
     record Error(String message) implements Dialogue {
         @Override
