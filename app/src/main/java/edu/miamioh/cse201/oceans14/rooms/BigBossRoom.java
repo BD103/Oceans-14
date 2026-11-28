@@ -110,7 +110,7 @@ public class BigBossRoom extends Room {
      */
     private InteractionResult enterPanopticonRoom() {
         return new InteractionResult(
-                new Dialogue.System("You straighten your newly acquired guard uniform and walk through the security door into the Panopticon."),
+                new Dialogue.System("You check that your guard uniform is straight, then walk through the security door into the Panopticon."),
                 InteractionTransition.CHANGE_ROOM,
                 GameWorld.getRoom("panopticon_room")
         );
