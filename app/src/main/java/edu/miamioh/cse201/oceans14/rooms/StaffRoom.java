@@ -106,7 +106,7 @@ public class StaffRoom extends Room {
         // Validate having the level_one_disguise
         if (!GameState.hasItem("level_one_disguise")) {
             return new InteractionResult(
-                    new Dialogue.Actor(GameWorld.getActor("anthony").getName(), "Hey buddy, you might want to suit up first"),
+                    new Dialogue.Actor(GameWorld.getActor("anthony").getName(), "Hey buddy, you might want to \033[1msuit up first\033[0m"),
                     InteractionTransition.NONE,
                     null
             );
@@ -143,7 +143,7 @@ public class StaffRoom extends Room {
         GameState.addItem("level_one_disguise");
         GameState.addFlag("taken_level_one_disguise");
         return new InteractionResult(
-                new Dialogue.System("After shuffling around through a few lockers, you find a waiter outfit in your size"),
+                new Dialogue.System("After shuffling around through a few lockers, you find a \033[1mwaiter outfit\033[0m in your size"),
                 InteractionTransition.NONE,
                 null
         );

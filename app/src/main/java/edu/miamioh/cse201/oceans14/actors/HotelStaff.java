@@ -103,7 +103,7 @@ public class HotelStaff extends Actor {
      */
     private InteractionResult askAboutElevator() {
         return new InteractionResult(
-                new Dialogue.Actor("First Receptionist", "Oh, that old thing? Yeah, I wouldn't trust it. I prefer the stairs. It especially makes a weird noise when you request the 13th floor. Management insists it's perfectly safe."),
+                new Dialogue.Actor("First Receptionist", "Oh, that old thing? Yeah, I wouldn't trust it. I prefer the stairs. It especially makes a weird noise when you request the \033[1m13th floor\033[0m. Management insists it's perfectly safe."),
                 InteractionTransition.NONE,
                 null
         );
@@ -117,7 +117,7 @@ public class HotelStaff extends Actor {
      */
     private InteractionResult askAboutContractors() {
         return new InteractionResult(
-                new Dialogue.Actor("Second Receptionist", "You know those contractors all around the casino? They are here to handle all sorts of maintenance problems, including the electricity. Turns out the system is so out of date that they have to shut off half the power in order to make repairs."),
+                new Dialogue.Actor("Second Receptionist", "You know those contractors all around the casino? They are here to handle all sorts of maintenance problems, including the electricity. Turns out the system is so out of date that they have to \033[1mshut off half the power in order to make repairs\033[0m."),
                 InteractionTransition.NONE,
                 null
         );
@@ -131,7 +131,7 @@ public class HotelStaff extends Actor {
      */
     private InteractionResult askAboutCasinoStaff() {
         return new InteractionResult(
-                new Dialogue.Actor("First Receptionist", "Everyone around here is super careless! Uniforms are lying about everywhere in the staff room. Half the time, I can't even tell who is supposed to be working since their name tags fall off all the time. The kitchen staff especially."),
+                new Dialogue.Actor("First Receptionist", "Everyone around here is super careless! \033[1mUniforms\033[0m are lying about everywhere in the \033[1mstaff room\033[0m. Half the time, I can't even tell who is supposed to be working since their name tags fall off all the time. The \033[1mkitchen staff\033[0m especially."),
                 InteractionTransition.NONE,
                 null
         );
@@ -145,7 +145,7 @@ public class HotelStaff extends Actor {
      */
     private InteractionResult askAboutSecurity() {
         return new InteractionResult(
-                new Dialogue.Actor("Second Receptionist", "That new article is talking all about how the new security is state-of-the-art and impenetrable, all while one of the guards is getting wasted at the bar. Rumor has it his wife is ruthless about child support. The guy is really loose-lipped after a few drinks."),
+                new Dialogue.Actor("Second Receptionist", "That new article is talking all about how the new security is state-of-the-art and impenetrable, all while \033[1mone of the guards is getting wasted at the bar\033[0m. Rumor has it his wife is ruthless about child support. The guy is really \033[1mloose-lipped after a few drinks\033[0m."),
                 InteractionTransition.NONE,
                 null
         );

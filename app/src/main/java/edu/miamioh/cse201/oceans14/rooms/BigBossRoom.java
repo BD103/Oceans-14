@@ -96,7 +96,7 @@ public class BigBossRoom extends Room {
     private InteractionResult stealGuardOutfit() {
         GameState.addItem("level_two_disguise");
         return new InteractionResult(
-                new Dialogue.System("You snag a guard outfit from a box of new uniforms. After fixing your hat in the mirror you are looking snazzy."),
+                new Dialogue.System("You snag a \033[1mguard outfit\033[0m from a box of new uniforms. After fixing your hat in the mirror you are looking snazzy."),
                 InteractionTransition.NONE,
                 null
         );

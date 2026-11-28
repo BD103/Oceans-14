@@ -98,7 +98,7 @@ public class Contractors extends Actor {
      */
     private InteractionResult askAboutWork() {
         return new InteractionResult(
-                new Dialogue.Actor("Contractor", "We're responsible for keeping this whole place running. The entire building is twice as old as I am and the grid is showing its age. We have to shut down half the power just to fix something like that stupid elevator."),
+                new Dialogue.Actor("Contractor", "We're responsible for keeping this whole place running. The entire building is twice as old as I am and the grid is showing its age. We have to \033[1mshut down half the power\033[0m just to fix something like that \033[1mstupid elevator\033[0m."),
                 InteractionTransition.NONE,
                 null
         );
@@ -115,7 +115,7 @@ public class Contractors extends Actor {
         GameState.addFlag("contractor_map_offer");
 
         return new InteractionResult(
-                new Dialogue.Actor("Contractor", "The ventilation system? What do you wanna know about that for? Actually, never mind. Look, between you and me, I might have made an extra copy of the ventilation schematics. Shows all the vents, even the security lasers. Management would have my head if they found out. Slip me " + VENT_MAP_PRICE + " chips, and maybe that copy goes missing. Just keep your voice down, alright?"),
+                new Dialogue.Actor("Contractor", "The ventilation system? What do you wanna know about that for? Actually, never mind. Look, between you and me, I might have made an extra copy of the \033[1mventilation schematics\033[0m. Shows all the vents, even the security lasers. Management would have my head if they found out. Slip me \033[1m" + VENT_MAP_PRICE + " chips\033[0m, and maybe that copy goes missing. Just keep your voice down, alright?"),
                 InteractionTransition.NONE,
                 null
         );
@@ -139,7 +139,7 @@ public class Contractors extends Actor {
             );
         } else {
             return new InteractionResult(
-                    new Dialogue.Actor("Contractor", "Hey, I said " + VENT_MAP_PRICE + " chips. I'm not risking my job for pocket change. Come back when you've got the money, and don't go telling the other guys what we talked about."),
+                    new Dialogue.Actor("Contractor", "Hey, I said \033[1m" + VENT_MAP_PRICE + " chips\033[0m. I'm not risking my job for pocket change. Come back when you've got the money, and don't go telling the other guys what we talked about."),
                     InteractionTransition.NONE,
                     null
             );
@@ -156,7 +156,7 @@ public class Contractors extends Actor {
     private InteractionResult reportBrokenElevator() {
         GameState.addFlag("vault_security_disabled");
         return new InteractionResult(
-                new Dialogue.System("You tell the contractors the elevator is broken again. After some arguing, a few of them go to investigate. A moment later, the lights flicker. It looks like they've cut power to some of the security systems while they make repairs."),
+                new Dialogue.System("You tell the contractors the elevator is broken again. After some arguing, a few of them go to investigate. A moment later, the lights flicker. It looks like \033[1mthey've cut power to some of the security systems\033[0m while they make repairs."),
                 InteractionTransition.NONE,
                 null
         );

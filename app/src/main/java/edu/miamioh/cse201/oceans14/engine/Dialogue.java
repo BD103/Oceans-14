@@ -35,7 +35,7 @@ public sealed interface Dialogue {
     record Actor(String actorName, String message) implements Dialogue {
         @Override
         public String display() {
-            return this.actorName + ": " + this.message;
+            return "\033[1m" + this.actorName + "\033[0m: " + this.message;
         }
     }
 
@@ -47,7 +47,7 @@ public sealed interface Dialogue {
     record Command(String command) implements Dialogue {
         @Override
         public String display() {
-            return "> " + this.command;
+            return "\033[2m>\033[0m " + this.command;
         }
     }
 
@@ -64,7 +64,7 @@ public sealed interface Dialogue {
     record Error(String message) implements Dialogue {
         @Override
         public String display() {
-            return "ERROR: " + this.message;
+            return "\033[31mERROR: " + this.message + "\033[0m";
         }
     }
 

@@ -81,8 +81,8 @@ public class CasinoGreeter extends Actor{
     private InteractionResult askAboutCasino() {
         // TODO change hotel info
         return new InteractionResult(
-                new Dialogue.Actor(this.getName(), "This is the Hotel Vista, the gem of Atlantic City. This is your top location for all" +
-                        " your gaming desires. A place where the daring come out with riches untold"),
+                new Dialogue.Actor(this.getName(), "This is the \033[1mBeach View Casino\033[0m, the gem of Atlantic City. This is your top location for all" +
+                        " your gaming desires. A place where the daring come out with riches untold."),
                 InteractionTransition.NONE,
                 null
         );
@@ -100,7 +100,7 @@ public class CasinoGreeter extends Actor{
         GameState.addItem("staff_room_keycard");
         return new InteractionResult(
                 new Dialogue.System("You ask the greeter about the building's architecture. As he turns to examine "
-                        + "the archway you're pointing at, you slip his staff keycard out of his pocket."),
+                        + "the archway you're pointing at, you slip his \033[1mstaff keycard\033[0m out of his pocket."),
                 InteractionTransition.NONE,
                 null
         );
