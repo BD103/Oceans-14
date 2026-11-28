@@ -3,15 +3,13 @@ package edu.miamioh.cse201.oceans14.ui;
 import edu.miamioh.cse201.oceans14.engine.Dialogue;
 import edu.miamioh.cse201.oceans14.ui.text.WrapParagraph;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.ListIterator;
 
 /**
  * A list of dialogue entries, rendered for the user interface.
  */
 public class DialogueEntries {
-    private final List<WrapParagraph> entries = new ArrayList<>();
+    private final FixedCapacityList<WrapParagraph> entries = new FixedCapacityList<>(500);
     private int maxWidth;
 
     /**
@@ -20,7 +18,7 @@ public class DialogueEntries {
      * @param dialogue The dialogue to add.
      */
     public void add(Dialogue dialogue) {
-        if (dialogue instanceof  Dialogue.List list) {
+        if (dialogue instanceof Dialogue.List list) {
             list.entries().forEach(this::add);
         } else {
             this.entries.add(new WrapParagraph(dialogue.display(), this.maxWidth));
@@ -30,8 +28,8 @@ public class DialogueEntries {
     /**
      * @return The dialogue as a list of formatted paragraphs.
      */
-    public List<WrapParagraph> paragraphs() {
-        return Collections.unmodifiableList(this.entries);
+    public ListIterator<WrapParagraph> paragraphs() {
+        return this.entries.listIterator();
     }
 
     /**

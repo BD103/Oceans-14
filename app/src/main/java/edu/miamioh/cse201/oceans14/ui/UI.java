@@ -36,6 +36,7 @@ public class UI implements AutoCloseable {
     private final InputParser parser;
     private final CommandBuffer commandBuffer = new CommandBuffer();
     private final DialogueEntries dialogue = new DialogueEntries();
+    private final CommandHistory commandHistory = new CommandHistory();
 
     private final RootView rootView;
 
@@ -184,8 +185,14 @@ public class UI implements AutoCloseable {
         if (input instanceof Input.Special inputSpecial) {
             switch (inputSpecial) {
                 case ENTER -> {
-                    this.processCommand(this.commandBuffer.getBuffer());
+                    String command = this.commandBuffer.getBuffer();
                     this.commandBuffer.clear();
+
+                    this.processCommand(command);
+
+                    this.commandHistory.add(command);
+                    this.commandHistory.stopScrolling();
+
                     this.drawRequested = true;
                 }
                 case DELETE -> {
@@ -209,6 +216,24 @@ public class UI implements AutoCloseable {
                 case RIGHT -> {
                     this.commandBuffer.right();
                     this.drawRequested = true;
+                }
+                case UP -> {
+                    String entry = this.commandHistory.scrollUp();
+
+                    if (entry != null) {
+                        this.commandBuffer.clear();
+                        this.commandBuffer.insert(entry);
+                        this.drawRequested = true;
+                    }
+                }
+                case DOWN -> {
+                    String entry = this.commandHistory.scrollDown();
+
+                    if (entry != null) {
+                        this.commandBuffer.clear();
+                        this.commandBuffer.insert(entry);
+                        this.drawRequested = true;
+                    }
                 }
                 case EXIT -> {
                     this.dialogue.add(new Dialogue.Error("To quit the game, enter the 'quit' command."));
