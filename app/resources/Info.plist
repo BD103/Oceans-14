@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "https://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+ <dict>
+  <key>LSMinimumSystemVersion</key>
+  <string>10.11</string>
+  <key>CFBundleDevelopmentRegion</key>
+  <string>English</string>
+  <key>CFBundleAllowMixedLocalizations</key>
+  <true/>
+  <key>CFBundleExecutable</key>
+  <string>launch_with_terminal.sh</string>
+  <key>CFBundleIconFile</key>
+  <string>Oceans14.icns</string>
+  <key>CFBundleIdentifier</key>
+  <string>edu.miamioh.cse201.oceans14</string>
+  <key>CFBundleInfoDictionaryVersion</key>
+  <string>6.0</string>
+  <key>CFBundleName</key>
+  <string>Oceans14</string>
+  <key>CFBundlePackageType</key>
+  <string>APPL</string>
+  <key>CFBundleSignature</key>
+  <string>????</string>
+  <!-- See https://developer.apple.com/app-store/categories/ for list of AppStore categories -->
+  <key>LSApplicationCategoryType</key>
+  <string>public.app-category.games</string>
+  <key>NSHighResolutionCapable</key>
+  <string>true</string>
+ </dict>
+</plist>

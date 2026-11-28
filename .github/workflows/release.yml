@@ -1,0 +1,52 @@
+name: Package Release
+
+on:
+  # Run when pushed to the `main` branch.
+  push:
+    branches: [main]
+  # Allow running manually.
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Package
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            java-version: 17
+          - os: ubuntu-24.04-arm
+            java-version: 17
+          - os: macos-latest
+            java-version: 17
+          - os: windows-latest
+            java-version: 17
+          - os: windows-11-arm
+            # Java 17 isn't available for Windows Arm.
+            java-version: 21
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Java ${{ matrix.java-version }}
+        uses: actions/setup-java@v6
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: temurin
+
+      - name: Build Package (Windows)
+        if: ${{ matrix.os == 'windows-latest' || matrix.os == 'windows-11-arm' }}
+        run: .\gradlew package
+
+      - name: Build Package (Non-Windows)
+        if: ${{ matrix.os != 'windows-latest' && matrix.os != 'windows-11-arm' }}
+        run: ./gradlew package
+
+      - name: Upload Package
+        uses: actions/upload-artifact@v7
+        with:
+          name: Oceans-14-${{ matrix.os }}
+          path: app/build/package
+          include-hidden-files: true
+          if-no-files-found: error
