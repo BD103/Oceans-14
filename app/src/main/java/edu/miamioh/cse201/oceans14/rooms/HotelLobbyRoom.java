@@ -111,7 +111,7 @@ public class HotelLobbyRoom extends Room {
         GameState.addChips(500);
         GameState.addFlag("pickpocketed_hotel_guest");
         return new InteractionResult(
-            new Dialogue.System("You walk up to a sharply dressed older man and compliment his hat, all while you pilfer some chips from his back pocket."),
+            new Dialogue.System("You walk up to a sharply dressed older man and compliment his hat, all while you \033[1mpilfer some chips\033[0m from his back pocket."),
             InteractionTransition.NONE,
             null
         );

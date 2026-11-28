@@ -121,7 +121,7 @@ public class CasinoRoom extends Room {
             );
         } else {
             return new InteractionResult(
-                    new Dialogue.System("You walk up to the staff door, but you don't have a keycard"),
+                    new Dialogue.System("You walk up to the staff door, but you don't have a \033[1mkeycard\033[0m"),
                     InteractionTransition.NONE,
                     null
             );
@@ -157,7 +157,7 @@ public class CasinoRoom extends Room {
             );
         } else {
             return new InteractionResult(
-                     new Dialogue.System("The bouncer denies you access, you don't have sufficient status"),
+                     new Dialogue.System("The bouncer denies you access, you don't have a \033[1mHigh Roller's Card\033[0m"),
                     InteractionTransition.NONE,
                     null
             );
@@ -231,7 +231,7 @@ public class CasinoRoom extends Room {
             );
         } else {
             return new InteractionResult(
-                    new Dialogue.System("You attempt to turn the door key, but its locked"),
+                    new Dialogue.System("You attempt to turn the door key, but its \033[1mlocked\033[0m"),
                     InteractionTransition.NONE,
                     null
             );

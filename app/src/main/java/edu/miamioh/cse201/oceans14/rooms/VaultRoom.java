@@ -75,7 +75,6 @@ public class VaultRoom extends Room {
      * @return never returns because the game ends with an error.
      */
     private InteractionResult robAndLoot() {
-        throw new IllegalAccessError("You won, congratulations!");
+        throw new IllegalAccessError("\033[35mYou won, congratulations!\033[0m");
     }
-
 }

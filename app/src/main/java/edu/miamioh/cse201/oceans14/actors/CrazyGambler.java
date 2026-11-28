@@ -100,7 +100,7 @@ public class CrazyGambler extends Actor {
      */
     private InteractionResult askHisStory() {
         return new InteractionResult(
-                new Dialogue.Actor("Crazy Gambler", "Kid, I was the best, but the higher ups, the big bosses were scared and struck me down like Icarus. Maybe one day you can take over the legacy. Come talk to me when you are a high roller."),
+                new Dialogue.Actor("Crazy Gambler", "Kid, I was the best, but the higher ups, the big bosses were scared and struck me down like Icarus. Maybe one day you can take over the legacy. \033[1mCome talk to me when you are a high roller.\033[0m"),
                 InteractionTransition.NONE,
                 null
         );
@@ -145,7 +145,7 @@ public class CrazyGambler extends Actor {
         GameState.addItem("rat_poison");
         GameState.addFlag("has_taken_rat_poison");
         return new InteractionResult(
-                new Dialogue.Actor("Crazy Gambler", "I ain't much for advice, kid, but all I know is that assholes like the Big Boss need to be taken down a peg. They tried to poison my baby Remy! Lucky for you, I kept the bottle they left behind. Here, take it. You should give the Big Boss some poison and see how he likes it."),
+                new Dialogue.Actor("Crazy Gambler", "I ain't much for advice, kid, but all I know is that assholes like the \033[1mBig Boss\033[0m need to be taken down a peg. They tried to poison my baby Remy! Lucky for you, I kept the bottle they left behind. Here, take it. You should \033[1mgive the Big Boss some poison\033[0m and see how he likes it."),
                 InteractionTransition.NONE,
                 null
         );

@@ -85,7 +85,7 @@ public class BarRoom extends Room {
         if (!GameState.flagIsActive("has_found_drink")) {
             GameState.addItem("drink");
             return new InteractionResult(
-                    new Dialogue.System("You found a drink. It's five o'clock somewhere..."),
+                    new Dialogue.System("You found a \033[1mdrink\033[0m. It's five o'clock somewhere..."),
                     InteractionTransition.NONE,
                     null
             );

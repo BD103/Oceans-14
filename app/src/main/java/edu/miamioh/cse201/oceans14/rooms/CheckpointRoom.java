@@ -62,7 +62,7 @@ public class CheckpointRoom extends Room {
             );
         } else {
             return new InteractionResult(
-                    new Dialogue.Actor("Guard", "Hey, you're not a guard! Go back to the casino floor!"),
+                    new Dialogue.Actor("Guard", "Hey, \033[1myou're not a guard\033[0m! Go back to the casino floor!"),
                     InteractionTransition.CHANGE_ROOM,
                     GameWorld.getRoom("casino_room")
             );

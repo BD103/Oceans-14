@@ -89,17 +89,26 @@ public class VentRoom extends Room {
      * @return The interactionResult room change to vault
      */
     private InteractionResult goToVault() {
-        if (GameState.hasItem("vent_map") && GameState.flagIsActive("vault_security_disabled")) {
+        if (!GameState.hasItem("vent_map")) {
             return new InteractionResult(
-                    new Dialogue.System("You head into the vault..."),
-                    InteractionTransition.CHANGE_ROOM,
-                    GameWorld.getRoom("VaultRoom")
+                    new Dialogue.System("You try to navigate the dark and twisting vent system, but quickly get lost. If only you had \033[1mdirections\033[0m on where to go..."),
+                    InteractionTransition.NONE,
+                    null
             );
         }
+
+        if (!GameState.flagIsActive("vault_security_disabled")) {
+            return new InteractionResult(
+                    new Dialogue.System("You crawl through the vents, but encounter lasers that will alert security of your intrusion. You need to \033[1mdisable the vault's security\033[0m before continuing on this path."),
+                    InteractionTransition.NONE,
+                    null
+            );
+        }
+
         return new InteractionResult(
-                new Dialogue.System("Seems like you're missing something..."),
-                InteractionTransition.NONE,
-                null
+                new Dialogue.System("You head into the vault..."),
+                InteractionTransition.CHANGE_ROOM,
+                GameWorld.getRoom("VaultRoom")
         );
     }
 }

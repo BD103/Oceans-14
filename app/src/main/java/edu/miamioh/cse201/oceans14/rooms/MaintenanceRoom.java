@@ -73,7 +73,7 @@ public class MaintenanceRoom extends Room {
 
     private InteractionResult inspectVent() {
         return new InteractionResult(
-                new Dialogue.System("You walk up to the vent cover. It's securely fastened to the wall, too tight for you to unscrew with your fingers. Where could the vent lead..?"),
+                new Dialogue.System("You walk up to the vent cover. It's securely fastened to the wall, \033[1mtoo tight for you to unscrew with your fingers\033[0m. Where could the vent lead..?"),
                 InteractionTransition.NONE,
                 null
         );
@@ -82,7 +82,7 @@ public class MaintenanceRoom extends Room {
     private InteractionResult inspectWorkbench() {
         GameState.addItem("screwdriver_checkout_note");
         return new InteractionResult(
-                new Dialogue.System("You find a messy workbench with wires, bolts, and various electronics strewn about. Hanging on the wall behind the bench is an empty battery charger, a photo of one of the contractor's family, and a sticky note from Anthony saying he borrowed the screwdriver. You take the sticky note."),
+                new Dialogue.System("You find a messy workbench with wires, bolts, and various electronics strewn about. Hanging on the wall behind the bench is an empty battery charger, a photo of one of the contractor's family, and a \033[1msticky note from Anthony saying he borrowed the screwdriver\033[0m. You take the sticky note."),
                 InteractionTransition.NONE,
                 null
         );
