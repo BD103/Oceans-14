@@ -54,6 +54,7 @@ public class GameWorld {
         registerRoom(new BarRoom());
         registerRoom(new CashOutRoom());
         registerRoom(new VentRoom());
+        registerRoom(new PanopticonRoom());
     }
 
     /**
@@ -74,6 +75,8 @@ public class GameWorld {
         registerActor(new Contractors());
         registerActor(new CrazyGambler());
         registerActor(new BigBoss());
+        registerActor(new CameraSystem());
+
     }
 
     /**
