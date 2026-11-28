@@ -9,6 +9,7 @@ import org.jline.utils.InfoCmp;
 
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * The dialogue view, responsible for displaying current and past game dialogue.
@@ -34,16 +35,15 @@ public class DialogueView implements View {
 
     private void drawParagraphs(Terminal term) {
         PrintWriter writer = term.writer();
-        List<WrapParagraph> paragraphs = this.entries.paragraphs();
+        ListIterator<WrapParagraph> paragraphs = this.entries.paragraphs();
 
         // Tracks which line in the terminal we're writing to.
         int y = this.viewport.y() + this.viewport.height() - 1;
 
-
         // Loop over each dialogue entry backwards.
         outer:
-        for (int p = paragraphs.size() - 1; p >= 0; p--) {
-            List<String> lines = paragraphs.get(p).getLines();
+        while (paragraphs.hasNext()) {
+            List<String> lines = paragraphs.next().getLines();
 
             // Loop over each line in the paragraph backwards.
             for (int l = lines.size() - 1; l >= 0; l--) {

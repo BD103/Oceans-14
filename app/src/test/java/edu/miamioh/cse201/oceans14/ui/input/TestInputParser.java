@@ -86,6 +86,24 @@ public class TestInputParser {
         Assertions.assertEquals(Input.Special.LEFT, this.parser.readAndParse());
     }
 
+    @Test
+    void up() throws IOException {
+        reader.write("\033OA");
+        Assertions.assertEquals(Input.Special.UP, this.parser.readAndParse());
+    }
+
+    @Test
+    void down() throws IOException {
+        reader.write("\033OB");
+        Assertions.assertEquals(Input.Special.DOWN, this.parser.readAndParse());
+    }
+
+    @Test
+    void tab() throws IOException {
+        reader.write('\t');
+        Assertions.assertEquals(Input.Special.TAB, this.parser.readAndParse());
+    }
+
     /**
      * A {@link NonBlockingReader} that lets tests simulate terminal keypresses.
      */

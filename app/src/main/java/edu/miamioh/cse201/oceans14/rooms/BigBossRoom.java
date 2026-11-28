@@ -35,12 +35,11 @@ public class BigBossRoom extends Room {
         if (!GameState.flagIsActive("boss_interaction_complete")) {
             actions.add(new ActionOption("talk_to_big_boss", "Talk to the Big Boss"));
         } else {
-            // TODO fix to be panopticon
             if (GameState.flagIsActive("boss_poisoned") && !GameState.hasItem("level_two_disguise")) {
                 actions.add(new ActionOption("steal_guard_outfit", "Steal a guard outfit"));
             }
             if (GameState.hasItem("level_two_disguise")) {
-                actions.add(new ActionOption("enter_casino_room", "Return to the casino floor"));
+                actions.add(new ActionOption("enter_panopticon_room", "Enter the Panopticon"));
             }
         }
         return List.copyOf(actions);
@@ -63,7 +62,7 @@ public class BigBossRoom extends Room {
         }
 
         return switch (actionID) {
-            case "enter_casino_room" -> enterCasinoRoom();
+            case "enter_panopticon_room" -> enterPanopticonRoom();
             case "talk_to_big_boss" -> talkToBigBoss();
             case "steal_guard_outfit" -> stealGuardOutfit();
 
@@ -104,18 +103,16 @@ public class BigBossRoom extends Room {
     }
 
     /**
-     * Allows the player to leave the Big Boss's office after
-     * completing the interaction with the Big Boss.
-     * Returns the player directly to the main casino floor.
+     * Allows the player to leave the Big Boss's office and
+     * enter the Panopticon after acquiring a Level 2 disguise.
      *
-     * @return a CHANGE_ROOM result targeting the casino room.
+     * @return a CHANGE_ROOM result targeting the Panopticon.
      */
-    // TODO make this actually point to the panopticon
-    private InteractionResult enterCasinoRoom() {
+    private InteractionResult enterPanopticonRoom() {
         return new InteractionResult(
-                new Dialogue.System("You walk back out to the main casino floor."),
+                new Dialogue.System("You check that your guard uniform is straight, then walk through the security door into the Panopticon."),
                 InteractionTransition.CHANGE_ROOM,
-                GameWorld.getRoom("casino_room")
+                GameWorld.getRoom("panopticon_room")
         );
     }
 

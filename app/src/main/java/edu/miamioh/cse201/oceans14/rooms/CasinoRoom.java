@@ -42,7 +42,7 @@ public class CasinoRoom extends Room {
                 new ActionOption("enter_bar_room", "Enter Hotel Bar"),
                 new ActionOption("enter_high_rollers_room", "Enter High Rollers Room"),
                 new ActionOption("enter_cash_out_room", "Enter Cash Out Room"),
-                new ActionOption("enter_big_boss_room", "Enter the Big Boss's Room"),
+                new ActionOption("enter_panopticon_room", "Enter the Panopticon Room"),
                 new ActionOption("enter_maintenance_room", "Enter Maintenance Room"),
                 new ActionOption("enter_hotel_lobby_room", "Enter Hotel Lobby"),
                 new ActionOption("talk_to_contractors", "Talk to Contractors"),
@@ -79,7 +79,7 @@ public class CasinoRoom extends Room {
             case "enter_bar_room" -> enterBarRoom();
             case "enter_high_rollers_room" -> enterHighRollersRoom();
             case "enter_cash_out_room" -> enterCashOutRoom();
-            case "enter_big_boss_room" -> enterPanopticonRoom();
+            case "enter_panopticon_room" -> enterPanopticonRoom();
             case "enter_maintenance_room" -> enterMaintenanceRoom();
             case "enter_hotel_lobby_room" -> enterHotelLobbyRoom();
             case "talk_to_contractors" -> talkToContractors();
@@ -177,12 +177,12 @@ public class CasinoRoom extends Room {
     }
 
     /**
-     * Attempts to enter the panopticon.
+     * Attempts to enter the Panopticon or the Big Boss's office.
      *
      * Access is granted if the player meets either requirement:
-     * 1. Possesses a level-two disguise.
+     * 1. Possesses a level-two disguise, granting entry to the Panopticon.
      * 2. Possesses a level-one disguise, food for the boss,
-     *    and permission from the chef.
+     *    and permission from the chef, granting entry to the Big Boss's office.
      *
      * Players who meet neither requirement are denied entry.
      *
@@ -194,14 +194,14 @@ public class CasinoRoom extends Room {
             return new InteractionResult(
                     new Dialogue.System("Your fellow guard nods and lets you in"),
                     InteractionTransition.CHANGE_ROOM,
-                    GameWorld.getRoom("big_boss_room")
+                    GameWorld.getRoom("panopticon_room")
             );
         } else if (
                 GameState.hasItem("boss_food") &&
                 GameState.hasItem("level_one_disguise") &&
                 GameState.hasItem("chef_permission")) {
             return new InteractionResult(
-                    new Dialogue.System("The guard nods you in and points you toward the bosses room"),
+                    new Dialogue.System("The guard nods you in and escorts you directly to the boss's office"),
                     InteractionTransition.CHANGE_ROOM,
                     GameWorld.getRoom("big_boss_room")
             );

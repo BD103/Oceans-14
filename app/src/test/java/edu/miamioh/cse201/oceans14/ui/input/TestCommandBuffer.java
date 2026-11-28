@@ -13,7 +13,7 @@ public class TestCommandBuffer {
     }
 
     @Test
-    void insert() {
+    void insertChar() {
         CommandBuffer buffer = new CommandBuffer();
 
         buffer.insert('H');
@@ -25,11 +25,20 @@ public class TestCommandBuffer {
     }
 
     @Test
+    void insertString() {
+        CommandBuffer buffer = new CommandBuffer();
+
+        buffer.insert("Boo!");
+
+        Assertions.assertEquals("Boo!", buffer.getBuffer());
+        Assertions.assertEquals(4, buffer.getCursor());
+    }
+
+    @Test
     void clear() {
         CommandBuffer buffer = new CommandBuffer();
 
-        buffer.insert('N');
-        buffer.insert('o');
+        buffer.insert("No");
         buffer.clear();
 
         Assertions.assertEquals("", buffer.getBuffer());
@@ -40,9 +49,7 @@ public class TestCommandBuffer {
     void delete() {
         CommandBuffer buffer = new CommandBuffer();
 
-        buffer.insert('Y');
-        buffer.insert('e');
-        buffer.insert('s');
+        buffer.insert("Yes");
         buffer.delete();
 
         Assertions.assertEquals("Ye", buffer.getBuffer());
@@ -57,9 +64,7 @@ public class TestCommandBuffer {
 
         Assertions.assertEquals(0, buffer.getCursor());
 
-        buffer.insert('M');
-        buffer.insert('O');
-        buffer.insert('O');
+        buffer.insert("MOO");
         buffer.left();
         buffer.left();
 
@@ -83,5 +88,20 @@ public class TestCommandBuffer {
         buffer.right();
 
         Assertions.assertEquals(1, buffer.getCursor());
+    }
+
+    @Test
+    void toEnd() {
+        CommandBuffer buffer = new CommandBuffer();
+
+        buffer.insert("Some text");
+
+        for (int i = 0; i < 5; i++) {
+            buffer.left();
+        }
+
+        buffer.toEnd();
+
+        Assertions.assertEquals(9, buffer.getCursor());
     }
 }

@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        GameEngine engine = new GameEngine(GameWorld.getRoom("entrance_room"));
+        GameEngine engine = new GameEngine();
 
         try (UI ui = new UI(engine)) {
             ui.run();
