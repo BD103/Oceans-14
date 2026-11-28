@@ -4,7 +4,6 @@ on:
   # Run when pushed to the `main` branch.
   push:
     branches: [main]
-  pull_request: # TODO: remove
   # Allow running manually.
   workflow_dispatch:
 
