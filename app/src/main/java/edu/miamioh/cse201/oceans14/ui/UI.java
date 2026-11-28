@@ -186,14 +186,18 @@ public class UI implements AutoCloseable {
             switch (inputSpecial) {
                 case ENTER -> {
                     String command = this.commandBuffer.getBuffer();
-                    this.commandBuffer.clear();
 
-                    this.processCommand(command);
+                    // Don't do anything if the buffer is empty.
+                    if (!command.isEmpty()) {
+                        this.commandBuffer.clear();
 
-                    this.commandHistory.add(command);
-                    this.commandHistory.stopScrolling();
+                        this.processCommand(command);
 
-                    this.drawRequested = true;
+                        this.commandHistory.add(command);
+                        this.commandHistory.stopScrolling();
+
+                        this.drawRequested = true;
+                    }
                 }
                 case DELETE -> {
                     this.commandBuffer.delete();
