@@ -19,7 +19,7 @@ public class TestStatsView {
         Size size = term.getSize();
         Rect viewport = new Rect(0, 0, size.getColumns(), size.getRows());
 
-        StatsView view = new StatsView(new GameEngine(GameWorld.getRoom("entrance_room")));
+        StatsView view = new StatsView(new GameEngine());
         view.resize(viewport);
         view.draw(term);
     }
@@ -29,7 +29,7 @@ public class TestStatsView {
         Size size = term.getSize();
         Rect viewport = new Rect(0, 0, size.getColumns(), size.getRows());
 
-        StatsView view = new StatsView(new GameEngine(GameWorld.getRoom("entrance_room")));
+        StatsView view = new StatsView(new GameEngine());
         view.resize(viewport);
         view.draw(term);
     }

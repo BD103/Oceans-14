@@ -38,8 +38,11 @@ public sealed interface Input {
     enum Special implements Input {
         ENTER,
         DELETE,
+        TAB,
         LEFT,
         RIGHT,
+        UP,
+        DOWN,
         EXIT;
     }
 }

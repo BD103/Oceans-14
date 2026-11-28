@@ -4,6 +4,7 @@ import edu.miamioh.cse201.oceans14.engine.ActionOption;
 import edu.miamioh.cse201.oceans14.engine.Dialogue;
 import edu.miamioh.cse201.oceans14.engine.GameEngine;
 import edu.miamioh.cse201.oceans14.engine.InteractionResult;
+import edu.miamioh.cse201.oceans14.ui.input.Completions;
 import edu.miamioh.cse201.oceans14.ui.views.RootView;
 import edu.miamioh.cse201.oceans14.ui.input.CommandBuffer;
 import edu.miamioh.cse201.oceans14.ui.input.Input;
@@ -35,6 +36,7 @@ public class UI implements AutoCloseable {
     private final InputParser parser;
     private final CommandBuffer commandBuffer = new CommandBuffer();
     private final DialogueEntries dialogue = new DialogueEntries();
+    private final CommandHistory commandHistory = new CommandHistory();
 
     private final RootView rootView;
 
@@ -183,13 +185,33 @@ public class UI implements AutoCloseable {
         if (input instanceof Input.Special inputSpecial) {
             switch (inputSpecial) {
                 case ENTER -> {
-                    this.processCommand(this.commandBuffer.getBuffer());
-                    this.commandBuffer.clear();
-                    this.drawRequested = true;
+                    String command = this.commandBuffer.getBuffer();
+
+                    // Don't do anything if the buffer is empty.
+                    if (!command.isEmpty()) {
+                        this.commandBuffer.clear();
+
+                        this.processCommand(command);
+
+                        this.commandHistory.add(command);
+                        this.commandHistory.stopScrolling();
+
+                        this.drawRequested = true;
+                    }
                 }
                 case DELETE -> {
                     this.commandBuffer.delete();
                     this.drawRequested = true;
+                }
+                case TAB -> {
+                    // Tries to find a match that would complete this command at the cursor.
+                    String match = Completions.complete(this.commandBuffer.getBuffer(), this.engine);
+
+                    if (match != null) {
+                        this.commandBuffer.toEnd();
+                        this.commandBuffer.insert(match);
+                        this.drawRequested = true;
+                    }
                 }
                 case LEFT -> {
                     this.commandBuffer.left();
@@ -199,7 +221,28 @@ public class UI implements AutoCloseable {
                     this.commandBuffer.right();
                     this.drawRequested = true;
                 }
-                case EXIT -> this.exitRequested = true;
+                case UP -> {
+                    String entry = this.commandHistory.scrollUp();
+
+                    if (entry != null) {
+                        this.commandBuffer.clear();
+                        this.commandBuffer.insert(entry);
+                        this.drawRequested = true;
+                    }
+                }
+                case DOWN -> {
+                    String entry = this.commandHistory.scrollDown();
+
+                    if (entry != null) {
+                        this.commandBuffer.clear();
+                        this.commandBuffer.insert(entry);
+                        this.drawRequested = true;
+                    }
+                }
+                case EXIT -> {
+                    this.dialogue.add(new Dialogue.Error("To quit the game, enter the 'quit' command."));
+                    this.drawRequested = true;
+                }
             }
         }
     }
@@ -210,11 +253,14 @@ public class UI implements AutoCloseable {
         if (command.equals("help")) {
             this.dialogue.add(new Dialogue.System("help: shows available commands"));
             this.dialogue.add(new Dialogue.System("describe: describes current interaction"));
+            this.dialogue.add(new Dialogue.System("quit: exit the game (progress will be lost)"));
             for (ActionOption option : this.engine.getAvailableActions()) {
                 this.dialogue.add(new Dialogue.System(option.id() + ": " + option.label()));
             }
         } else if (command.equals("describe")) {
             this.dialogue.add(new Dialogue.System(this.engine.getCurrentDescription()));
+        } else if (command.equals("quit")) {
+            this.exitRequested = true;
         } else {
             InteractionResult result = this.engine.performAction(command);
             this.dialogue.add(result.dialogue());

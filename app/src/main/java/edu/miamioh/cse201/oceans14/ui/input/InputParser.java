@@ -40,6 +40,9 @@ public class InputParser {
             case 8:
             case 127:
                 return Input.Special.DELETE;
+            // HT (Horizontal Tab)
+            case 9:
+                return Input.Special.TAB;
             // EOF or Ctrl+C
             case -1:
             case 3:
@@ -78,6 +81,10 @@ public class InputParser {
         int input = reader.read(READ_TIMEOUT);
 
         return switch (input) {
+            // ESC O A
+            case 'A' -> Input.Special.UP;
+            // ESC O B
+            case 'B' -> Input.Special.DOWN;
             // ESC O C
             case 'C' -> Input.Special.RIGHT;
             // ESC O D

@@ -6,6 +6,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HotelStaff extends Actor {
+    private int gameplayAdviceNumber = 0;
+    private final InteractionResult[] gameplayAdvice = new InteractionResult[] {
+            // Teach tab-completion.
+            new InteractionResult(
+                    new Dialogue.List(List.of(
+                            new Dialogue.Actor("First Receptionist", "An old hermit once told me: 'Press TAB to auto-complete actions.' I never figured out what he was talking about."),
+                            new Dialogue.Actor("Second Receptionist", "Wisdom of the elders, I suppose!")
+                    )),
+                    InteractionTransition.NONE,
+                    null
+            ),
+            // Teach scrolling through command history.
+            new InteractionResult(
+                    new Dialogue.List(List.of(
+                            new Dialogue.Actor("Second Receptionist", "You can use the up and down arrows to auto-fill commands you've previously run!"),
+                            new Dialogue.Actor("First Receptionist", "I wish I could do that when replying to emails. The sheer amount of messages in my inbox complaining about no mints on their pillows...")
+                    )),
+                    InteractionTransition.NONE,
+                    null
+            )
+    };
 
     public HotelStaff() {
         super("hotel_staff", "Hotel Staff");
@@ -29,6 +50,7 @@ public class HotelStaff extends Actor {
         actions.add(new ActionOption("ask_about_contractors", "Ask About the Contractors"));
         actions.add(new ActionOption("ask_about_casino_staff", "Ask About Casino Staff"));
         actions.add(new ActionOption("ask_about_security", "Ask About Casino Security"));
+        actions.add(new ActionOption("ask_about_gameplay", "Ask about Gameplay"));
 
         // End conversation
         actions.add(new ActionOption("end_conversation", "End the conversation"));
@@ -60,6 +82,7 @@ public class HotelStaff extends Actor {
             case "ask_about_contractors" -> askAboutContractors();
             case "ask_about_casino_staff" -> askAboutCasinoStaff();
             case "ask_about_security" -> askAboutSecurity();
+            case "ask_about_gameplay" -> askAboutGameplay();
 
             // End the conversation always exists
             case "end_conversation" -> endConversation();
@@ -126,6 +149,14 @@ public class HotelStaff extends Actor {
                 InteractionTransition.NONE,
                 null
         );
+    }
+
+    private InteractionResult askAboutGameplay() {
+        InteractionResult result = this.gameplayAdvice[this.gameplayAdviceNumber];
+
+        this.gameplayAdviceNumber = (this.gameplayAdviceNumber + 1) % this.gameplayAdvice.length;
+
+        return result;
     }
 
     /**
