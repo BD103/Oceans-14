@@ -201,7 +201,7 @@ public class CasinoRoom extends Room {
                 GameState.hasItem("level_one_disguise") &&
                 GameState.hasItem("chef_permission")) {
             return new InteractionResult(
-                    new Dialogue.System("The guard nods you in and points you toward the boss's office"),
+                    new Dialogue.System("The guard nods you in and escorts you directly to the boss's office"),
                     InteractionTransition.CHANGE_ROOM,
                     GameWorld.getRoom("big_boss_room")
             );
